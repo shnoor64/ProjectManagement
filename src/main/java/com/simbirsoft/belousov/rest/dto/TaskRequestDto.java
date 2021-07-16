@@ -9,11 +9,11 @@ import java.time.Period;
 public class TaskRequestDto {
 
 
-    @Schema(description = "Имя проекта")
+    @Schema(description = "Имя задачи")
     private String name;
 
-    @Schema(description = "Описание проекта")
-    private String description;
+    @Schema(description = "Описание задачи")
+    private String descriptionTask;
 
     @Schema(description = "ID проекта")
     private int projectId;
@@ -30,7 +30,7 @@ public class TaskRequestDto {
     @Schema(description = "ID релиза")
     private int releaseId;
 
-    @Schema(description = "Время на исполнение")
+    @Schema(description = "Время на исполнение задачи")
     private Period tineToComplete;
 
     @Schema(description = "Время начала выполнения задачи")
@@ -43,7 +43,7 @@ public class TaskRequestDto {
             , int authorId, int performerId, int releaseId, Period tineToComplete
             , LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.name = name;
-        this.description = description;
+        this.descriptionTask = description;
         this.projectId = projectId;
         this.statusTask = statusTask;
         this.authorId = authorId;
@@ -63,11 +63,11 @@ public class TaskRequestDto {
     }
 
     public String getDescription() {
-        return description;
+        return descriptionTask;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.descriptionTask = description;
     }
 
     public int getProjectId() {
