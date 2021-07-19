@@ -5,6 +5,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Пользователь")
 public class UserResponseDto {
 
+
+    @Schema(description = "ID пользователя")
+    private int userId;
+
     @Schema(description = "Имя пользователя")
     private String name;
 
@@ -14,10 +18,19 @@ public class UserResponseDto {
     @Schema(description = "Роль")
     private String role;
 
-    public UserResponseDto(String name, String surname, String role) {
+    public UserResponseDto(int userId, String name, String surname, String role) {
+        this.userId = userId;
         this.name = name;
         this.surname = surname;
         this.role = role;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {

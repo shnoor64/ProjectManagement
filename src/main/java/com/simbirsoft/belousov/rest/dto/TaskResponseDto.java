@@ -8,6 +8,9 @@ import java.time.Period;
 @Schema(description = "Задача")
 public class TaskResponseDto {
 
+    @Schema(description = "ID задачи")
+    private int taskId;
+
     @Schema(description = "Имя задачи")
     private String name;
 
@@ -38,9 +41,10 @@ public class TaskResponseDto {
     @Schema(description = "Время окончания выполнения задачи")
     private LocalDateTime endTimeTask;
 
-    public TaskResponseDto(String name, String description, int projectId, String statusTask
-            , int authorId, int performerId, int releaseId, Period tineToComplete
-            , LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
+    public TaskResponseDto(int taskId, String name, String description, int projectId,
+                           String statusTask, int authorId, int performerId, int releaseId,
+                           Period tineToComplete, LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
+        this.taskId = taskId;
         this.name = name;
         this.descriptionTask = description;
         this.projectId = projectId;
@@ -51,6 +55,14 @@ public class TaskResponseDto {
         this.tineToComplete = tineToComplete;
         this.startTimeTask = startTimeTask;
         this.endTimeTask = endTimeTask;
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
     public String getName() {

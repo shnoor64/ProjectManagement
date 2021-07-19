@@ -5,6 +5,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Проект")
 public class ProjectResponseDto {
 
+    @Schema(description = "ID проекта")
+    private int projectId;
+
     @Schema(description = "Имя проекта")
     private String name;
 
@@ -17,11 +20,20 @@ public class ProjectResponseDto {
     @Schema(description = "Статус проекта")
     private String statusProject;
 
-    public ProjectResponseDto(String name, String descriptionProject, String customer, String statusProject) {
+    public ProjectResponseDto(int projectId, String name, String descriptionProject, String customer, String statusProject) {
+        this.projectId=projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
         this.customer = customer;
         this.statusProject = statusProject;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public String getName() {

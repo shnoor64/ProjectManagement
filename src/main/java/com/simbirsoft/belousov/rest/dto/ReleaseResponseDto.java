@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 @Schema(description = "Релиз")
 public class ReleaseResponseDto {
 
+    @Schema(description = "ID релиза")
+    private int releaseId;
+
     @Schema(description = "Версия релиза")
     private int version;
 
@@ -15,6 +18,21 @@ public class ReleaseResponseDto {
 
     @Schema(description = "Время окончания выполнения релиза")
     private LocalDateTime endTimeRelease;
+
+    public ReleaseResponseDto(int releaseId, int version, LocalDateTime startTimeRelease, LocalDateTime endTimeRelease) {
+        this.releaseId = releaseId;
+        this.version = version;
+        this.startTimeRelease = startTimeRelease;
+        this.endTimeRelease = endTimeRelease;
+    }
+
+    public int getReleaseId() {
+        return releaseId;
+    }
+
+    public void setReleaseId(int releaseId) {
+        this.releaseId = releaseId;
+    }
 
     public int getVersion() {
         return version;
@@ -37,12 +55,6 @@ public class ReleaseResponseDto {
     }
 
     public void setEndTimeRelease(LocalDateTime endTimeRelease) {
-        this.endTimeRelease = endTimeRelease;
-    }
-
-    public ReleaseResponseDto(int version, LocalDateTime startTimeRelease, LocalDateTime endTimeRelease) {
-        this.version = version;
-        this.startTimeRelease = startTimeRelease;
         this.endTimeRelease = endTimeRelease;
     }
 }
