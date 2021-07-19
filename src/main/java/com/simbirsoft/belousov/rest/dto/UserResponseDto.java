@@ -16,9 +16,9 @@ public class UserResponseDto {
     private String surname;
 
     @Schema(description = "Роль")
-    private String role;
+    private int role;
 
-    public UserResponseDto(int userId, String name, String surname, String role) {
+    public UserResponseDto(int userId, String name, String surname, int role) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
@@ -49,11 +49,11 @@ public class UserResponseDto {
         this.surname = surname;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 }

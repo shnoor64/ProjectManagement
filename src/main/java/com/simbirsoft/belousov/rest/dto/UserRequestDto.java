@@ -18,9 +18,9 @@ public class UserRequestDto {
     private String password;
 
     @Schema(description = "Роль")
-    private String role;
+    private int role;
 
-    public UserRequestDto(int userId, String name, String surname, String password, String role) {
+    public UserRequestDto(int userId, String name, String surname, String password, int role) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
@@ -60,11 +60,11 @@ public class UserRequestDto {
         this.password = password;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 }
