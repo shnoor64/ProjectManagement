@@ -53,9 +53,4 @@ public class ReleaseController {
         return ResponseEntity.ok().build();
     }
 
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity handleException(IOException e) {
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
-    }
-
 }

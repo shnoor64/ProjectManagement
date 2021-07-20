@@ -1,5 +1,6 @@
 package com.simbirsoft.belousov.rest;
 
+import com.simbirsoft.belousov.enums.StatusTask;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,9 +22,9 @@ public class TaskBoardController {
     @Operation(summary = "Получить список задач")
     @GetMapping(value = "/tasks")
     public ResponseEntity<List<TaskResponseDto>> getTasks() {
-        TaskResponseDto task1 = new TaskResponseDto(5,"task1", "Создать схему БД", 5, "BACKLOG", 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task2 = new TaskResponseDto(6,"task2", "Прописать DTO", 5, "IN_PROGRESS", 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task3 = new TaskResponseDto(7,"task3", "Прописать RestController’s", 5, "BACKLOG", 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
+        TaskResponseDto task1 = new TaskResponseDto(5,"task1", "Создать схему БД", 5, StatusTask.DONE, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
+        TaskResponseDto task2 = new TaskResponseDto(6,"task2", "Прописать DTO", 5, StatusTask.BACKLOG, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
+        TaskResponseDto task3 = new TaskResponseDto(7,"task3", "Прописать RestController’s", 5, StatusTask.IN_PROGRESS, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
 
         List<TaskResponseDto> results = List.of(task1, task2, task3);
         return ResponseEntity.ok().body(results);
@@ -58,11 +59,6 @@ public class TaskBoardController {
     @DeleteMapping(value = "/tasks/{id}")
     public ResponseEntity partialUpdateTask(@PathVariable int id) {
         return ResponseEntity.ok().build();
-    }
-
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity handleException(IOException e) {
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
 }

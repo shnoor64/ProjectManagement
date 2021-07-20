@@ -1,5 +1,6 @@
 package com.simbirsoft.belousov.rest.dto;
 
+import com.simbirsoft.belousov.enums.StatusTask;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public class TaskResponseDto {
     private int projectId;
 
     @Schema(description = "Статус задачи")
-    private String statusTask;
+    private StatusTask statusTask;
 
     @Schema(description = "ID автора задачи")
     private int authorId;
@@ -42,7 +43,7 @@ public class TaskResponseDto {
     private LocalDateTime endTimeTask;
 
     public TaskResponseDto(int taskId, String name, String description, int projectId,
-                           String statusTask, int authorId, int performerId, int releaseId,
+                           StatusTask statusTask, int authorId, int performerId, int releaseId,
                            Period tineToComplete, LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
@@ -89,11 +90,11 @@ public class TaskResponseDto {
         this.projectId = projectId;
     }
 
-    public String getStatusTask() {
+    public StatusTask getStatusTask() {
         return statusTask;
     }
 
-    public void setStatusTask(String statusTask) {
+    public void setStatusTask(StatusTask statusTask) {
         this.statusTask = statusTask;
     }
 

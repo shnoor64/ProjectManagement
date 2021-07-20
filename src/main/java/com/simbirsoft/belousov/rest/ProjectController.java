@@ -1,12 +1,14 @@
 package com.simbirsoft.belousov.rest;
 
 
+import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +29,7 @@ public class ProjectController {
 
     @Operation(summary = "Добавить проект")
     @PostMapping(value = "/projects")
-    public ResponseEntity<ProjectResponseDto> createProjects(@RequestBody ProjectResponseDto requestDto) {
+    public ResponseEntity<ProjectResponseDto> createProjects(@RequestBody ProjectRequestDto requestDto) {
         return ResponseEntity.ok().body(new ProjectResponseDto(
                 requestDto.getProjectId(),
                 requestDto.getName(),
@@ -40,7 +42,7 @@ public class ProjectController {
     @Operation(summary = "Обновить проект")
     @PutMapping(value = "/projects/{id}")
     public ResponseEntity<ProjectResponseDto> partialUpdateProjects(@PathVariable int id,
-                                                             @RequestBody ProjectResponseDto requestDto) throws IOException {
+                                                                    @RequestBody ProjectRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 
@@ -50,9 +52,5 @@ public class ProjectController {
         return ResponseEntity.ok().build();
     }
 
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity handleException(IOException e) {
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
-    }
 
 }
