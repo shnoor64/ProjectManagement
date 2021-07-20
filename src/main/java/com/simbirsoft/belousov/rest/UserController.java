@@ -17,7 +17,7 @@ import java.util.List;
 public class UserController {
     @Operation(summary = "Получить список пользователей")
     @GetMapping(value = "/users")
-    public ResponseEntity<List<UserResponseDto>> getTasks() {
+    public ResponseEntity<List<UserResponseDto>> getUsers() {
         UserResponseDto user1 = new UserResponseDto(6,"Oleg", "Belousov", 3);
         UserResponseDto user2 = new UserResponseDto(1,"Ekaterina", "Dilekeeva", 4);
 

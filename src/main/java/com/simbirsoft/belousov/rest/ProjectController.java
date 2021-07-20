@@ -29,7 +29,7 @@ public class ProjectController {
 
     @Operation(summary = "Добавить проект")
     @PostMapping(value = "/projects")
-    public ResponseEntity<ProjectResponseDto> createProjects(@RequestBody ProjectRequestDto requestDto) {
+    public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto requestDto) {
         return ResponseEntity.ok().body(new ProjectResponseDto(
                 requestDto.getProjectId(),
                 requestDto.getName(),
@@ -41,14 +41,14 @@ public class ProjectController {
 
     @Operation(summary = "Обновить проект")
     @PutMapping(value = "/projects/{id}")
-    public ResponseEntity<ProjectResponseDto> partialUpdateProjects(@PathVariable int id,
+    public ResponseEntity<ProjectResponseDto> partialUpdateProject(@PathVariable int id,
                                                                     @RequestBody ProjectRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 
     @Operation(summary = "Удалить проект")
     @DeleteMapping(value = "/projects/{id}")
-    public ResponseEntity partialUpdateProjects(@PathVariable int id) {
+    public ResponseEntity partialUpdateProject(@PathVariable int id) {
         return ResponseEntity.ok().build();
     }
 

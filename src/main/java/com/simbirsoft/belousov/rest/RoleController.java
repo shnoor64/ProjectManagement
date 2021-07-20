@@ -30,7 +30,7 @@ public class RoleController {
 
     @Operation(summary = "Добавить роль")
     @PostMapping(value = "/roles")
-    public ResponseEntity<RoleResponseDto> createRoles(@RequestBody RoleRequestDto requestDto) {
+    public ResponseEntity<RoleResponseDto> createRole(@RequestBody RoleRequestDto requestDto) {
         return ResponseEntity.ok().body(new RoleResponseDto(
                 requestDto.getRoleId(),
                 requestDto.getName()
@@ -39,14 +39,14 @@ public class RoleController {
 
     @Operation(summary = "Обновить роль")
     @PutMapping(value = "/roles/{id}")
-    public ResponseEntity<RoleResponseDto> partialUpdateRoles(@PathVariable int id,
+    public ResponseEntity<RoleResponseDto> partialUpdateRole(@PathVariable int id,
                                                                     @RequestBody RoleRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 
     @Operation(summary = "Удалить роль")
     @DeleteMapping(value = "/roles/{id}")
-    public ResponseEntity partialUpdateRoles(@PathVariable int id) {
+    public ResponseEntity partialUpdateRole(@PathVariable int id) {
         return ResponseEntity.ok().build();
     }
 

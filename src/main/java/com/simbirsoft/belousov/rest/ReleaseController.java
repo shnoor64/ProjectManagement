@@ -31,7 +31,7 @@ public class ReleaseController {
 
     @Operation(summary = "Добавить релиз")
     @PostMapping(value = "/releases")
-    public ResponseEntity<ReleaseResponseDto> createReleases(@RequestBody ReleaseRequestDto requestDto) {
+    public ResponseEntity<ReleaseResponseDto> createReleas(@RequestBody ReleaseRequestDto requestDto) {
         return ResponseEntity.ok().body(new ReleaseResponseDto(
                 requestDto.getReleaseId(),
                 requestDto.getVersion(),
@@ -42,14 +42,14 @@ public class ReleaseController {
 
     @Operation(summary = "Обновить релиз")
     @PutMapping(value = "/releases/{id}")
-    public ResponseEntity<ReleaseResponseDto> partialUpdateReleases(@PathVariable int id,
+    public ResponseEntity<ReleaseResponseDto> partialUpdateReleas(@PathVariable int id,
                                                                     @RequestBody ReleaseRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 
     @Operation(summary = "Удалить релиз")
     @DeleteMapping(value = "/releases/{id}")
-    public ResponseEntity partialUpdateReleases(@PathVariable int id) {
+    public ResponseEntity partialUpdateReleas(@PathVariable int id) {
         return ResponseEntity.ok().build();
     }
 
