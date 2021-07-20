@@ -3,6 +3,7 @@ package com.simbirsoft.belousov.rest;
 
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
+import com.simbirsoft.belousov.rest.exeption_handing.NoSuchExeption;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,9 @@ public class ProjectController {
             }
 
         }
+//        if (result==null){
+//            throw new NoSuchExeption("Не найден запрашиваемый объект с ID ="+id);
+//        }
         return ResponseEntity.ok().body(result);
     }
 
