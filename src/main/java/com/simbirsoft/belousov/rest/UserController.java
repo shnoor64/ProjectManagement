@@ -1,5 +1,7 @@
 package com.simbirsoft.belousov.rest;
 
+import com.simbirsoft.belousov.rest.dto.RoleRequestDto;
+import com.simbirsoft.belousov.rest.dto.RoleResponseDto;
 import com.simbirsoft.belousov.rest.dto.UserRequestDto;
 import com.simbirsoft.belousov.rest.dto.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +25,24 @@ public class UserController {
 
         List<UserResponseDto> results = List.of(user1, user2);
         return ResponseEntity.ok().body(results);
+    }
+
+    @Operation(summary = "Получить пользлваьеля")
+    @GetMapping(value = "/users/{id}")
+    public ResponseEntity<UserResponseDto> getUser(@PathVariable int id,
+                                                   @RequestBody UserRequestDto requestDto) {
+        UserResponseDto user1 = new UserResponseDto(6,"Oleg", "Belousov", 3);
+        UserResponseDto user2 = new UserResponseDto(1,"Ekaterina", "Dilekeeva", 4);
+        //Времянка, перепешу после создания сервиса
+        List<UserResponseDto> resultsList = List.of(user1, user2);
+        UserResponseDto result = null;
+        for (UserResponseDto itVar : resultsList) {
+            if (itVar.getUserId()== id) {
+                result=itVar;
+            }
+
+        }
+        return ResponseEntity.ok().body(result);
     }
     @Operation(summary = "Добавить пользователя")
     @PostMapping(value = "/users")

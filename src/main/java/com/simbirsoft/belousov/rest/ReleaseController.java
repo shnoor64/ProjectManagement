@@ -1,6 +1,8 @@
 package com.simbirsoft.belousov.rest;
 
 
+import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
+import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseRequestDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +31,24 @@ public class ReleaseController {
         return ResponseEntity.ok().body(results);
     }
 
+    @Operation(summary = "Получить релиз")
+    @GetMapping(value = "/releases/{id}")
+    public ResponseEntity<ReleaseResponseDto> getReleas(@PathVariable int id,
+                                                         @RequestBody ReleaseRequestDto requestDto) {
+        ReleaseResponseDto  release1= new ReleaseResponseDto(3,15, LocalDateTime.of(2020, Month.APRIL, 18, 8, 0),LocalDateTime.of(2021, Month.FEBRUARY, 18, 8, 0));
+        ReleaseResponseDto  release2= new ReleaseResponseDto(4,17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0),LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
+
+        //Времянка, перепешу после создания сервиса
+        List<ReleaseResponseDto> resultsList = List.of(release1, release2);
+        ReleaseResponseDto result = null;
+        for (ReleaseResponseDto itVar : resultsList) {
+            if (itVar.getReleaseId()== id) {
+                result=itVar;
+            }
+
+        }
+        return ResponseEntity.ok().body(result);
+    }
     @Operation(summary = "Добавить релиз")
     @PostMapping(value = "/releases")
     public ResponseEntity<ReleaseResponseDto> createReleas(@RequestBody ReleaseRequestDto requestDto) {
