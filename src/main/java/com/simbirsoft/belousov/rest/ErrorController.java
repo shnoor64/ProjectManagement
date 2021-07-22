@@ -1,6 +1,7 @@
 package com.simbirsoft.belousov.rest;
 
-import com.simbirsoft.belousov.rest.exeption_handing.NoSuchExeption;
+import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,9 +16,10 @@ public class ErrorController {
     public ResponseEntity handleIOException(IOException e) {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
-//    @ExceptionHandler(NoSuchExeption.class)
-//    public ResponseEntity handleIOException(NoSuchExeption e) {
-//        return new ResponseEntity(HttpStatus.NOT_FOUND);
-//
-//    }
+
+    @ExceptionHandler(NoSuchException.class)
+    public ResponseEntity handleIOException(NoSuchException e) {
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+    }
 }
