@@ -38,7 +38,7 @@ public class UserController {
         result = Stream.of(user1, user2)
                 .filter(userResponseDto -> userResponseDto.getUserId() == id)
                 .findFirst()
-                .orElseThrow(() -> new NoSuchException("Задача не найдена"));
+                .orElseThrow(() -> new NoSuchException("Пользователь не найден"));
         return ResponseEntity.ok().body(result);
     }
 
