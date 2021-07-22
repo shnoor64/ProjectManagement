@@ -4,6 +4,7 @@ import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
 import com.simbirsoft.belousov.rest.dto.RoleRequestDto;
 import com.simbirsoft.belousov.rest.dto.RoleResponseDto;
+import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -38,9 +39,12 @@ public class RoleController {
         RoleResponseDto role1 = new RoleResponseDto(3, "developer");
         RoleResponseDto role2 = new RoleResponseDto(4, "time lead");
         //Времянка, перепешу после создания сервиса
-        final RoleResponseDto[] result = new RoleResponseDto[1];
-        Stream.of(role1, role2).filter(roleResponseDto -> roleResponseDto.getRoleId() == id).forEach(x -> result[0] = x);
-        return ResponseEntity.ok().body(result[0]);
+        RoleResponseDto result;
+        result = Stream.of(role1, role2)
+                .filter(roleResponseDto -> roleResponseDto.getRoleId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchException("Роль не найдена"));
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Добавить роль")

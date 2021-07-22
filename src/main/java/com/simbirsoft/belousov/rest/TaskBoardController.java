@@ -5,6 +5,7 @@ import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.RoleResponseDto;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
+import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -42,9 +43,12 @@ public class TaskBoardController {
         TaskResponseDto task2 = new TaskResponseDto(6, "task2", "Прописать DTO", 5, StatusTask.BACKLOG, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
         TaskResponseDto task3 = new TaskResponseDto(7, "task3", "Прописать RestController’s", 5, StatusTask.IN_PROGRESS, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
         //Времянка, перепешу после создания сервиса
-        final TaskResponseDto[] result = new TaskResponseDto[1];
-        Stream.of(task1, task2, task3).filter(taskResponseDto -> taskResponseDto.getTaskId() == id).forEach(x -> result[0] = x);
-        return ResponseEntity.ok().body(result[0]);
+        TaskResponseDto result;
+        result = Stream.of(task1, task2, task3)
+                .filter(taskResponseDto -> taskResponseDto.getTaskId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Добавить задачу")

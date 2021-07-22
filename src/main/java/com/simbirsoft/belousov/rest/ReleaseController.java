@@ -5,6 +5,7 @@ import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseRequestDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
+import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -40,9 +41,12 @@ public class ReleaseController {
         ReleaseResponseDto release2 = new ReleaseResponseDto(4, 17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0), LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
 
         //Времянка, перепешу после создания сервиса
-        final ReleaseResponseDto[] result = new ReleaseResponseDto[1];
-        Stream.of(release1, release2).filter(releaseResponseDto -> releaseResponseDto.getReleaseId() == id).forEach(x -> result[0] = x);
-        return ResponseEntity.ok().body(result[0]);
+        ReleaseResponseDto result;
+        result = Stream.of(release1, release2)
+                .filter(releaseResponseDto -> releaseResponseDto.getReleaseId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchException("Релиз не найден"));
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Добавить релиз")

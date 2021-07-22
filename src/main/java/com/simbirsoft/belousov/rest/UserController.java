@@ -3,6 +3,7 @@ package com.simbirsoft.belousov.rest;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import com.simbirsoft.belousov.rest.dto.UserRequestDto;
 import com.simbirsoft.belousov.rest.dto.UserResponseDto;
+import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,12 @@ public class UserController {
         UserResponseDto user1 = new UserResponseDto(6, "Oleg", "Belousov", 3);
         UserResponseDto user2 = new UserResponseDto(1, "Ekaterina", "Dilekeeva", 4);
         //Времянка, перепешу после создания сервиса
-        final UserResponseDto[] result = new UserResponseDto[1];
-        Stream.of(user1, user2).filter(userResponseDto -> userResponseDto.getUserId() == id).forEach(x -> result[0] = x);
-        return ResponseEntity.ok().body(result[0]);
+        UserResponseDto result;
+        result = Stream.of(user1, user2)
+                .filter(userResponseDto -> userResponseDto.getUserId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Добавить пользователя")
