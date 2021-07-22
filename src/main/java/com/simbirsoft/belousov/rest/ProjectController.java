@@ -4,7 +4,8 @@ package com.simbirsoft.belousov.rest;
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
-import com.simbirsoft.belousov.rest.exeption_handing.NoSuchExeption;
+import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
+
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,13 +41,12 @@ public class ProjectController {
         ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", "IN_PROGRESS");
 
         //Времянка, перепешу после создания сервиса
-        final ProjectResponseDto[] result = new ProjectResponseDto[1];
-        Stream.of(project1, project2).filter(projectResponseDto -> projectResponseDto.getProjectId() == id).forEach(x -> result[0] = x);
-        return ResponseEntity.ok().body(result[0]);
-
-//        if (result==null){l
-//            throw new NoSuchExeption("Не найден запрашиваемый объект с ID ="+id);
-//        }
+        ProjectResponseDto result;
+        result = Stream.of(project1, project2)
+                .filter(projectResponseDto -> projectResponseDto.getProjectId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchException("Проект не найден"));
+        return ResponseEntity.ok().body(result);
 
     }
 
