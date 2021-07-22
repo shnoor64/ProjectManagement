@@ -17,38 +17,39 @@ import java.time.Month;
 import java.util.List;
 
 @Tag(name = "Управление релизами")
-@RequestMapping("/api/projectManagement")
+@RequestMapping("/api/management")
 @RestController
 public class ReleaseController {
     @Operation(summary = "Получить список релизов")
     @GetMapping(value = "/releases")
     public ResponseEntity<List<ReleaseResponseDto>> getReleases() {
-        ReleaseResponseDto  release1= new ReleaseResponseDto(3,15, LocalDateTime.of(2020, Month.APRIL, 18, 8, 0),LocalDateTime.of(2021, Month.FEBRUARY, 18, 8, 0));
-        ReleaseResponseDto  release2= new ReleaseResponseDto(4,17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0),LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
+        ReleaseResponseDto release1 = new ReleaseResponseDto(3, 15, LocalDateTime.of(2020, Month.APRIL, 18, 8, 0), LocalDateTime.of(2021, Month.FEBRUARY, 18, 8, 0));
+        ReleaseResponseDto release2 = new ReleaseResponseDto(4, 17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0), LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
 
 
-        List<ReleaseResponseDto> results = List.of(release1,release2);
+        List<ReleaseResponseDto> results = List.of(release1, release2);
         return ResponseEntity.ok().body(results);
     }
 
     @Operation(summary = "Получить релиз")
     @GetMapping(value = "/releases/{id}")
     public ResponseEntity<ReleaseResponseDto> getReleas(@PathVariable int id,
-                                                         @RequestBody ReleaseRequestDto requestDto) {
-        ReleaseResponseDto  release1= new ReleaseResponseDto(3,15, LocalDateTime.of(2020, Month.APRIL, 18, 8, 0),LocalDateTime.of(2021, Month.FEBRUARY, 18, 8, 0));
-        ReleaseResponseDto  release2= new ReleaseResponseDto(4,17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0),LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
+                                                        @RequestBody ReleaseRequestDto requestDto) {
+        ReleaseResponseDto release1 = new ReleaseResponseDto(3, 15, LocalDateTime.of(2020, Month.APRIL, 18, 8, 0), LocalDateTime.of(2021, Month.FEBRUARY, 18, 8, 0));
+        ReleaseResponseDto release2 = new ReleaseResponseDto(4, 17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0), LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
 
         //Времянка, перепешу после создания сервиса
         List<ReleaseResponseDto> resultsList = List.of(release1, release2);
         ReleaseResponseDto result = null;
         for (ReleaseResponseDto itVar : resultsList) {
-            if (itVar.getReleaseId()== id) {
-                result=itVar;
+            if (itVar.getReleaseId() == id) {
+                result = itVar;
             }
 
         }
         return ResponseEntity.ok().body(result);
     }
+
     @Operation(summary = "Добавить релиз")
     @PostMapping(value = "/releases")
     public ResponseEntity<ReleaseResponseDto> createReleas(@RequestBody ReleaseRequestDto requestDto) {
@@ -63,7 +64,7 @@ public class ReleaseController {
     @Operation(summary = "Обновить релиз")
     @PutMapping(value = "/releases/{id}")
     public ResponseEntity<ReleaseResponseDto> partialUpdateReleas(@PathVariable int id,
-                                                                    @RequestBody ReleaseRequestDto requestDto) throws IOException {
+                                                                  @RequestBody ReleaseRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 

@@ -16,37 +16,38 @@ import java.time.Month;
 import java.util.List;
 
 @Tag(name = "Управление ролями")
-@RequestMapping("/api/projectManagement")
+@RequestMapping("/api/management")
 @RestController
 public class RoleController {
     @Operation(summary = "Получить список ролей")
     @GetMapping(value = "/roles")
     public ResponseEntity<List<RoleResponseDto>> getRoles() {
-        RoleResponseDto  role1= new RoleResponseDto(3,"developer");
-        RoleResponseDto  role2= new RoleResponseDto(4,"time lead");
+        RoleResponseDto role1 = new RoleResponseDto(3, "developer");
+        RoleResponseDto role2 = new RoleResponseDto(4, "time lead");
 
 
-        List<RoleResponseDto> results = List.of(role1,role2);
+        List<RoleResponseDto> results = List.of(role1, role2);
         return ResponseEntity.ok().body(results);
     }
 
     @Operation(summary = "Получить роль")
     @GetMapping(value = "/roles/{id}")
     public ResponseEntity<RoleResponseDto> getRele(@PathVariable int id,
-                                                        @RequestBody RoleRequestDto requestDto) {
-        RoleResponseDto  role1= new RoleResponseDto(3,"developer");
-        RoleResponseDto  role2= new RoleResponseDto(4,"time lead");
+                                                   @RequestBody RoleRequestDto requestDto) {
+        RoleResponseDto role1 = new RoleResponseDto(3, "developer");
+        RoleResponseDto role2 = new RoleResponseDto(4, "time lead");
         //Времянка, перепешу после создания сервиса
         List<RoleResponseDto> resultsList = List.of(role1, role2);
         RoleResponseDto result = null;
         for (RoleResponseDto itVar : resultsList) {
-            if (itVar.getRoleId()== id) {
-                result=itVar;
+            if (itVar.getRoleId() == id) {
+                result = itVar;
             }
 
         }
         return ResponseEntity.ok().body(result);
     }
+
     @Operation(summary = "Добавить роль")
     @PostMapping(value = "/roles")
     public ResponseEntity<RoleResponseDto> createRole(@RequestBody RoleRequestDto requestDto) {
@@ -59,7 +60,7 @@ public class RoleController {
     @Operation(summary = "Обновить роль")
     @PutMapping(value = "/roles/{id}")
     public ResponseEntity<RoleResponseDto> partialUpdateRole(@PathVariable int id,
-                                                                    @RequestBody RoleRequestDto requestDto) throws IOException {
+                                                             @RequestBody RoleRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 

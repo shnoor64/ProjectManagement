@@ -17,7 +17,7 @@ import java.time.Month;
 import java.util.List;
 
 @Tag(name = "Управление задачами")
-@RequestMapping("/api/projectManagement")
+@RequestMapping("/api/management")
 @RestController
 public class TaskBoardController {
 
@@ -41,7 +41,7 @@ public class TaskBoardController {
         TaskResponseDto task2 = new TaskResponseDto(6, "task2", "Прописать DTO", 5, StatusTask.BACKLOG, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
         TaskResponseDto task3 = new TaskResponseDto(7, "task3", "Прописать RestController’s", 5, StatusTask.IN_PROGRESS, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
         //Времянка, перепешу после создания сервиса
-        List<TaskResponseDto> resultsList = List.of(task1, task2,task3);
+        List<TaskResponseDto> resultsList = List.of(task1, task2, task3);
         TaskResponseDto result = null;
         for (TaskResponseDto itVar : resultsList) {
             if (itVar.getTaskId() == id) {

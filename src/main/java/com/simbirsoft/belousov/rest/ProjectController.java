@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Управление проектами")
-@RequestMapping("/api/projectManagement")
+@RequestMapping("/api/management")
 @RestController
 public class ProjectController {
     @Operation(summary = "Получить список проектов")
@@ -41,7 +41,7 @@ public class ProjectController {
         ProjectResponseDto result = null;
         for (ProjectResponseDto itVar : resultsList) {
             if (itVar.getProjectId() == id) {
-               result=itVar;
+                result = itVar;
             }
 
         }
