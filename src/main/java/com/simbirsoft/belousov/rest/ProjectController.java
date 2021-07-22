@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Tag(name = "Управление проектами")
-@RequestMapping("/api/management")
+@RequestMapping("/api/management/projects")
 @RestController
 public class ProjectController {
     @Operation(summary = "Получить список проектов")
-    @GetMapping(value = "/projects")
+    @GetMapping
     public ResponseEntity<List<ProjectResponseDto>> getProjects() {
         ProjectResponseDto project1 = new ProjectResponseDto(1, "Банк Рога и копыта", "Приложение для банка", "Заказчик", "IN_PROGRESS");
         ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", "IN_PROGRESS");
@@ -33,7 +33,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "Получить проект")
-    @GetMapping(value = "/projects/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<ProjectResponseDto> getProject(@PathVariable int id,
                                                          @RequestBody ProjectRequestDto requestDto) {
         ProjectResponseDto project1 = new ProjectResponseDto(1, "Банк Рога и копыта", "Приложение для банка", "Заказчик", "IN_PROGRESS");
@@ -51,7 +51,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "Добавить проект")
-    @PostMapping(value = "/projects")
+    @PostMapping
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto requestDto) {
         return ResponseEntity.ok().body(new ProjectResponseDto(
                 requestDto.getProjectId(),
@@ -63,14 +63,14 @@ public class ProjectController {
     }
 
     @Operation(summary = "Обновить проект")
-    @PutMapping(value = "/projects/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<ProjectResponseDto> partialUpdateProject(@PathVariable int id,
                                                                    @RequestBody ProjectRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 
     @Operation(summary = "Удалить проект")
-    @DeleteMapping(value = "/projects/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity partialUpdateProject(@PathVariable int id) {
         return ResponseEntity.ok().build();
     }

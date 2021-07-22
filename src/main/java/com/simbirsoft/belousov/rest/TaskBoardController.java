@@ -18,12 +18,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Tag(name = "Управление задачами")
-@RequestMapping("/api/management")
+@RequestMapping("/api/management/tasks")
 @RestController
 public class TaskBoardController {
 
     @Operation(summary = "Получить список задач")
-    @GetMapping(value = "/tasks")
+    @GetMapping
     public ResponseEntity<List<TaskResponseDto>> getTasks() {
         TaskResponseDto task1 = new TaskResponseDto(5, "task1", "Создать схему БД", 5, StatusTask.DONE, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
         TaskResponseDto task2 = new TaskResponseDto(6, "task2", "Прописать DTO", 5, StatusTask.BACKLOG, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
@@ -35,7 +35,7 @@ public class TaskBoardController {
 
 
     @Operation(summary = "Получить задачу")
-    @GetMapping(value = "/tasks/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<TaskResponseDto> getTask(@PathVariable int id,
                                                    @RequestBody TaskRequestDto requestDto) {
         TaskResponseDto task1 = new TaskResponseDto(5, "task1", "Создать схему БД", 5, StatusTask.DONE, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
@@ -48,7 +48,7 @@ public class TaskBoardController {
     }
 
     @Operation(summary = "Добавить задачу")
-    @PostMapping(value = "/tasks")
+    @PostMapping
     public ResponseEntity<TaskResponseDto> createTask(@RequestBody TaskRequestDto requestDto) {
         return ResponseEntity.ok().body(new TaskResponseDto(
                 requestDto.getTaskId(),
@@ -66,14 +66,14 @@ public class TaskBoardController {
     }
 
     @Operation(summary = "Обновить задачу")
-    @PutMapping(value = "/tasks/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<TaskResponseDto> partialUpdateTask(@PathVariable int id,
                                                              @RequestBody TaskRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 
     @Operation(summary = "Удалить задачу")
-    @DeleteMapping(value = "/tasks/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity partialUpdateTask(@PathVariable int id) {
         return ResponseEntity.ok().build();
     }

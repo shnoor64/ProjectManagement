@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Tag(name = "Управление пользователями")
-@RequestMapping("/api/management")
+@RequestMapping("/api/management/users")
 @RestController
 public class UserController {
     @Operation(summary = "Получить список пользователей")
-    @GetMapping(value = "/users")
+    @GetMapping
     public ResponseEntity<List<UserResponseDto>> getUsers() {
         UserResponseDto user1 = new UserResponseDto(6, "Oleg", "Belousov", 3);
         UserResponseDto user2 = new UserResponseDto(1, "Ekaterina", "Dilekeeva", 4);
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @Operation(summary = "Получить пользователя")
-    @GetMapping(value = "/users/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<UserResponseDto> getUser(@PathVariable int id,
                                                    @RequestBody UserRequestDto requestDto) {
         UserResponseDto user1 = new UserResponseDto(6, "Oleg", "Belousov", 3);
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @Operation(summary = "Добавить пользователя")
-    @PostMapping(value = "/users")
+    @PostMapping
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto requestDto) {
         return ResponseEntity.ok().body(new UserResponseDto(
                 requestDto.getUserId(),
@@ -50,14 +50,14 @@ public class UserController {
     }
 
     @Operation(summary = "Обновить пользователя")
-    @PutMapping(value = "/users/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<UserResponseDto> partialUpdateUser(@PathVariable int id,
                                                              @RequestBody UserRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 
     @Operation(summary = "Удалить пользователя")
-    @DeleteMapping(value = "/users/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity partialUpdateUser(@PathVariable int id) {
         return ResponseEntity.ok().build();
     }

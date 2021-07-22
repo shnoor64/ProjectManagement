@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Tag(name = "Управление релизами")
-@RequestMapping("/api/management")
+@RequestMapping("/api/management/releases")
 @RestController
 public class ReleaseController {
     @Operation(summary = "Получить список релизов")
-    @GetMapping(value = "/releases")
+    @GetMapping
     public ResponseEntity<List<ReleaseResponseDto>> getReleases() {
         ReleaseResponseDto release1 = new ReleaseResponseDto(3, 15, LocalDateTime.of(2020, Month.APRIL, 18, 8, 0), LocalDateTime.of(2021, Month.FEBRUARY, 18, 8, 0));
         ReleaseResponseDto release2 = new ReleaseResponseDto(4, 17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0), LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
@@ -33,7 +33,7 @@ public class ReleaseController {
     }
 
     @Operation(summary = "Получить релиз")
-    @GetMapping(value = "/releases/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<ReleaseResponseDto> getReleas(@PathVariable int id,
                                                         @RequestBody ReleaseRequestDto requestDto) {
         ReleaseResponseDto release1 = new ReleaseResponseDto(3, 15, LocalDateTime.of(2020, Month.APRIL, 18, 8, 0), LocalDateTime.of(2021, Month.FEBRUARY, 18, 8, 0));
@@ -46,7 +46,7 @@ public class ReleaseController {
     }
 
     @Operation(summary = "Добавить релиз")
-    @PostMapping(value = "/releases")
+    @PostMapping
     public ResponseEntity<ReleaseResponseDto> createReleas(@RequestBody ReleaseRequestDto requestDto) {
         return ResponseEntity.ok().body(new ReleaseResponseDto(
                 requestDto.getReleaseId(),
@@ -57,14 +57,14 @@ public class ReleaseController {
     }
 
     @Operation(summary = "Обновить релиз")
-    @PutMapping(value = "/releases/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<ReleaseResponseDto> partialUpdateReleas(@PathVariable int id,
                                                                   @RequestBody ReleaseRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 
     @Operation(summary = "Удалить релиз")
-    @DeleteMapping(value = "/releases/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity partialUpdateReleas(@PathVariable int id) {
         return ResponseEntity.ok().build();
     }
