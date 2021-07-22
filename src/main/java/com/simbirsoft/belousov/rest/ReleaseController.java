@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Tag(name = "Управление релизами")
 @RequestMapping("/api/management")
@@ -39,15 +40,9 @@ public class ReleaseController {
         ReleaseResponseDto release2 = new ReleaseResponseDto(4, 17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0), LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
 
         //Времянка, перепешу после создания сервиса
-        List<ReleaseResponseDto> resultsList = List.of(release1, release2);
-        ReleaseResponseDto result = null;
-        for (ReleaseResponseDto itVar : resultsList) {
-            if (itVar.getReleaseId() == id) {
-                result = itVar;
-            }
-
-        }
-        return ResponseEntity.ok().body(result);
+        final ReleaseResponseDto[] result = new ReleaseResponseDto[1];
+        Stream.of(release1, release2).filter(releaseResponseDto -> releaseResponseDto.getReleaseId() == id).forEach(x -> result[0] = x);
+        return ResponseEntity.ok().body(result[0]);
     }
 
     @Operation(summary = "Добавить релиз")

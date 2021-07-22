@@ -3,7 +3,9 @@ package com.simbirsoft.belousov.rest;
 
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
+import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchExeption;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.webjars.NotFoundException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Tag(name = "Управление проектами")
 @RequestMapping("/api/management")
@@ -37,18 +40,14 @@ public class ProjectController {
         ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", "IN_PROGRESS");
 
         //Времянка, перепешу после создания сервиса
-        List<ProjectResponseDto> resultsList = List.of(project1, project2);
-        ProjectResponseDto result = null;
-        for (ProjectResponseDto itVar : resultsList) {
-            if (itVar.getProjectId() == id) {
-                result = itVar;
-            }
+        final ProjectResponseDto[] result = new ProjectResponseDto[1];
+        Stream.of(project1, project2).filter(projectResponseDto -> projectResponseDto.getProjectId() == id).forEach(x -> result[0] = x);
+        return ResponseEntity.ok().body(result[0]);
 
-        }
-//        if (result==null){
+//        if (result==null){l
 //            throw new NoSuchExeption("Не найден запрашиваемый объект с ID ="+id);
 //        }
-        return ResponseEntity.ok().body(result);
+
     }
 
     @Operation(summary = "Добавить проект")

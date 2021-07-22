@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Tag(name = "Управление ролями")
 @RequestMapping("/api/management")
@@ -32,20 +33,14 @@ public class RoleController {
 
     @Operation(summary = "Получить роль")
     @GetMapping(value = "/roles/{id}")
-    public ResponseEntity<RoleResponseDto> getRele(@PathVariable int id,
+    public ResponseEntity<RoleResponseDto> getRole(@PathVariable int id,
                                                    @RequestBody RoleRequestDto requestDto) {
         RoleResponseDto role1 = new RoleResponseDto(3, "developer");
         RoleResponseDto role2 = new RoleResponseDto(4, "time lead");
         //Времянка, перепешу после создания сервиса
-        List<RoleResponseDto> resultsList = List.of(role1, role2);
-        RoleResponseDto result = null;
-        for (RoleResponseDto itVar : resultsList) {
-            if (itVar.getRoleId() == id) {
-                result = itVar;
-            }
-
-        }
-        return ResponseEntity.ok().body(result);
+        final RoleResponseDto[] result = new RoleResponseDto[1];
+        Stream.of(role1, role2).filter(roleResponseDto -> roleResponseDto.getRoleId() == id).forEach(x -> result[0] = x);
+        return ResponseEntity.ok().body(result[0]);
     }
 
     @Operation(summary = "Добавить роль")
