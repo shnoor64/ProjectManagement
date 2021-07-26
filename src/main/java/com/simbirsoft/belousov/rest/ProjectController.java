@@ -3,7 +3,10 @@ package com.simbirsoft.belousov.rest;
 
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
-import com.simbirsoft.belousov.rest.exeption_handing.NoSuchExeption;
+import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
+import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
+
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -13,13 +16,14 @@ import org.webjars.NotFoundException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Tag(name = "Управление проектами")
-@RequestMapping("/api/projectManagement")
+@RequestMapping("/api/management/projects")
 @RestController
 public class ProjectController {
     @Operation(summary = "Получить список проектов")
-    @GetMapping(value = "/projects")
+    @GetMapping
     public ResponseEntity<List<ProjectResponseDto>> getProjects() {
         ProjectResponseDto project1 = new ProjectResponseDto(1, "Банк Рога и копыта", "Приложение для банка", "Заказчик", "IN_PROGRESS");
         ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", "IN_PROGRESS");
@@ -30,29 +34,24 @@ public class ProjectController {
     }
 
     @Operation(summary = "Получить проект")
-    @GetMapping(value = "/projects/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<ProjectResponseDto> getProject(@PathVariable int id,
                                                          @RequestBody ProjectRequestDto requestDto) {
         ProjectResponseDto project1 = new ProjectResponseDto(1, "Банк Рога и копыта", "Приложение для банка", "Заказчик", "IN_PROGRESS");
         ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", "IN_PROGRESS");
 
         //Времянка, перепешу после создания сервиса
-        List<ProjectResponseDto> resultsList = List.of(project1, project2);
-        ProjectResponseDto result = null;
-        for (ProjectResponseDto itVar : resultsList) {
-            if (itVar.getProjectId() == id) {
-               result=itVar;
-            }
-
-        }
-//        if (result==null){
-//            throw new NoSuchExeption("Не найден запрашиваемый объект с ID ="+id);
-//        }
+        ProjectResponseDto result;
+        result = Stream.of(project1, project2)
+                .filter(projectResponseDto -> projectResponseDto.getProjectId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchException("Проект не найден"));
         return ResponseEntity.ok().body(result);
+
     }
 
     @Operation(summary = "Добавить проект")
-    @PostMapping(value = "/projects")
+    @PostMapping
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto requestDto) {
         return ResponseEntity.ok().body(new ProjectResponseDto(
                 requestDto.getProjectId(),
@@ -64,14 +63,14 @@ public class ProjectController {
     }
 
     @Operation(summary = "Обновить проект")
-    @PutMapping(value = "/projects/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<ProjectResponseDto> partialUpdateProject(@PathVariable int id,
                                                                    @RequestBody ProjectRequestDto requestDto) throws IOException {
         throw new IOException();
     }
 
     @Operation(summary = "Удалить проект")
-    @DeleteMapping(value = "/projects/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity partialUpdateProject(@PathVariable int id) {
         return ResponseEntity.ok().build();
     }
