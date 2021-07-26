@@ -1,6 +1,7 @@
 package com.simbirsoft.belousov.rest;
 
 
+import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
@@ -12,7 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.webjars.NotFoundException;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -25,8 +26,8 @@ public class ProjectController {
     @Operation(summary = "Получить список проектов")
     @GetMapping
     public ResponseEntity<List<ProjectResponseDto>> getProjects() {
-        ProjectResponseDto project1 = new ProjectResponseDto(1, "Банк Рога и копыта", "Приложение для банка", "Заказчик", "IN_PROGRESS");
-        ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", "IN_PROGRESS");
+        ProjectResponseDto project1 = new ProjectResponseDto(1, "Банк Рога и копыта", "Приложение для банка", "Заказчик", StatusProject.IN_PROGRESS);
+        ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", StatusProject.CLOSED);
 
 
         List<ProjectResponseDto> results = List.of(project1, project2);
@@ -37,8 +38,8 @@ public class ProjectController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProjectResponseDto> getProject(@PathVariable int id,
                                                          @RequestBody ProjectRequestDto requestDto) {
-        ProjectResponseDto project1 = new ProjectResponseDto(1, "Банк Рога и копыта", "Приложение для банка", "Заказчик", "IN_PROGRESS");
-        ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", "IN_PROGRESS");
+        ProjectResponseDto project1 = new ProjectResponseDto(1, "Банк Рога и копыта", "Приложение для банка", "Заказчик", StatusProject.IN_PROGRESS);
+        ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", StatusProject.CLOSED);
 
         //Времянка, перепешу после создания сервиса
         ProjectResponseDto result;

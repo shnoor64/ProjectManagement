@@ -34,7 +34,7 @@ public class TaskRequestDto {
     private int releaseId;
 
     @Schema(description = "Время на исполнение задачи")
-    private Period tineToComplete;
+    private Period timeToComplete;
 
     @Schema(description = "Время начала выполнения задачи")
     private LocalDateTime startTimeTask;
@@ -53,7 +53,7 @@ public class TaskRequestDto {
         this.authorId = authorId;
         this.performerId = performerId;
         this.releaseId = releaseId;
-        this.tineToComplete = tineToComplete;
+        this.timeToComplete = tineToComplete;
         this.startTimeTask = startTimeTask;
         this.endTimeTask = endTimeTask;
     }
@@ -131,11 +131,11 @@ public class TaskRequestDto {
     }
 
     public Period getTineToComplete() {
-        return tineToComplete;
+        return timeToComplete;
     }
 
     public void setTineToComplete(Period tineToComplete) {
-        this.tineToComplete = tineToComplete;
+        this.timeToComplete = tineToComplete;
     }
 
     public LocalDateTime getStartTimeTask() {

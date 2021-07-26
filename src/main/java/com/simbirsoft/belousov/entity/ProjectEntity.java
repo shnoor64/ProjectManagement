@@ -1,5 +1,7 @@
 package com.simbirsoft.belousov.entity;
 
+import com.simbirsoft.belousov.enums.StatusProject;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,12 +23,12 @@ public class ProjectEntity {
     private String customer;
 
     @Column(name = "status_project")
-    private String statusProject;
+    private StatusProject statusProject;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
     private List <TaskEntity> tasks;
 
-    public ProjectEntity(int projectId, String name, String descriptionProject, String customer, String statusProject) {
+    public ProjectEntity(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject) {
         this.projectId = projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
@@ -70,11 +72,11 @@ public class ProjectEntity {
         this.customer = customer;
     }
 
-    public String getStatusProject() {
+    public StatusProject getStatusProject() {
         return statusProject;
     }
 
-    public void setStatusProject(String statusProject) {
+    public void setStatusProject(StatusProject statusProject) {
         this.statusProject = statusProject;
     }
 

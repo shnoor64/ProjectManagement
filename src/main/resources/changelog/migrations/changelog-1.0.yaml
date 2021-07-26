@@ -1,0 +1,154 @@
+databaseChangeLog:
+  - changeSet:
+    id: create-table-projects
+    author: Oleg Belousov
+    changes:
+      - createTable:
+          tableName: projects
+          columns:
+            - column:
+                name: id
+                type: int
+                autoIncrement: true
+                  constraints:
+                    primaryKey: true
+            - column:
+                name: name
+                type: VARCHAR(255)
+            - column:
+                name: description_project
+                type: VARCHAR(255)
+            - column:
+                name: customer
+                type: VARCHAR(255)
+            - column:
+                name: status_project
+                type: VARCHAR(255)
+
+  - changeSet:
+    id: create-table-releases
+    author: Oleg Belousov
+    changes:
+      - createTable:
+          tableName: releases
+          columns:
+            - column:
+                name: id
+                type: int
+                autoIncrement: true
+                  constraints:
+                    primaryKey: true
+            - column:
+                name: version
+                type: int
+            - column:
+                name: name
+                type: VARCHAR(255)
+            - column:
+                name: start_time_release
+                type: timestamp
+            - column:
+                name: end_time_release
+                type: timestamp
+
+  - changeSet:
+    id: create-table-roles
+    author: Oleg Belousov
+    changes:
+      - createTable:
+          tableName: roles
+          columns:
+            - column:
+                name: id
+                type: int
+                autoIncrement: true
+                  constraints:
+                    primaryKey: true
+            - column:
+                name: name
+                type: VARCHAR(255)
+
+  - changeSet:
+    id: create-table-tasks
+    author: Oleg Belousov
+    changes:
+      - createTable:
+          tableName: tasks
+          columns:
+            - column:
+                name: id
+                type: int
+                autoIncrement: true
+                  constraints:
+                    primaryKey: true
+            - column:
+                name: name
+                type: VARCHAR(255)
+            - column:
+                name: description_task
+                type: VARCHAR(255)
+            - column:
+                name: project_id
+                type: int
+                  constraints:
+                    foreignKeyName: fk_project_id
+                    references: projects(id)
+            - column:
+                name: status_task
+                type: VARCHAR(255)
+            - column:
+                name: author_id
+                type: int
+                constraints:
+                  foreignKeyName: fk_author_id
+                  references: users(id)
+            - column:
+                name: performer_id
+                type: int
+                constraints:
+                  foreignKeyName: fk_performer_id
+                  references: users(id)
+            - column:
+                name: release_id
+                type: int
+                constraints:
+                  foreignKeyName: fk_release_id
+                  references: releases(id)
+            - column:
+                name: time_to_complete
+                type: interval
+            - column:
+                name: start_time_task
+                type: timestamp
+            - column:
+                name: end_time_task
+                type: timestamp
+
+  - changeSet:
+    id: create-table-users
+    author: Oleg Belousov
+    changes:
+      - createTable:
+          tableName: users
+          columns:
+            - column:
+                name: id
+                type: int
+                autoIncrement: true
+                  constraints:
+                    primaryKey: true
+            - column:
+                name: name
+                type: VARCHAR(32)
+            - column:
+                name: surname
+                type: VARCHAR(32)
+            - column:
+                name: password
+                type: VARCHAR(32)
+            - column:
+                name: role
+                type: VARCHAR(255)
+                constraints:
+                  foreignKeyName: fk_role
+                  references: roles(id)

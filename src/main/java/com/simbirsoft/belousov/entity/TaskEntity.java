@@ -40,7 +40,7 @@ public class TaskEntity {
     @JoinColumn (name = "release_id")
     private ReleaseEntity releaseId;
 
-    @Column(name = "tine_to_complete")
+    @Column(name = "time_to_complete")
     private Period tineToComplete;
 
     @Column(name = "start_time_task")

@@ -20,6 +20,9 @@ public class UserEntity {
     @Column(name = "surname")
     private String surname;
 
+    @Column(name = "password")
+    private String password;
+
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn (name = "role")
     private RoleEntity role;
