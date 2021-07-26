@@ -1,12 +1,8 @@
 package com.simbirsoft.belousov.entity;
 
 import com.simbirsoft.belousov.enums.StatusTask;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.Period;
 
@@ -25,20 +21,24 @@ public class TaskEntity {
     @Column(name = "description_task")
     private String descriptionTask;
 
-    @Column(name = "project_id")
-    private int projectId;
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "project_id")
+    private ProjectEntity projectId;
 
     @Column(name = "status_task")
     private StatusTask statusTask;
 
-    @Column(name = "author_id")
-    private int authorId;
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "author_id")
+    private UserEntity authorId;
 
-    @Column(name = "performer_id")
-    private int performerId;
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "performer_id")
+    private UserEntity performerId;
 
-    @Column(name = "release_id")
-    private int releaseId;
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "release_id")
+    private ReleaseEntity releaseId;
 
     @Column(name = "tine_to_complete")
     private Period tineToComplete;
@@ -49,8 +49,10 @@ public class TaskEntity {
     @Column(name = "end_time_task")
     private LocalDateTime endTimeTask;
 
-    public TaskEntity(int taskId, String name, String descriptionTask, int projectId, StatusTask statusTask
-            , int authorId, int performerId, int releaseId, Period tineToComplete
+    public TaskEntity(int taskId, String name, String descriptionTask
+            , ProjectEntity projectId, StatusTask statusTask
+            , UserEntity authorId, UserEntity performerId
+            , ReleaseEntity releaseId, Period tineToComplete
             , LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
@@ -77,14 +79,6 @@ public class TaskEntity {
         this.taskId = taskId;
     }
 
-    public String getDescriptionTask() {
-        return descriptionTask;
-    }
-
-    public void setDescriptionTask(String descriptionTask) {
-        this.descriptionTask = descriptionTask;
-    }
-
     public String getName() {
         return name;
     }
@@ -93,19 +87,19 @@ public class TaskEntity {
         this.name = name;
     }
 
-    public String getDescription() {
+    public String getDescriptionTask() {
         return descriptionTask;
     }
 
-    public void setDescription(String description) {
-        this.descriptionTask = description;
+    public void setDescriptionTask(String descriptionTask) {
+        this.descriptionTask = descriptionTask;
     }
 
-    public int getProjectId() {
+    public ProjectEntity getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(ProjectEntity projectId) {
         this.projectId = projectId;
     }
 
@@ -117,27 +111,27 @@ public class TaskEntity {
         this.statusTask = statusTask;
     }
 
-    public int getAuthorId() {
+    public UserEntity getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(int authorId) {
+    public void setAuthorId(UserEntity authorId) {
         this.authorId = authorId;
     }
 
-    public int getPerformerId() {
+    public UserEntity getPerformerId() {
         return performerId;
     }
 
-    public void setPerformerId(int performerId) {
+    public void setPerformerId(UserEntity performerId) {
         this.performerId = performerId;
     }
 
-    public int getReleaseId() {
+    public ReleaseEntity getReleaseId() {
         return releaseId;
     }
 
-    public void setReleaseId(int releaseId) {
+    public void setReleaseId(ReleaseEntity releaseId) {
         this.releaseId = releaseId;
     }
 

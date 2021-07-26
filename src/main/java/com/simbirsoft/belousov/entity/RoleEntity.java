@@ -1,12 +1,8 @@
 package com.simbirsoft.belousov.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "role")
@@ -19,10 +15,15 @@ public class RoleEntity {
     @Column(name = "name")
     private String name;
 
-    public RoleEntity(int roleId, String name) {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
+    private List<UserEntity> users;
+
+    public RoleEntity(int roleId, String name, List<UserEntity> users) {
         this.roleId = roleId;
         this.name = name;
+        this.users = users;
     }
+
 
     public RoleEntity() {
 
@@ -42,5 +43,13 @@ public class RoleEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<UserEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
     }
 }

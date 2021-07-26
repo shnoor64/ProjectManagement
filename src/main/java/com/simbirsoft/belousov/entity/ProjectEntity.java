@@ -1,11 +1,7 @@
 package com.simbirsoft.belousov.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "project")
@@ -26,6 +22,9 @@ public class ProjectEntity {
 
     @Column(name = "status_project")
     private String statusProject;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
+    private List <TaskEntity> tasks;
 
     public ProjectEntity(int projectId, String name, String descriptionProject, String customer, String statusProject) {
         this.projectId = projectId;
@@ -79,4 +78,11 @@ public class ProjectEntity {
         this.statusProject = statusProject;
     }
 
+    public List<TaskEntity> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskEntity> tasks) {
+        this.tasks = tasks;
+    }
 }
