@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Integer> {
-    Optional<ProjectEntity> findByName();
+
 }
