@@ -14,6 +14,10 @@ public class RoleResponseDto {
         this.name = name;
     }
 
+    public RoleResponseDto() {
+
+    }
+
     public int getRoleId() {
         return roleId;
     }

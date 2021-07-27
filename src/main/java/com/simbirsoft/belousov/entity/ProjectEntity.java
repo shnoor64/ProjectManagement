@@ -22,6 +22,7 @@ public class ProjectEntity {
     @Column(name = "customer")
     private String customer;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status_project")
     private StatusProject statusProject;
 

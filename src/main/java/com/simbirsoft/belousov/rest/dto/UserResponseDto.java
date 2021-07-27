@@ -16,13 +16,17 @@ public class UserResponseDto {
     private String surname;
 
     @Schema(description = "Роль")
-    private int role;
+    private RoleResponseDto role;
 
-    public UserResponseDto(int userId, String name, String surname, int role) {
+    public UserResponseDto(int userId, String name, String surname, RoleResponseDto role) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
         this.role = role;
+    }
+
+    public UserResponseDto() {
+
     }
 
     public int getUserId() {
@@ -49,11 +53,11 @@ public class UserResponseDto {
         this.surname = surname;
     }
 
-    public int getRole() {
+    public RoleResponseDto getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(RoleResponseDto role) {
         this.role = role;
     }
 }

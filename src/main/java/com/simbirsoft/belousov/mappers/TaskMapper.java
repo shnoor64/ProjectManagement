@@ -5,8 +5,10 @@ import com.simbirsoft.belousov.entity.TaskEntity;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-@Mapper
+@Mapper(componentModel = "spring")
+@Component
 public interface TaskMapper {
 
     TaskEntity TaskRequestDtoToEntity(TaskRequestDto taskRequestDto);

@@ -19,19 +19,19 @@ public class TaskRequestDto {
     private String descriptionTask;
 
     @Schema(description = "ID проекта")
-    private int projectId;
+    private ProjectRequestDto projectId;
 
     @Schema(description = "Статус задачи")
     private StatusTask statusTask;
 
     @Schema(description = "ID автора задачи")
-    private int authorId;
+    private UserRequestDto authorId;
 
     @Schema(description = "ID исполнителя задачи")
-    private int performerId;
+    private UserRequestDto performerId;
 
     @Schema(description = "ID релиза")
-    private int releaseId;
+    private ReleaseRequestDto releaseId;
 
     @Schema(description = "Время на исполнение задачи")
     private Period timeToComplete;
@@ -42,8 +42,8 @@ public class TaskRequestDto {
     @Schema(description = "Время окончания выполнения задачи")
     private LocalDateTime endTimeTask;
 
-    public TaskRequestDto(int taskId, String name, String descriptionTask, int projectId, StatusTask statusTask
-            , int authorId, int performerId, int releaseId, Period tineToComplete
+    public TaskRequestDto(int taskId, String name, String descriptionTask, ProjectRequestDto projectId, StatusTask statusTask
+            , UserRequestDto authorId, UserRequestDto performerId, ReleaseRequestDto releaseId, Period tineToComplete
             , LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
@@ -90,11 +90,11 @@ public class TaskRequestDto {
         this.descriptionTask = description;
     }
 
-    public int getProjectId() {
+    public ProjectRequestDto getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(ProjectRequestDto projectId) {
         this.projectId = projectId;
     }
 
@@ -106,28 +106,36 @@ public class TaskRequestDto {
         this.statusTask = statusTask;
     }
 
-    public int getAuthorId() {
+    public UserRequestDto getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(int authorId) {
+    public void setAuthorId(UserRequestDto authorId) {
         this.authorId = authorId;
     }
 
-    public int getPerformerId() {
+    public UserRequestDto getPerformerId() {
         return performerId;
     }
 
-    public void setPerformerId(int performerId) {
+    public void setPerformerId(UserRequestDto performerId) {
         this.performerId = performerId;
     }
 
-    public int getReleaseId() {
+    public ReleaseRequestDto getReleaseId() {
         return releaseId;
     }
 
-    public void setReleaseId(int releaseId) {
+    public void setReleaseId(ReleaseRequestDto releaseId) {
         this.releaseId = releaseId;
+    }
+
+    public Period getTimeToComplete() {
+        return timeToComplete;
+    }
+
+    public void setTimeToComplete(Period timeToComplete) {
+        this.timeToComplete = timeToComplete;
     }
 
     public Period getTineToComplete() {

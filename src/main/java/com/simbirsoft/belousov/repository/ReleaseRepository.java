@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface ReleaseRepository extends JpaRepository<ReleaseEntity, Integer> {
-    Optional<ReleaseEntity> findByName();
+
 }

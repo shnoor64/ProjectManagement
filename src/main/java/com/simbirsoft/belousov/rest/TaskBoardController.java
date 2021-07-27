@@ -1,10 +1,7 @@
 package com.simbirsoft.belousov.rest;
 
 import com.simbirsoft.belousov.enums.StatusTask;
-import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
-import com.simbirsoft.belousov.rest.dto.RoleResponseDto;
-import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
-import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
+import com.simbirsoft.belousov.rest.dto.*;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,9 +23,9 @@ public class TaskBoardController {
     @Operation(summary = "Получить список задач")
     @GetMapping
     public ResponseEntity<List<TaskResponseDto>> getTasks() {
-        TaskResponseDto task1 = new TaskResponseDto(5, "task1", "Создать схему БД", 5, StatusTask.DONE, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task2 = new TaskResponseDto(6, "task2", "Прописать DTO", 5, StatusTask.BACKLOG, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task3 = new TaskResponseDto(7, "task3", "Прописать RestController’s", 5, StatusTask.IN_PROGRESS, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
+        TaskResponseDto task1 = new TaskResponseDto(5, "task1", "Создать схему БД", new ProjectResponseDto(), StatusTask.DONE, new UserResponseDto(), new UserResponseDto(), new ReleaseResponseDto(), null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
+        TaskResponseDto task2 = new TaskResponseDto(6, "task2", "Прописать DTO", new ProjectResponseDto(), StatusTask.BACKLOG, new UserResponseDto(), new UserResponseDto(), new ReleaseResponseDto(), null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
+        TaskResponseDto task3 = new TaskResponseDto(7, "task3", "Прописать RestController’s", new ProjectResponseDto(), StatusTask.IN_PROGRESS, new UserResponseDto(), new UserResponseDto(), new ReleaseResponseDto(), null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
 
         List<TaskResponseDto> results = List.of(task1, task2, task3);
         return ResponseEntity.ok().body(results);
@@ -39,10 +36,10 @@ public class TaskBoardController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<TaskResponseDto> getTask(@PathVariable int id,
                                                    @RequestBody TaskRequestDto requestDto) {
-        TaskResponseDto task1 = new TaskResponseDto(5, "task1", "Создать схему БД", 5, StatusTask.DONE, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task2 = new TaskResponseDto(6, "task2", "Прописать DTO", 5, StatusTask.BACKLOG, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task3 = new TaskResponseDto(7, "task3", "Прописать RestController’s", 5, StatusTask.IN_PROGRESS, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        //Времянка, перепешу после создания сервиса
+        TaskResponseDto task1 = new TaskResponseDto(5, "task1", "Создать схему БД", new ProjectResponseDto(), StatusTask.DONE, new UserResponseDto(), new UserResponseDto(), new ReleaseResponseDto(), null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
+        TaskResponseDto task2 = new TaskResponseDto(6, "task2", "Прописать DTO", new ProjectResponseDto(), StatusTask.BACKLOG, new UserResponseDto(), new UserResponseDto(), new ReleaseResponseDto(), null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
+        TaskResponseDto task3 = new TaskResponseDto(7, "task3", "Прописать RestController’s", new ProjectResponseDto(), StatusTask.IN_PROGRESS, new UserResponseDto(), new UserResponseDto(), new ReleaseResponseDto(), null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
+//Времянка, перепешу после создания сервиса
         TaskResponseDto result;
         result = Stream.of(task1, task2, task3)
                 .filter(taskResponseDto -> taskResponseDto.getTaskId() == id)
@@ -51,23 +48,23 @@ public class TaskBoardController {
         return ResponseEntity.ok().body(result);
     }
 
-    @Operation(summary = "Добавить задачу")
-    @PostMapping
-    public ResponseEntity<TaskResponseDto> createTask(@RequestBody TaskRequestDto requestDto) {
-        return ResponseEntity.ok().body(new TaskResponseDto(
-                requestDto.getTaskId(),
-                requestDto.getName(),
-                requestDto.getDescription(),
-                requestDto.getProjectId(),
-                requestDto.getStatusTask(),
-                requestDto.getAuthorId(),
-                requestDto.getPerformerId(),
-                requestDto.getReleaseId(),
-                requestDto.getTineToComplete(),
-                requestDto.getStartTimeTask(),
-                requestDto.getEndTimeTask()
-        ));
-    }
+//    @Operation(summary = "Добавить задачу")
+//    @PostMapping
+//    public ResponseEntity<TaskResponseDto> createTask(@RequestBody TaskRequestDto requestDto) {
+//        return ResponseEntity.ok().body(new TaskResponseDto(
+//                requestDto.getTaskId(),
+//                requestDto.getName(),
+//                requestDto.getDescription(),
+//                requestDto.getProjectId(),
+//                requestDto.getStatusTask(),
+//                requestDto.getAuthorId(),
+//                requestDto.getPerformerId(),
+//                requestDto.getReleaseId(),
+//                requestDto.getTineToComplete(),
+//                requestDto.getStartTimeTask(),
+//                requestDto.getEndTimeTask()
+//        ));
+//    }
 
     @Operation(summary = "Обновить задачу")
     @PutMapping(value = "/{id}")

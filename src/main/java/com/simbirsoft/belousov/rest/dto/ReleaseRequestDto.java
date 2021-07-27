@@ -26,6 +26,10 @@ public class ReleaseRequestDto {
         this.endTimeRelease = endTimeRelease;
     }
 
+    public ReleaseRequestDto() {
+
+    }
+
     public int getReleaseId() {
         return releaseId;
     }

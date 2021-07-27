@@ -25,6 +25,7 @@ public class TaskEntity {
     @JoinColumn (name = "project_id")
     private ProjectEntity projectId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status_task")
     private StatusTask statusTask;
 

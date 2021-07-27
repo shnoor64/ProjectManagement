@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<TaskEntity, Integer> {
-    Optional<TaskEntity> findByName();
+
 }

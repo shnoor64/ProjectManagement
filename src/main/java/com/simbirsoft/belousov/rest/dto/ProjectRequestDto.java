@@ -29,6 +29,10 @@ public class ProjectRequestDto {
         this.statusProject = statusProject;
     }
 
+    public ProjectRequestDto() {
+
+    }
+
     public int getProjectId() {
         return projectId;
     }

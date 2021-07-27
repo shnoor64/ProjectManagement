@@ -15,6 +15,10 @@ public class RoleRequestDto {
         this.name = name;
     }
 
+    public RoleRequestDto() {
+
+    }
+
     public int getRoleId() {
         return roleId;
     }
