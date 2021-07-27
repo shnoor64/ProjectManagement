@@ -148,7 +148,7 @@ databaseChangeLog:
                 type: VARCHAR(32)
             - column:
                 name: role
-                type: VARCHAR(255)
+                type: VARCHAR(32)
                 constraints:
                   foreignKeyName: fk_role
                   references: roles(id)
