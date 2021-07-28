@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public interface RoleMapper {
 
-    RoleEntity RoleRequestDtoToEntity(RoleRequestDto roleRequestDto);
+    RoleEntity roleRequestDtoToEntity(RoleRequestDto roleRequestDto);
 
-    RoleResponseDto RoleEntityToResponseDto(RoleEntity roleEntity);
+    RoleResponseDto roleEntityToResponseDto(RoleEntity roleEntity);
 
 }

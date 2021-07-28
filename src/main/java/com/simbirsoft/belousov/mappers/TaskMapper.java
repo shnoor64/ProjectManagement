@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public interface TaskMapper {
 
-    TaskEntity TaskRequestDtoToEntity(TaskRequestDto taskRequestDto);
+    TaskEntity taskRequestDtoToEntity(TaskRequestDto taskRequestDto);
 
-    TaskResponseDto TaskEntityToResponseDto(TaskEntity taskEntity);
+    TaskResponseDto taskEntityToResponseDto(TaskEntity taskEntity);
 
 }

@@ -17,8 +17,5 @@ public interface UserMapper {
 
     UserResponseDto userEntityToResponseDto(UserEntity userEntity);
 
-//    RoleEntity roleRequestDtoToRoleEntity(RoleRequestDto entity);
-//
-//    RoleResponseDto roleEntityToRoleResponseDto(RoleEntity entity);
 
 }

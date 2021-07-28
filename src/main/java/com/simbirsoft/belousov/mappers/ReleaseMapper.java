@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public interface ReleaseMapper {
 
-    ReleaseEntity ReleaseRequestDtoToEntity(ReleaseRequestDto releaseRequestDto);
+    ReleaseEntity releaseRequestDtoToEntity(ReleaseRequestDto releaseRequestDto);
 
-    ReleaseResponseDto ReleaseEntityToResponseDto(ReleaseEntity releaseEntity);
+    ReleaseResponseDto releaseEntityToResponseDto(ReleaseEntity releaseEntity);
 
 }

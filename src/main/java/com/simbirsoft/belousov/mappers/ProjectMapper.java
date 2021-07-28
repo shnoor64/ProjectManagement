@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public interface ProjectMapper {
 
-    ProjectEntity ProjectRequestDtoToEntity(ProjectRequestDto projectRequestDto);
+    ProjectEntity projectRequestDtoToEntity(ProjectRequestDto projectRequestDto);
 
-    ProjectResponseDto ProjectEntityToResponseDto(ProjectEntity projectEntity);
+    ProjectResponseDto projectEntityToResponseDto(ProjectEntity projectEntity);
 
 }
