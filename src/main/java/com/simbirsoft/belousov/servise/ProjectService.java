@@ -13,7 +13,7 @@ public interface ProjectService {
 
     ProjectResponseDto addProject(ProjectRequestDto projectRequestDto);
 
-    ProjectResponseDto updateProject(ProjectRequestDto projectRequestDto);
+    ProjectResponseDto updateProject(ProjectRequestDto projectRequestDto, int id);
 
     void deleteProject(int id);
 }

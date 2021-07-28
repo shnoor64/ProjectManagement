@@ -12,7 +12,7 @@ public interface ReleaseService {
 
     ReleaseResponseDto addRelease(ReleaseRequestDto releaseRequestDto);
 
-    ReleaseResponseDto updateRelease(ReleaseRequestDto releaseRequestDto);
+    ReleaseResponseDto updateRelease(ReleaseRequestDto releaseRequestDto, int id);
 
     void deleteRelease(int id);
 }

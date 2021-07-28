@@ -25,13 +25,13 @@ public class ProjectController {
 
 
         List<ProjectResponseDto> results = List.of(project1, project2);
-        return ResponseEntity.ok().body(results);
+//        return ResponseEntity.ok().body(results);
+        return
     }
 
     @Operation(summary = "Получить проект")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProjectResponseDto> getProject(@PathVariable int id,
-                                                         @RequestBody ProjectRequestDto requestDto) {
+    public ResponseEntity<ProjectResponseDto> getProject(@PathVariable int id) {
         ProjectResponseDto project1 = new ProjectResponseDto(1, "Банк Рога и копыта", "Приложение для банка", "Заказчик", StatusProject.IN_PROGRESS);
         ProjectResponseDto project2 = new ProjectResponseDto(2, "Банк Рога и копыта", "Приложение для суши", "Заказчик", StatusProject.CLOSED);
 
