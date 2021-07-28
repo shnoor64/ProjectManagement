@@ -25,8 +25,8 @@ public class ProjectController {
 
 
         List<ProjectResponseDto> results = List.of(project1, project2);
-//        return ResponseEntity.ok().body(results);
-        return
+        return ResponseEntity.ok().body(results);
+
     }
 
     @Operation(summary = "Получить проект")
