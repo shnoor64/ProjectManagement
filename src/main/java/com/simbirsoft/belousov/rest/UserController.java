@@ -1,9 +1,7 @@
 package com.simbirsoft.belousov.rest;
 
-import com.simbirsoft.belousov.entity.UserEntity;
-import com.simbirsoft.belousov.mappers.UserMapper;
-import com.simbirsoft.belousov.rest.dto.*;
-import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
+import com.simbirsoft.belousov.rest.dto.UserRequestDto;
+import com.simbirsoft.belousov.rest.dto.UserResponseDto;
 import com.simbirsoft.belousov.servise.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Tag(name = "Управление пользователями")
 @RequestMapping("/api/management/users")

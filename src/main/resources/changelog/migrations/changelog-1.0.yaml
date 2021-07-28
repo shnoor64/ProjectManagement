@@ -12,15 +12,20 @@ databaseChangeLog:
                 autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
             - column:
                 name: name
                 type: VARCHAR(255)
+                constraints:
+                  nullable: false
             - column:
                 name: description_project
                 type: VARCHAR(255)
             - column:
                 name: customer
                 type: VARCHAR(255)
+                constraints:
+                  nullable: false
             - column:
                 name: status_project
                 type: VARCHAR(255)
@@ -38,12 +43,15 @@ databaseChangeLog:
                 autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
             - column:
                 name: version
                 type: int
             - column:
                 name: name
                 type: VARCHAR(255)
+                constraints:
+                  nullable: false
             - column:
                 name: start_time_release
                 type: timestamp
@@ -64,9 +72,12 @@ databaseChangeLog:
                 autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
             - column:
                 name: name
                 type: VARCHAR(255)
+                constraints:
+                  nullable: false
 
   - changeSet:
     id: create-table-tasks
@@ -81,9 +92,12 @@ databaseChangeLog:
                 autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
             - column:
                 name: name
                 type: VARCHAR(255)
+                constraints:
+                  nullable: false
             - column:
                 name: description_task
                 type: VARCHAR(255)
@@ -93,27 +107,33 @@ databaseChangeLog:
                   constraints:
                     foreignKeyName: fk_project_id
                     references: projects(id)
+                    nullable: false
             - column:
                 name: status_task
                 type: VARCHAR(255)
+                constraints:
+                  nullable: false
             - column:
                 name: author_id
                 type: int
                 constraints:
                   foreignKeyName: fk_author_id
                   references: users(id)
+                  nullable: false
             - column:
                 name: performer_id
                 type: int
                 constraints:
                   foreignKeyName: fk_performer_id
                   references: users(id)
+                  nullable: false
             - column:
                 name: release_id
                 type: int
                 constraints:
                   foreignKeyName: fk_release_id
                   references: releases(id)
+                  nullable: false
             - column:
                 name: time_to_complete
                 type: interval
@@ -137,18 +157,26 @@ databaseChangeLog:
                 autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
             - column:
                 name: name
                 type: VARCHAR(32)
+                constraints:
+                  nullable: false
             - column:
                 name: surname
                 type: VARCHAR(32)
+                constraints:
+                  nullable: false
             - column:
                 name: password
                 type: VARCHAR(32)
+                constraints:
+                  nullable: false
             - column:
                 name: role
                 type: VARCHAR(32)
                 constraints:
                   foreignKeyName: fk_role
                   references: roles(id)
+                  nullable: false
