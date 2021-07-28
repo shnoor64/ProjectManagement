@@ -12,7 +12,7 @@ public interface RoleService {
 
     RoleResponseDto addRole(RoleRequestDto roleRequestDto);
 
-    RoleResponseDto updateRole(RoleRequestDto roleRequestDto);
+    RoleResponseDto updateRole(RoleRequestDto roleRequestDto, int id);
 
     void deleteRole(int id);
 }

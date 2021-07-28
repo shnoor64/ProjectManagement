@@ -12,7 +12,7 @@ public interface UserService {
 
     UserResponseDto addUser(UserRequestDto userRequestDto);
 
-    UserResponseDto updateUser(UserRequestDto userRequestDto);
+    UserResponseDto updateUser(UserRequestDto userRequestDto, int id);
 
     void deleteUser(int id);
 }
