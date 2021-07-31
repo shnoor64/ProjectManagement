@@ -5,6 +5,7 @@ import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import com.simbirsoft.belousov.servise.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,11 @@ import java.util.List;
 @RestController
 public class TaskBoardController {
 
+    private final TaskService taskService;
 
-    private TaskService taskService;
+    public TaskBoardController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @Operation(summary = "Получить список задач")
     @GetMapping

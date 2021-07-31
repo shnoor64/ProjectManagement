@@ -11,16 +11,22 @@ import com.simbirsoft.belousov.rest.dto.UserResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
-    private UserMapperImpl userMapper;
+    private final UserRepository userRepository;
+    private final UserMapperImpl userMapper;
+
+    public UserServiceImpl(UserRepository userRepository, UserMapperImpl userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
 
     @Transactional
     @Override

@@ -17,9 +17,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class ReleaseServiceImpl implements ReleaseService {
-    @Autowired
-    private ReleaseRepository releaseRepository;
-    private ReleaseMapperImpl releaseMapper;
+    private final ReleaseRepository releaseRepository;
+    private final ReleaseMapperImpl releaseMapper;
+
+    public ReleaseServiceImpl(ReleaseRepository releaseRepository, ReleaseMapperImpl releaseMapper) {
+        this.releaseRepository = releaseRepository;
+        this.releaseMapper = releaseMapper;
+    }
 
     @Transactional
     @Override

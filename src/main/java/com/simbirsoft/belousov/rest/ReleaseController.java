@@ -9,6 +9,7 @@ import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.ReleaseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,11 @@ import java.util.stream.Stream;
 @RequestMapping("/api/management/releases")
 @RestController
 public class ReleaseController {
+    private final ReleaseService releaseService;
 
-    private ReleaseService releaseService;
+    public ReleaseController(ReleaseService releaseService) {
+        this.releaseService = releaseService;
+    }
 
     @Operation(summary = "Получить список редизов")
     @GetMapping

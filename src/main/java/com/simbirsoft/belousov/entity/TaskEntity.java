@@ -50,11 +50,11 @@ public class TaskEntity {
     @Column(name = "end_time_task")
     private LocalDateTime endTimeTask;
 
-    public TaskEntity(int taskId, String name, String descriptionTask
-            , ProjectEntity projectId, StatusTask statusTask
-            , UserEntity authorId, UserEntity performerId
-            , ReleaseEntity releaseId, Period tineToComplete
-            , LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
+    public TaskEntity(int taskId, String name, String descriptionTask,
+                      ProjectEntity projectId, StatusTask statusTask,
+                      UserEntity authorId, UserEntity performerId,
+                      ReleaseEntity releaseId, Period tineToComplete,
+                      LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
         this.descriptionTask = descriptionTask;

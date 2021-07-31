@@ -22,9 +22,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-    @Autowired
-    private RoleRepository roleRepository;
-    private RoleMapperImpl roleMapper;
+    private final RoleRepository roleRepository;
+    private final RoleMapperImpl roleMapper;
+
+    public RoleServiceImpl(RoleRepository roleRepository, RoleMapperImpl roleMapper) {
+        this.roleRepository = roleRepository;
+        this.roleMapper = roleMapper;
+    }
 
     @Transactional
     @Override
