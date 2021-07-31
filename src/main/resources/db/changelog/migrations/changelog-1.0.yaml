@@ -10,9 +10,9 @@ databaseChangeLog:
                 name: id
                 type: int
                 autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+                constraints:
+                   primaryKey: true
+                   nullable: false
             - column:
                 name: name
                 type: VARCHAR(255)
@@ -41,9 +41,9 @@ databaseChangeLog:
                 name: id
                 type: int
                 autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+                constraints:
+                   primaryKey: true
+                   nullable: false
             - column:
                 name: version
                 type: int
@@ -70,9 +70,9 @@ databaseChangeLog:
                 name: id
                 type: int
                 autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+                constraints:
+                   primaryKey: true
+                   nullable: false
             - column:
                 name: name
                 type: VARCHAR(255)
@@ -90,9 +90,9 @@ databaseChangeLog:
                 name: id
                 type: int
                 autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+                constraints:
+                   primaryKey: true
+                   nullable: false
             - column:
                 name: name
                 type: VARCHAR(255)
@@ -104,10 +104,10 @@ databaseChangeLog:
             - column:
                 name: project_id
                 type: int
-                  constraints:
-                    foreignKeyName: fk_project_id
-                    references: projects(id)
-                    nullable: false
+                constraints:
+                   foreignKeyName: fk_project_id
+                   references: projects(id)
+                   nullable: false
             - column:
                 name: status_task
                 type: VARCHAR(255)
@@ -155,9 +155,9 @@ databaseChangeLog:
                 name: id
                 type: int
                 autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+                constraints:
+                   primaryKey: true
+                   nullable: false
             - column:
                 name: name
                 type: VARCHAR(32)
