@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 import java.time.Period;
 
 @Entity
-@Table(name = "task")
+@Table(name = "tasks")
 public class TaskEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int taskId;
 
     @Column(name = "name")
