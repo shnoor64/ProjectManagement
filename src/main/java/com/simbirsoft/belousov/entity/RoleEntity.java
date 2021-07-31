@@ -3,6 +3,7 @@ package com.simbirsoft.belousov.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -16,9 +17,9 @@ public class RoleEntity {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private List<UserEntity> users;
+    private Set<UserEntity> users;
 
-    public RoleEntity(int roleId, String name, List<UserEntity> users) {
+    public RoleEntity(int roleId, String name, Set<UserEntity> users) {
         this.roleId = roleId;
         this.name = name;
         this.users = users;
@@ -45,11 +46,11 @@ public class RoleEntity {
         this.name = name;
     }
 
-    public List<UserEntity> getUsers() {
+    public Set<UserEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(List<UserEntity> users) {
+    public void setUsers(Set<UserEntity> users) {
         this.users = users;
     }
 }
