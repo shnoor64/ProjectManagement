@@ -1,27 +1,35 @@
-package com.simbirsoft.belousov.rest.dto;
+package com.simbirsoft.belousov.entity;
 
 import com.simbirsoft.belousov.enums.StatusProject;
-import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "Проект")
-public class ProjectRequestDto {
+import javax.persistence.*;
+import java.util.List;
 
-    @Schema(description = "ID проекта")
+@Entity
+@Table(name = "project")
+public class ProjectEntity {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int projectId;
 
-    @Schema(description = "Имя проекта")
+    @Column(name = "name")
     private String name;
 
-    @Schema(description = "Описание проекта")
+    @Column(name = "description_project")
     private String descriptionProject;
 
-    @Schema(description = "Заказчик")
+    @Column(name = "customer")
     private String customer;
 
-    @Schema(description = "Статус проекта")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_project")
     private StatusProject statusProject;
 
-    public ProjectRequestDto(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject) {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
+    private List <TaskEntity> tasks;
+
+    public ProjectEntity(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject) {
         this.projectId = projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
@@ -29,7 +37,7 @@ public class ProjectRequestDto {
         this.statusProject = statusProject;
     }
 
-    public ProjectRequestDto() {
+    public ProjectEntity() {
 
     }
 
@@ -71,5 +79,13 @@ public class ProjectRequestDto {
 
     public void setStatusProject(StatusProject statusProject) {
         this.statusProject = statusProject;
+    }
+
+    public List<TaskEntity> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskEntity> tasks) {
+        this.tasks = tasks;
     }
 }

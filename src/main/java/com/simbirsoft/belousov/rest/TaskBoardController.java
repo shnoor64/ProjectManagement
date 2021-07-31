@@ -1,85 +1,66 @@
 package com.simbirsoft.belousov.rest;
 
-import com.simbirsoft.belousov.enums.StatusTask;
-import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
-import com.simbirsoft.belousov.rest.dto.RoleResponseDto;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
-import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
+import com.simbirsoft.belousov.servise.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Tag(name = "Управление задачами")
 @RequestMapping("/api/management/tasks")
 @RestController
 public class TaskBoardController {
 
+    private final TaskService taskService;
+
+    public TaskBoardController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
     @Operation(summary = "Получить список задач")
     @GetMapping
     public ResponseEntity<List<TaskResponseDto>> getTasks() {
-        TaskResponseDto task1 = new TaskResponseDto(5, "task1", "Создать схему БД", 5, StatusTask.DONE, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task2 = new TaskResponseDto(6, "task2", "Прописать DTO", 5, StatusTask.BACKLOG, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task3 = new TaskResponseDto(7, "task3", "Прописать RestController’s", 5, StatusTask.IN_PROGRESS, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
 
-        List<TaskResponseDto> results = List.of(task1, task2, task3);
+        List<TaskResponseDto> results = taskService.getAllTasks();
         return ResponseEntity.ok().body(results);
-    }
 
+    }
 
     @Operation(summary = "Получить задачу")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<TaskResponseDto> getTask(@PathVariable int id,
-                                                   @RequestBody TaskRequestDto requestDto) {
-        TaskResponseDto task1 = new TaskResponseDto(5, "task1", "Создать схему БД", 5, StatusTask.DONE, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task2 = new TaskResponseDto(6, "task2", "Прописать DTO", 5, StatusTask.BACKLOG, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        TaskResponseDto task3 = new TaskResponseDto(7, "task3", "Прописать RestController’s", 5, StatusTask.IN_PROGRESS, 6, 7, 4, null, LocalDateTime.of(2021, Month.JANUARY, 12, 14, 15), LocalDateTime.of(2021, Month.AUGUST, 18, 8, 0));
-        //Времянка, перепешу после создания сервиса
-        TaskResponseDto result;
-        result = Stream.of(task1, task2, task3)
-                .filter(taskResponseDto -> taskResponseDto.getTaskId() == id)
-                .findFirst()
-                .orElseThrow(() -> new NoSuchException("Задача не найдена"));
+    public ResponseEntity<TaskResponseDto> getTask(@PathVariable int id) {
+        TaskResponseDto result = taskService.getTaskById(id);
         return ResponseEntity.ok().body(result);
+
     }
 
     @Operation(summary = "Добавить задачу")
     @PostMapping
     public ResponseEntity<TaskResponseDto> createTask(@RequestBody TaskRequestDto requestDto) {
-        return ResponseEntity.ok().body(new TaskResponseDto(
-                requestDto.getTaskId(),
-                requestDto.getName(),
-                requestDto.getDescription(),
-                requestDto.getProjectId(),
-                requestDto.getStatusTask(),
-                requestDto.getAuthorId(),
-                requestDto.getPerformerId(),
-                requestDto.getReleaseId(),
-                requestDto.getTineToComplete(),
-                requestDto.getStartTimeTask(),
-                requestDto.getEndTimeTask()
-        ));
+        TaskResponseDto result = taskService.addTask(requestDto);
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Обновить задачу")
     @PutMapping(value = "/{id}")
     public ResponseEntity<TaskResponseDto> partialUpdateTask(@PathVariable int id,
-                                                             @RequestBody TaskRequestDto requestDto) throws IOException {
+                                                                   @RequestBody TaskRequestDto requestDto) throws IOException {
+        TaskResponseDto result = taskService.updateTask(requestDto, id);
         throw new IOException();
     }
 
     @Operation(summary = "Удалить задачу")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity partialUpdateTask(@PathVariable int id) {
+        taskService.deleteTask(id);
         return ResponseEntity.ok().build();
     }
+
 
 }

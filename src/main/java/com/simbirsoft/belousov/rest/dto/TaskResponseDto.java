@@ -19,22 +19,22 @@ public class TaskResponseDto {
     private String descriptionTask;
 
     @Schema(description = "ID проекта")
-    private int projectId;
+    private ProjectResponseDto projectId;
 
     @Schema(description = "Статус задачи")
     private StatusTask statusTask;
 
     @Schema(description = "ID автора задачи")
-    private int authorId;
+    private UserResponseDto authorId;
 
     @Schema(description = "ID исполнителя задачи")
-    private int performerId;
+    private UserResponseDto performerId;
 
     @Schema(description = "ID релиза")
-    private int releaseId;
+    private ReleaseResponseDto releaseId;
 
     @Schema(description = "Время на исполнение задачи")
-    private Period tineToComplete;
+    private Period timeToComplete;
 
     @Schema(description = "Время начала выполнения задачи")
     private LocalDateTime startTimeTask;
@@ -42,8 +42,8 @@ public class TaskResponseDto {
     @Schema(description = "Время окончания выполнения задачи")
     private LocalDateTime endTimeTask;
 
-    public TaskResponseDto(int taskId, String name, String description, int projectId,
-                           StatusTask statusTask, int authorId, int performerId, int releaseId,
+    public TaskResponseDto(int taskId, String name, String description, ProjectResponseDto projectId,
+                           StatusTask statusTask, UserResponseDto authorId, UserResponseDto performerId, ReleaseResponseDto releaseId,
                            Period tineToComplete, LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
@@ -53,9 +53,13 @@ public class TaskResponseDto {
         this.authorId = authorId;
         this.performerId = performerId;
         this.releaseId = releaseId;
-        this.tineToComplete = tineToComplete;
+        this.timeToComplete = tineToComplete;
         this.startTimeTask = startTimeTask;
         this.endTimeTask = endTimeTask;
+    }
+
+    public TaskResponseDto() {
+
     }
 
     public int getTaskId() {
@@ -74,60 +78,21 @@ public class TaskResponseDto {
         this.name = name;
     }
 
-    public String getDescription() {
+    public String getDescriptionTask() {
         return descriptionTask;
     }
 
-    public void setDescription(String description) {
-        this.descriptionTask = description;
+    public void setDescriptionTask(String descriptionTask) {
+        this.descriptionTask = descriptionTask;
     }
 
-    public int getProjectId() {
-        return projectId;
+
+    public Period getTimeToComplete() {
+        return timeToComplete;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    public StatusTask getStatusTask() {
-        return statusTask;
-    }
-
-    public void setStatusTask(StatusTask statusTask) {
-        this.statusTask = statusTask;
-    }
-
-    public int getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
-    }
-
-    public int getPerformerId() {
-        return performerId;
-    }
-
-    public void setPerformerId(int performerId) {
-        this.performerId = performerId;
-    }
-
-    public int getReleaseId() {
-        return releaseId;
-    }
-
-    public void setReleaseId(int releaseId) {
-        this.releaseId = releaseId;
-    }
-
-    public Period getTineToComplete() {
-        return tineToComplete;
-    }
-
-    public void setTineToComplete(Period tineToComplete) {
-        this.tineToComplete = tineToComplete;
+    public void setTimeToComplete(Period timeToComplete) {
+        this.timeToComplete = timeToComplete;
     }
 
     public LocalDateTime getStartTimeTask() {
@@ -146,3 +111,4 @@ public class TaskResponseDto {
         this.endTimeTask = endTimeTask;
     }
 }
+

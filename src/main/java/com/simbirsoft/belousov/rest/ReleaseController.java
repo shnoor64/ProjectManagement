@@ -1,13 +1,15 @@
 package com.simbirsoft.belousov.rest;
 
 
-import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
-import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
+import com.simbirsoft.belousov.rest.dto.ReleaseRequestDto;
+import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseRequestDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
+import com.simbirsoft.belousov.servise.ReleaseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,55 +24,50 @@ import java.util.stream.Stream;
 @RequestMapping("/api/management/releases")
 @RestController
 public class ReleaseController {
-    @Operation(summary = "Получить список релизов")
+    private final ReleaseService releaseService;
+
+    public ReleaseController(ReleaseService releaseService) {
+        this.releaseService = releaseService;
+    }
+
+    @Operation(summary = "Получить список редизов")
     @GetMapping
     public ResponseEntity<List<ReleaseResponseDto>> getReleases() {
-        ReleaseResponseDto release1 = new ReleaseResponseDto(3, 15, LocalDateTime.of(2020, Month.APRIL, 18, 8, 0), LocalDateTime.of(2021, Month.FEBRUARY, 18, 8, 0));
-        ReleaseResponseDto release2 = new ReleaseResponseDto(4, 17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0), LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
 
-
-        List<ReleaseResponseDto> results = List.of(release1, release2);
+        List<ReleaseResponseDto> results = releaseService.getAllReleases();
         return ResponseEntity.ok().body(results);
+
     }
 
     @Operation(summary = "Получить релиз")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ReleaseResponseDto> getReleas(@PathVariable int id,
-                                                        @RequestBody ReleaseRequestDto requestDto) {
-        ReleaseResponseDto release1 = new ReleaseResponseDto(3, 15, LocalDateTime.of(2020, Month.APRIL, 18, 8, 0), LocalDateTime.of(2021, Month.FEBRUARY, 18, 8, 0));
-        ReleaseResponseDto release2 = new ReleaseResponseDto(4, 17, LocalDateTime.of(2020, Month.MAY, 15, 7, 0), LocalDateTime.of(2020, Month.DECEMBER, 13, 8, 0));
-
-        //Времянка, перепешу после создания сервиса
-        ReleaseResponseDto result;
-        result = Stream.of(release1, release2)
-                .filter(releaseResponseDto -> releaseResponseDto.getReleaseId() == id)
-                .findFirst()
-                .orElseThrow(() -> new NoSuchException("Релиз не найден"));
+    public ResponseEntity<ReleaseResponseDto> getRelease(@PathVariable int id) {
+        ReleaseResponseDto result = releaseService.getReleaseById(id);
         return ResponseEntity.ok().body(result);
+
     }
 
     @Operation(summary = "Добавить релиз")
     @PostMapping
-    public ResponseEntity<ReleaseResponseDto> createReleas(@RequestBody ReleaseRequestDto requestDto) {
-        return ResponseEntity.ok().body(new ReleaseResponseDto(
-                requestDto.getReleaseId(),
-                requestDto.getVersion(),
-                requestDto.getStartTimeRelease(),
-                requestDto.getEndTimeRelease()
-        ));
+    public ResponseEntity<ReleaseResponseDto> createRelease(@RequestBody ReleaseRequestDto requestDto) {
+        ReleaseResponseDto result = releaseService.addRelease(requestDto);
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Обновить релиз")
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ReleaseResponseDto> partialUpdateReleas(@PathVariable int id,
-                                                                  @RequestBody ReleaseRequestDto requestDto) throws IOException {
+    public ResponseEntity<ReleaseResponseDto> partialUpdateRelease(@PathVariable int id,
+                                                                   @RequestBody ReleaseRequestDto requestDto) throws IOException {
+        ReleaseResponseDto result = releaseService.updateRelease(requestDto, id);
         throw new IOException();
     }
 
     @Operation(summary = "Удалить релиз")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity partialUpdateReleas(@PathVariable int id) {
+    public ResponseEntity partialUpdateRelease(@PathVariable int id) {
+        releaseService.deleteRelease(id);
         return ResponseEntity.ok().build();
     }
+
 
 }

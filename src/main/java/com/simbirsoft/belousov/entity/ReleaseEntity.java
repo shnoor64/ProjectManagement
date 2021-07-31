@@ -1,32 +1,41 @@
-package com.simbirsoft.belousov.rest.dto;
+package com.simbirsoft.belousov.entity;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Schema(description = "Релиз")
-public class ReleaseRequestDto {
+@Entity
+@Table(name = "release")
+public class ReleaseEntity {
 
-    @Schema(description = "ID релиза")
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int releaseId;
 
-    @Schema(description = "Версия релиза")
+    @Column(name = "version")
     private int version;
 
-    @Schema(description = "Время начала выполнения редиза")
+    @Column(name = "start_time_release")
     private LocalDateTime startTimeRelease;
 
-    @Schema(description = "Время окончания выполнения релиза")
+    @Column(name = "end_time_release")
     private LocalDateTime endTimeRelease;
 
-    public ReleaseRequestDto(int releaseId, int version, LocalDateTime startTimeRelease, LocalDateTime endTimeRelease) {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "releaseId")
+    private List <TaskEntity> tasks;
+
+
+    public ReleaseEntity(int releaseId, int version, LocalDateTime startTimeRelease, LocalDateTime endTimeRelease, List<TaskEntity> releases) {
         this.releaseId = releaseId;
         this.version = version;
         this.startTimeRelease = startTimeRelease;
         this.endTimeRelease = endTimeRelease;
+        this.tasks = releases;
     }
 
-    public ReleaseRequestDto() {
+
+    public ReleaseEntity() {
 
     }
 
@@ -60,5 +69,13 @@ public class ReleaseRequestDto {
 
     public void setEndTimeRelease(LocalDateTime endTimeRelease) {
         this.endTimeRelease = endTimeRelease;
+    }
+
+    public List<TaskEntity> getReleases() {
+        return tasks;
+    }
+
+    public void setReleases(List<TaskEntity> releases) {
+        this.tasks = releases;
     }
 }

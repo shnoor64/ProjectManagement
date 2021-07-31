@@ -18,14 +18,18 @@ public class UserRequestDto {
     private String password;
 
     @Schema(description = "Роль")
-    private int role;
+    private RoleRequestDto role;
 
-    public UserRequestDto(int userId, String name, String surname, String password, int role) {
+    public UserRequestDto(int userId, String name, String surname, String password, RoleRequestDto role) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.role = role;
+    }
+
+    public UserRequestDto() {
+
     }
 
     public int getUserId() {
@@ -60,11 +64,11 @@ public class UserRequestDto {
         this.password = password;
     }
 
-    public int getRole() {
+    public RoleRequestDto getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(RoleRequestDto role) {
         this.role = role;
     }
 }
