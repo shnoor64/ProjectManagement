@@ -4,6 +4,7 @@ import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import com.simbirsoft.belousov.rest.dto.UserRequestDto;
 
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface TaskService {
 
     TaskResponseDto updateTimeToCompleteTask(int taskId, Period tineToComplete);
 
-    TaskResponseDto updateStartTimeTask(int taskId, int id);
+    TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask);
 //    TaskResponseDto calculatedTimeEndTaskTask(TaskRequestDto taskRequestDto, int id);
 //    TaskResponseDto showOutstandingTask(TaskRequestDto taskRequestDto, int id);
 

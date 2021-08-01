@@ -16,6 +16,7 @@ import com.simbirsoft.belousov.servise.TaskService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +111,14 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto updateTimeToCompleteTask(int taskId, Period timeToComplete) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         taskEntity.setTimeToComplete(timeToComplete);
+        taskRepository.save(taskEntity);
+        return taskMapper.taskEntityToResponseDto(taskEntity);
+    }
+
+    @Override
+    public TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask) {
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        taskEntity.setStartTimeTask(startTimeTask);
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
