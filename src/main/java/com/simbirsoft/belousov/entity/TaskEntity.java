@@ -42,7 +42,7 @@ public class TaskEntity {
     private ReleaseEntity releaseId;
 
     @Column(name = "time_to_complete")
-    private Period tineToComplete;
+    private Period timeToComplete;
 
     @Column(name = "start_time_task", updatable = false)
     private LocalDateTime startTimeTask;
@@ -63,7 +63,7 @@ public class TaskEntity {
         this.authorId = authorId;
         this.performerId = performerId;
         this.releaseId = releaseId;
-        this.tineToComplete = tineToComplete;
+        this.timeToComplete = tineToComplete;
         this.startTimeTask = startTimeTask;
         this.endTimeTask = endTimeTask;
     }
@@ -136,12 +136,12 @@ public class TaskEntity {
         this.releaseId = releaseId;
     }
 
-    public Period getTineToComplete() {
-        return tineToComplete;
+    public Period getTimeToComplete() {
+        return timeToComplete;
     }
 
-    public void setTineToComplete(Period tineToComplete) {
-        this.tineToComplete = tineToComplete;
+    public void setTimeToComplete(Period timeToComplete) {
+        this.timeToComplete = timeToComplete;
     }
 
     public LocalDateTime getStartTimeTask() {
@@ -159,4 +159,6 @@ public class TaskEntity {
     public void setEndTimeTask(LocalDateTime endTimeTask) {
         this.endTimeTask = endTimeTask;
     }
+
+
 }
