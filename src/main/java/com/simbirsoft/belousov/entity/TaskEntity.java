@@ -44,10 +44,10 @@ public class TaskEntity {
     @Column(name = "time_to_complete")
     private Period tineToComplete;
 
-    @Column(name = "start_time_task")
+    @Column(name = "start_time_task", updatable = false)
     private LocalDateTime startTimeTask;
 
-    @Column(name = "end_time_task")
+    @Column(name = "end_time_task", updatable = false)
     private LocalDateTime endTimeTask;
 
     public TaskEntity(int taskId, String name, String descriptionTask,

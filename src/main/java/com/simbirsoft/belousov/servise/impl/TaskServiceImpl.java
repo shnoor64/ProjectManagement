@@ -1,16 +1,15 @@
 package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.TaskEntity;
+import com.simbirsoft.belousov.entity.UserEntity;
 import com.simbirsoft.belousov.mappers.TaskMapperImpl;
+import com.simbirsoft.belousov.mappers.UserMapperImpl;
 import com.simbirsoft.belousov.repository.TaskRepository;
-import com.simbirsoft.belousov.repository.TaskRepository;
-import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
-import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
+import com.simbirsoft.belousov.repository.UserRepository;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +21,16 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapperImpl taskMapper;
+    private final UserRepository userRepository;
+    private final UserMapperImpl userMapper;
 
-    public TaskServiceImpl(TaskRepository taskRepository, TaskMapperImpl taskMapper) {
+
+    public TaskServiceImpl(TaskRepository taskRepository, TaskMapperImpl taskMapper, UserRepository userRepository, UserMapperImpl userMapper) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+
     }
 
     @Transactional
@@ -59,7 +64,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateTask(TaskRequestDto taskRequestDto, int id) {
         TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException("Задача не найдена"));
-        taskEntity = taskMapper.taskRequestDtoToEntity(taskRequestDto);
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
@@ -69,5 +73,14 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(int id) {
         TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         taskRepository.delete(taskEntity);
+    }
+
+    @Override
+    public TaskResponseDto updatePerformerTask(int taskId, int performerId) {
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        UserEntity performerEntity = userRepository.findById(performerId).orElseThrow(() -> new NoSuchException("Пользователь не найден"));
+        taskEntity.setPerformerId(performerEntity);
+        taskRepository.save(taskEntity);
+        return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 }

@@ -16,10 +16,10 @@ public class ReleaseEntity {
     @Column(name = "version")
     private int version;
 
-    @Column(name = "start_time_release")
+    @Column(name = "start_time_release", updatable = false)
     private LocalDateTime startTimeRelease;
 
-    @Column(name = "end_time_release")
+    @Column(name = "end_time_release", updatable = false)
     private LocalDateTime endTimeRelease;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "releaseId")
