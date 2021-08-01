@@ -20,10 +20,14 @@ public interface TaskService {
 
 
     TaskResponseDto updatePerformerTask(int taskId, int performerId);
+
     TaskResponseDto updateStatusTask(TaskRequestDto taskRequestDto, int id);
+
     TaskResponseDto updateReleaseTask(int taskId, int releaseId);
+
     TaskResponseDto updateTimeToCompleteTask(int taskId, Period tineToComplete);
-//    TaskResponseDto updateStartTimeTask(TaskRequestDto taskRequestDto, int id);
+
+    TaskResponseDto updateStartTimeTask(int taskId, int id);
 //    TaskResponseDto calculatedTimeEndTaskTask(TaskRequestDto taskRequestDto, int id);
 //    TaskResponseDto showOutstandingTask(TaskRequestDto taskRequestDto, int id);
 

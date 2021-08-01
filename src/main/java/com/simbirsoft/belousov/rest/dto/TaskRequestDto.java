@@ -43,7 +43,7 @@ public class TaskRequestDto {
     private LocalDateTime endTimeTask;
 
     public TaskRequestDto(int taskId, String name, String descriptionTask, ProjectRequestDto projectId, StatusTask statusTask
-            , UserRequestDto authorId, UserRequestDto performerId, ReleaseRequestDto releaseId, Period tineToComplete
+            , UserRequestDto authorId, UserRequestDto performerId, ReleaseRequestDto releaseId, Period timeToComplete
             , LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
@@ -53,7 +53,7 @@ public class TaskRequestDto {
         this.authorId = authorId;
         this.performerId = performerId;
         this.releaseId = releaseId;
-        this.timeToComplete = tineToComplete;
+        this.timeToComplete = timeToComplete;
         this.startTimeTask = startTimeTask;
         this.endTimeTask = endTimeTask;
     }
@@ -136,14 +136,6 @@ public class TaskRequestDto {
 
     public void setTimeToComplete(Period timeToComplete) {
         this.timeToComplete = timeToComplete;
-    }
-
-    public Period getTineToComplete() {
-        return timeToComplete;
-    }
-
-    public void setTineToComplete(Period tineToComplete) {
-        this.timeToComplete = tineToComplete;
     }
 
     public LocalDateTime getStartTimeTask() {

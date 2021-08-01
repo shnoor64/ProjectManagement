@@ -53,7 +53,7 @@ public class TaskEntity {
     public TaskEntity(int taskId, String name, String descriptionTask,
                       ProjectEntity projectId, StatusTask statusTask,
                       UserEntity authorId, UserEntity performerId,
-                      ReleaseEntity releaseId, Period tineToComplete,
+                      ReleaseEntity releaseId, Period timeToComplete,
                       LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
@@ -63,7 +63,7 @@ public class TaskEntity {
         this.authorId = authorId;
         this.performerId = performerId;
         this.releaseId = releaseId;
-        this.timeToComplete = tineToComplete;
+        this.timeToComplete = timeToComplete;
         this.startTimeTask = startTimeTask;
         this.endTimeTask = endTimeTask;
     }

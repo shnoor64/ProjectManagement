@@ -44,7 +44,7 @@ public class TaskResponseDto {
 
     public TaskResponseDto(int taskId, String name, String description, ProjectResponseDto projectId,
                            StatusTask statusTask, UserResponseDto authorId, UserResponseDto performerId, ReleaseResponseDto releaseId,
-                           Period tineToComplete, LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
+                           Period timeToComplete, LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
         this.descriptionTask = description;
@@ -53,7 +53,7 @@ public class TaskResponseDto {
         this.authorId = authorId;
         this.performerId = performerId;
         this.releaseId = releaseId;
-        this.timeToComplete = tineToComplete;
+        this.timeToComplete = timeToComplete;
         this.startTimeTask = startTimeTask;
         this.endTimeTask = endTimeTask;
     }

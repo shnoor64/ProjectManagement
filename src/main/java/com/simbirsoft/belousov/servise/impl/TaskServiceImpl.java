@@ -110,6 +110,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto updateTimeToCompleteTask(int taskId, Period timeToComplete) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         taskEntity.setTimeToComplete(timeToComplete);
-        return null;
+        taskRepository.save(taskEntity);
+        return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 }
