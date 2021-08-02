@@ -123,11 +123,11 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
-    @Override
-    public int showNumberOutstandingTask(int releaseId) {
-        ReleaseEntity releaseEntity = releaseRepository.findById(releaseId).orElseThrow(() -> new NoSuchException("Релиз не найден"));
-
-        taskRepository.f
-        return 0;
-    }
+//    @Override
+//    public int showNumberOutstandingTask(int releaseId) {
+//        ReleaseEntity releaseEntity = releaseRepository.findById(releaseId).orElseThrow(() -> new NoSuchException("Релиз не найден"));
+//
+//        taskRepository.f
+//        return 0;
+//    }
 }

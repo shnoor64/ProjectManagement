@@ -30,7 +30,7 @@ public interface TaskService {
 
     TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask);
 //    TaskResponseDto calculatedTimeEndTaskTask(TaskRequestDto taskRequestDto, int id);
-    int showNumberOutstandingTask(int releaseId);
+//    int showNumberOutstandingTask(int releaseId);
 
 
 }

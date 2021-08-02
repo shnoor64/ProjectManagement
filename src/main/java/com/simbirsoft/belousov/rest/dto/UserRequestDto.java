@@ -64,11 +64,11 @@ public class UserRequestDto {
         this.password = password;
     }
 
-    public int getRole() {
+    public int getRoleId() {
         return roleId;
     }
 
-    public void setRole(int roleId) {
+    public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
 }
