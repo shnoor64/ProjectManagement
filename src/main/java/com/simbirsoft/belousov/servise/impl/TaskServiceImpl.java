@@ -3,6 +3,7 @@ package com.simbirsoft.belousov.servise.impl;
 import com.simbirsoft.belousov.entity.ReleaseEntity;
 import com.simbirsoft.belousov.entity.TaskEntity;
 import com.simbirsoft.belousov.entity.UserEntity;
+import com.simbirsoft.belousov.enums.StatusTask;
 import com.simbirsoft.belousov.mappers.ReleaseMapperImpl;
 import com.simbirsoft.belousov.mappers.TaskMapperImpl;
 import com.simbirsoft.belousov.mappers.UserMapperImpl;
@@ -73,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateTask(TaskRequestDto taskRequestDto, int id) {
         TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException("Задача не найдена"));
-        taskRepository.save(taskEntity);
+        taskRepository.save(taskMapper.taskRequestDtoToEntity(taskRequestDto));
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -94,8 +95,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponseDto updateStatusTask(TaskRequestDto taskRequestDto, int id) {
-        return null;
+    public TaskResponseDto updateStatusTask(int taskId, String statusTask) {
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        taskEntity.setStatusTask(StatusTask.valueOf(statusTask));
+        taskRepository.save(taskEntity);
+        return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
     @Override
@@ -129,7 +133,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskEntity> showAllOutstandingTasksByRelease(int releaseId) {
+    public List<TaskResponseDto> showAllOutstandingTasksByRelease(int releaseId) {
         return showAllOutstandingTasksByRelease(releaseId);
     }
+
 }
