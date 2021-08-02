@@ -122,4 +122,12 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
+
+    @Override
+    public int showNumberOutstandingTask(int releaseId) {
+        ReleaseEntity releaseEntity = releaseRepository.findById(releaseId).orElseThrow(() -> new NoSuchException("Релиз не найден"));
+
+        taskRepository.f
+        return 0;
+    }
 }
