@@ -1,15 +1,12 @@
 package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.ProjectEntity;
-
 import com.simbirsoft.belousov.mappers.ProjectMapperImpl;
 import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.ProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,15 +43,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto getProjectById(int id) {
         ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
         return projectMapper.projectEntityToResponseDto(projectEntity);
-//        List<ProjectResponseDto> projectResponseDtoList = new ArrayList<>();
-//        List<ProjectEntity> projectEntityList = projectRepository.findAll();
-//
-//        return projectEntityList
-//                .stream()
-//                .map(projectEntity -> projectMapper.projectEntityToResponseDto(projectEntity))
-//                .filter(projectResponseDto -> projectResponseDto.getProjectId() == id)
-//                .findFirst()
-//                .orElseThrow(() -> new NoSuchException("Проект не найден"));
+
     }
 
     @Transactional
@@ -69,8 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto updateProject(ProjectRequestDto projectRequestDto, int id) {
         ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
-        projectEntity = projectMapper.projectRequestDtoToEntity(projectRequestDto);
-        projectRepository.save(projectEntity);
+        projectRepository.save(projectMapper.projectRequestDtoToEntity(projectRequestDto));
         return projectMapper.projectEntityToResponseDto(projectEntity);
     }
 
@@ -79,5 +67,10 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteProject(int id) {
         ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
         projectRepository.delete(projectEntity);
+    }
+
+    @Override
+    public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
+        return null;
     }
 }

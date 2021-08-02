@@ -7,7 +7,6 @@ import com.simbirsoft.belousov.rest.dto.ReleaseRequestDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.ReleaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,8 +55,7 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public ReleaseResponseDto updateRelease(ReleaseRequestDto releaseRequestDto, int id) {
         ReleaseEntity releaseEntity = releaseRepository.findById(id).orElseThrow(() -> new NoSuchException("Релиз не найден"));
-        releaseEntity = releaseMapper.releaseRequestDtoToEntity(releaseRequestDto);
-        releaseRepository.save(releaseEntity);
+        releaseRepository.save(releaseMapper.releaseRequestDtoToEntity(releaseRequestDto));
         return releaseMapper.releaseEntityToResponseDto(releaseEntity);
     }
 
