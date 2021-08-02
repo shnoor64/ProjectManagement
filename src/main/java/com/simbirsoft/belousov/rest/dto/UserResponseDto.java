@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Пользователь")
 public class UserResponseDto {
 
-
     @Schema(description = "ID пользователя")
     private int userId;
 
@@ -15,14 +14,18 @@ public class UserResponseDto {
     @Schema(description = "Фамилия пользователя")
     private String surname;
 
-    @Schema(description = "Роль")
-    private RoleResponseDto role;
+    @Schema(description = "Пароль")
+    private String password;
 
-    public UserResponseDto(int userId, String name, String surname, RoleResponseDto role) {
+    @Schema(description = "Роль")
+    private int roleId;
+
+    public UserResponseDto(int userId, String name, String surname, String password, int roleId) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
-        this.role = role;
+        this.password = password;
+        this.roleId = roleId;
     }
 
     public UserResponseDto() {
@@ -53,11 +56,19 @@ public class UserResponseDto {
         this.surname = surname;
     }
 
-    public RoleResponseDto getRole() {
-        return role;
+    public String getPassword() {
+        return password;
     }
 
-    public void setRole(RoleResponseDto role) {
-        this.role = role;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getRole() {
+        return roleId;
+    }
+
+    public void setRole(int roleId) {
+        this.roleId = roleId;
     }
 }
