@@ -19,19 +19,19 @@ public class TaskRequestDto {
     private String descriptionTask;
 
     @Schema(description = "ID проекта")
-    private ProjectRequestDto projectId;
+    private int projectId;
 
     @Schema(description = "Статус задачи")
     private StatusTask statusTask;
 
     @Schema(description = "ID автора задачи")
-    private UserRequestDto authorId;
+    private int authorId;
 
     @Schema(description = "ID исполнителя задачи")
-    private UserRequestDto performerId;
+    private int performerId;
 
     @Schema(description = "ID релиза")
-    private ReleaseRequestDto releaseId;
+    private int releaseId;
 
     @Schema(description = "Время на исполнение задачи")
     private Period timeToComplete;
@@ -42,8 +42,8 @@ public class TaskRequestDto {
     @Schema(description = "Время окончания выполнения задачи")
     private LocalDateTime endTimeTask;
 
-    public TaskRequestDto(int taskId, String name, String descriptionTask, ProjectRequestDto projectId, StatusTask statusTask
-            , UserRequestDto authorId, UserRequestDto performerId, ReleaseRequestDto releaseId, Period timeToComplete
+    public TaskRequestDto(int taskId, String name, String descriptionTask, int projectId, StatusTask statusTask
+            , int authorId, int performerId, int releaseId, Period timeToComplete
             , LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
@@ -66,14 +66,6 @@ public class TaskRequestDto {
         this.taskId = taskId;
     }
 
-    public String getDescriptionTask() {
-        return descriptionTask;
-    }
-
-    public void setDescriptionTask(String descriptionTask) {
-        this.descriptionTask = descriptionTask;
-    }
-
     public String getName() {
         return name;
     }
@@ -82,19 +74,19 @@ public class TaskRequestDto {
         this.name = name;
     }
 
-    public String getDescription() {
+    public String getDescriptionTask() {
         return descriptionTask;
     }
 
-    public void setDescription(String description) {
-        this.descriptionTask = description;
+    public void setDescriptionTask(String descriptionTask) {
+        this.descriptionTask = descriptionTask;
     }
 
-    public ProjectRequestDto getProjectId() {
+    public int getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(ProjectRequestDto projectId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
 
@@ -106,27 +98,27 @@ public class TaskRequestDto {
         this.statusTask = statusTask;
     }
 
-    public UserRequestDto getAuthorId() {
+    public int getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(UserRequestDto authorId) {
+    public void setAuthorId(int authorId) {
         this.authorId = authorId;
     }
 
-    public UserRequestDto getPerformerId() {
+    public int getPerformerId() {
         return performerId;
     }
 
-    public void setPerformerId(UserRequestDto performerId) {
+    public void setPerformerId(int performerId) {
         this.performerId = performerId;
     }
 
-    public ReleaseRequestDto getReleaseId() {
+    public int getReleaseId() {
         return releaseId;
     }
 
-    public void setReleaseId(ReleaseRequestDto releaseId) {
+    public void setReleaseId(int releaseId) {
         this.releaseId = releaseId;
     }
 
