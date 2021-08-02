@@ -1,5 +1,6 @@
 package com.simbirsoft.belousov.servise;
 
+import com.simbirsoft.belousov.entity.TaskEntity;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 
@@ -30,6 +31,6 @@ public interface TaskService {
     TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask);
 //    TaskResponseDto calculatedTimeEndTaskTask(TaskRequestDto taskRequestDto, int id);
     int showNumberOutstandingTask(int releaseId);
-
+    List<TaskEntity> showAllOutstandingTasksByRelease (int releaseId);
 
 }

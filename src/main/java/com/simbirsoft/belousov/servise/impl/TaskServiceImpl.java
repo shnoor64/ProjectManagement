@@ -125,8 +125,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public int showNumberOutstandingTask(int releaseId) {
-//        ReleaseEntity releaseEntity = releaseRepository.findById(releaseId).orElseThrow(() -> new NoSuchException("Релиз не найден"));
+        return taskRepository.countAllOutstandingTasksByRelease(releaseId);
+    }
 
-        return taskRepository.getAllOutstandingTasksByRelease(releaseId).size();
+    @Override
+    public List<TaskEntity> showAllOutstandingTasksByRelease(int releaseId) {
+        return showAllOutstandingTasksByRelease(releaseId);
     }
 }
