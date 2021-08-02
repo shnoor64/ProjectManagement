@@ -2,7 +2,6 @@ package com.simbirsoft.belousov.servise;
 
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
-import com.simbirsoft.belousov.rest.dto.UserRequestDto;
 
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -30,7 +29,7 @@ public interface TaskService {
 
     TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask);
 //    TaskResponseDto calculatedTimeEndTaskTask(TaskRequestDto taskRequestDto, int id);
-//    int showNumberOutstandingTask(int releaseId);
+    int showNumberOutstandingTask(int releaseId);
 
 
 }
