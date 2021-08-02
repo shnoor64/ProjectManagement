@@ -21,11 +21,11 @@ public abstract class UserMapper {
     protected RoleRepository roleRepository;
 
     @Mappings({
-    @Mapping(target = "roleId", expression = "java(roleRepository.findById(userRequestDto.getRoleId()).orElseThrow(() -> new NoSuchException(\"Задача не найдена\")))")
+    @Mapping(target = "role", expression = "java(roleRepository.findById(userRequestDto.getRoleId()).orElseThrow(() -> new NoSuchException(\"Роль не найдена\")))")
     })
     public abstract UserEntity userRequestDtoToEntity(UserRequestDto userRequestDto) throws NoSuchException;
     @Mappings({
-    @Mapping(target = "releaseId", expression = "java(userEntity.getRole().getRoleId())")
+    @Mapping(target = "roleId", expression = "java(userEntity.getRole().getRoleId())")
     })
     public abstract UserResponseDto userEntityToResponseDto(UserEntity userEntity);
 

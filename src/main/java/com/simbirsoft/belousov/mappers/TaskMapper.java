@@ -24,10 +24,10 @@ public abstract class TaskMapper {
     protected ReleaseRepository releaseRepository;
 
     @Mappings({
-            @Mapping(target = "projectId", expression = "java(projectRepository.findById(taskRequestDto.getProjectId()).orElseThrow(() -> new NoSuchException(\"Задача не найдена\")))"),
-            @Mapping(target = "authorId", expression = "java(userRepository.findById(taskRequestDto.getAuthorId()).orElseThrow(() -> new NoSuchException(\"Задача не найдена\")))"),
-            @Mapping(target = "performerId", expression = "java(userRepository.findById(taskRequestDto.getPerformerId()).orElseThrow(() -> new NoSuchException(\"Задача не найдена\")))"),
-            @Mapping(target = "releaseId", expression = "java(releaseRepository.findById(taskRequestDto.getReleaseId()).orElseThrow(() -> new NoSuchException(\"Задача не найдена\")))"),
+            @Mapping(target = "projectId", expression = "java(projectRepository.findById(taskRequestDto.getProjectId()).orElseThrow(() -> new NoSuchException(\"Проект не найден\")))"),
+            @Mapping(target = "authorId", expression = "java(userRepository.findById(taskRequestDto.getAuthorId()).orElseThrow(() -> new NoSuchException(\"Автор не найден\")))"),
+            @Mapping(target = "performerId", expression = "java(userRepository.findById(taskRequestDto.getPerformerId()).orElseThrow(() -> new NoSuchException(\"Исполнитель не найден\")))"),
+            @Mapping(target = "releaseId", expression = "java(releaseRepository.findById(taskRequestDto.getReleaseId()).orElseThrow(() -> new NoSuchException(\"Релиз не найден\")))"),
 
     })
     public abstract TaskEntity taskRequestDtoToEntity(TaskRequestDto taskRequestDto) throws NoSuchException;
