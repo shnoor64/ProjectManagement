@@ -1,6 +1,7 @@
 package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.ProjectEntity;
+import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.mappers.ProjectMapperImpl;
 import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
@@ -71,6 +72,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
-        return null;
+        ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));
+        if (statusProject){
+
+        }
+
+        projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
+        projectRepository.save(projectMapper.projectRequestDtoToEntity(projectRequestDto));
+        return projectMapper.projectEntityToResponseDto(projectEntity);
     }
 }
