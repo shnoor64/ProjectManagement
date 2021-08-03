@@ -62,6 +62,12 @@ public class ProjectController {
         projectService.deleteProject(id);
         return ResponseEntity.ok().build();
     }
-
+    @Operation(summary = "Обновить статус проекта проект")
+    @PutMapping(value = "/{id}")
+    public ResponseEntity <ProjectResponseDto> updateStatusProjectById (@PathVariable int id,
+                                                                        @RequestBody String status) throws IOException {
+        ProjectResponseDto result = projectService.updateStatusProject(id, status);
+        throw new IOException();
+    }
 
 }
