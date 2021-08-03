@@ -97,6 +97,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateStatusTask(int taskId, String statusTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+
         taskEntity.setStatusTask(StatusTask.valueOf(statusTask));
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);

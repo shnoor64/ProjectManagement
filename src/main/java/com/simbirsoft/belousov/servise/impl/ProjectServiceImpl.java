@@ -4,8 +4,10 @@ import com.simbirsoft.belousov.entity.ProjectEntity;
 import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.mappers.ProjectMapperImpl;
 import com.simbirsoft.belousov.repository.ProjectRepository;
+import com.simbirsoft.belousov.repository.TaskRepository;
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
+import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusException;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.ProjectService;
 import org.springframework.stereotype.Service;
@@ -20,10 +22,12 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final TaskRepository taskRepository;
     private final ProjectMapperImpl projectMapper;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectMapperImpl projectMapper) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ProjectMapperImpl projectMapper) {
         this.projectRepository = projectRepository;
+        this.taskRepository = taskRepository;
         this.projectMapper = projectMapper;
     }
 
@@ -73,12 +77,15 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));
-        if (statusProject){
-
+        if (statusProject.equals(StatusProject.CLOSED)) {
+            if (taskRepository.countAllNotDoneTasksByProject(projectId) == 0) {
+                projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
+            } else {
+                throw new IncorrectlyEnteredStatusException("Не все задачи завершены");
+            }
+        } else {
+            projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
         }
-
-        projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
-        projectRepository.save(projectMapper.projectRequestDtoToEntity(projectRequestDto));
         return projectMapper.projectEntityToResponseDto(projectEntity);
     }
 }

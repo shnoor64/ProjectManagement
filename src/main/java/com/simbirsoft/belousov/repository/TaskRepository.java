@@ -15,4 +15,8 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Integer> {
 
     @Query("select count(t) from TaskEntity t where t.releaseId.releaseId=:releaseId and (t.statusTask='BACKLOG' or  t.statusTask='IN_PROGRESS')")
     int countAllOutstandingTasksByRelease(int releaseId);
+
+    @Query("select count(t) from TaskEntity t where t.projectId.projectId=:projectId and (t.statusTask='BACKLOG' or  t.statusTask='IN_PROGRESS')")
+    int countAllNotDoneTasksByProject(int projectId);
+
 }
