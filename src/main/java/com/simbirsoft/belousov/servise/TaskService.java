@@ -31,7 +31,7 @@ public interface TaskService {
     //    TaskResponseDto calculatedTimeEndTaskTask(TaskRequestDto taskRequestDto, int taskId);
     int showNumberOutstandingTask(int releaseId);
 
-    List<TaskResponseDto> showAllOutstandingTasksByRelease(int releaseId);
+    List<TaskResponseDto> showAllOutstandingTasks(int releaseId);
 
 
 

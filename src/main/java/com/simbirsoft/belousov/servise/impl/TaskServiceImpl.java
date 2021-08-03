@@ -97,7 +97,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateStatusTask(int taskId, String statusTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
-
         taskEntity.setStatusTask(StatusTask.valueOf(statusTask));
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
@@ -134,8 +133,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskResponseDto> showAllOutstandingTasksByRelease(int releaseId) {
-        return showAllOutstandingTasksByRelease(releaseId);
+    public List<TaskResponseDto> showAllOutstandingTasks(int releaseId) {
+        List<TaskEntity> taskEntityList = taskRepository.getAllOutstandingTasksByRelease(releaseId);
+        return taskEntityList
+                .stream()
+                .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
+                .collect(Collectors.toList());
     }
 
 }
