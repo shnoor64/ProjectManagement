@@ -29,11 +29,12 @@ public interface TaskService {
     TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask);
 
     //    TaskResponseDto calculatedTimeEndTaskTask(TaskRequestDto taskRequestDto, int taskId);
+
     int showNumberOutstandingTask(int releaseId);
 
     List<TaskResponseDto> showAllOutstandingTasks(int releaseId);
 
-
+    LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete);
 
 
 }

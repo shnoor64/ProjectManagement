@@ -100,14 +100,14 @@ public class TaskBoardController {
         throw new IOException();
     }
 
-    @Operation(summary = "Показать количество задач, не завершившиеся в заданный релиз")
+    @Operation(summary = "Показать количество задач, не завершившихся в заданный релиз")
     @GetMapping(value = "/{releaseId}")
     public ResponseEntity<Integer> showNumberOutstandingTaskByReleaseId(@PathVariable int releaseId) {
         int result = taskService.showNumberOutstandingTask(releaseId);
         return ResponseEntity.ok().body(result);
     }
 
-    @Operation(summary = "Получить список задач, не завершившиеся в заданный релиз")
+    @Operation(summary = "Получить список задач, не завершившихся в заданный релиз")
     @GetMapping(value = "/{releaseId}")
     public ResponseEntity<List<TaskResponseDto>> showAllOutstandingTasksByReleaseId(@PathVariable int releaseId) {
         List<TaskResponseDto> results = taskService.showAllOutstandingTasks(releaseId);

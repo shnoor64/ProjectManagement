@@ -3,6 +3,7 @@ package com.simbirsoft.belousov.servise.impl;
 import com.simbirsoft.belousov.entity.ReleaseEntity;
 import com.simbirsoft.belousov.entity.TaskEntity;
 import com.simbirsoft.belousov.entity.UserEntity;
+import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.enums.StatusTask;
 import com.simbirsoft.belousov.mappers.ReleaseMapperImpl;
 import com.simbirsoft.belousov.mappers.TaskMapperImpl;
@@ -66,6 +67,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto addTask(TaskRequestDto taskRequestDto) {
         TaskEntity taskEntity = taskMapper.taskRequestDtoToEntity(taskRequestDto);
+        taskEntity.setStatusTask(StatusTask.BACKLOG);
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
@@ -97,7 +99,32 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateStatusTask(int taskId, String statusTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        StatusTask oldStatusTask = taskEntity.getStatusTask();
         taskEntity.setStatusTask(StatusTask.valueOf(statusTask));
+        switch (StatusTask.valueOf(statusTask)) {
+            case BACKLOG:
+//                taskEntity.setStartTimeTask(null);
+//                taskEntity.setEndTimeTask(null);
+                break;
+            case IN_PROGRESS:
+                if (taskEntity.getProjectId().getStatusProject().equals(StatusProject.IN_PROGRESS)) {
+                    taskEntity.setStartTimeTask(LocalDateTime.now());
+                    //taskEntity.setEndTimeTask(getPlannedEndTimeTask(taskEntity.getStartTimeTask(), taskEntity.getTimeToComplete()));
+                } else {
+                    //вывалить исключение : Невозможно поменять статус, проект не стартовал.
+                }
+                break;
+            case DONE:
+                if (taskEntity.getStatusTask().equals(StatusTask.IN_PROGRESS)) {
+                    taskEntity.setStatusTask(StatusTask.DONE);
+                    taskEntity.setEndTimeTask(LocalDateTime.now());
+                } else {
+                    //вывалить исключение : Невозможно поменять статус, задача не была на исполнении.
+                }
+                break;
+            default:
+
+        }
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
@@ -140,5 +167,12 @@ public class TaskServiceImpl implements TaskService {
                 .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete) {
+        return startTimeTask.plus(timeToComplete);
+    }
+
+
 
 }
