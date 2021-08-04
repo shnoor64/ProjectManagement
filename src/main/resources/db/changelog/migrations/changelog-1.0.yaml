@@ -17,7 +17,7 @@ databaseChangeLog:
                   name: name
                   type: VARCHAR(255)
                   constraints:
-                    nullable: false
+                    - nullable: false
               - column:
                   name: description_project
                   type: VARCHAR(255)
@@ -47,11 +47,8 @@ databaseChangeLog:
               - column:
                   name: version
                   type: int
-              - column:
-                  name: name
-                  type: VARCHAR(255)
                   constraints:
-                    nullable: false
+                    - nullable: false
               - column:
                   name: start_time_release
                   type: timestamp

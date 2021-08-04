@@ -3,11 +3,9 @@ package com.simbirsoft.belousov.rest;
 
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
-
 import com.simbirsoft.belousov.servise.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,6 +62,12 @@ public class ProjectController {
         projectService.deleteProject(id);
         return ResponseEntity.ok().build();
     }
-
+    @Operation(summary = "Обновить статус проекта проект")
+    @PutMapping(value = "/{id}")
+    public ResponseEntity <ProjectResponseDto> updateStatusProjectById (@PathVariable int id,
+                                                                        @RequestBody String status) throws IOException {
+        ProjectResponseDto result = projectService.updateStatusProject(id, status);
+        throw new IOException();
+    }
 
 }

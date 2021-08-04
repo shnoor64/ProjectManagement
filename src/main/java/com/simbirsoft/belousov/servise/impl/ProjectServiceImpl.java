@@ -1,15 +1,15 @@
 package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.ProjectEntity;
-
+import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.mappers.ProjectMapperImpl;
 import com.simbirsoft.belousov.repository.ProjectRepository;
+import com.simbirsoft.belousov.repository.TaskRepository;
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
+import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusException;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.ProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +22,12 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final TaskRepository taskRepository;
     private final ProjectMapperImpl projectMapper;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectMapperImpl projectMapper) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ProjectMapperImpl projectMapper) {
         this.projectRepository = projectRepository;
+        this.taskRepository = taskRepository;
         this.projectMapper = projectMapper;
     }
 
@@ -46,21 +48,14 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto getProjectById(int id) {
         ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
         return projectMapper.projectEntityToResponseDto(projectEntity);
-//        List<ProjectResponseDto> projectResponseDtoList = new ArrayList<>();
-//        List<ProjectEntity> projectEntityList = projectRepository.findAll();
-//
-//        return projectEntityList
-//                .stream()
-//                .map(projectEntity -> projectMapper.projectEntityToResponseDto(projectEntity))
-//                .filter(projectResponseDto -> projectResponseDto.getProjectId() == id)
-//                .findFirst()
-//                .orElseThrow(() -> new NoSuchException("Проект не найден"));
+
     }
 
     @Transactional
     @Override
     public ProjectResponseDto addProject(ProjectRequestDto projectRequestDto) {
         ProjectEntity projectEntity = projectMapper.projectRequestDtoToEntity(projectRequestDto);
+        projectEntity.setStatusProject(StatusProject.BACKLOG);
         projectRepository.save(projectEntity);
         return projectMapper.projectEntityToResponseDto(projectEntity);
     }
@@ -69,8 +64,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto updateProject(ProjectRequestDto projectRequestDto, int id) {
         ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
-        projectEntity = projectMapper.projectRequestDtoToEntity(projectRequestDto);
-        projectRepository.save(projectEntity);
+        projectRepository.save(projectMapper.projectRequestDtoToEntity(projectRequestDto));
         return projectMapper.projectEntityToResponseDto(projectEntity);
     }
 
@@ -79,5 +73,20 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteProject(int id) {
         ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
         projectRepository.delete(projectEntity);
+    }
+
+    @Override
+    public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
+        ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));
+        if (statusProject.equals(StatusProject.CLOSED)) {
+            if (taskRepository.countAllNotDoneTasksByProject(projectId) == 0) {
+                projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
+            } else {
+                throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
+            }
+        } else {
+            projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
+        }
+        return projectMapper.projectEntityToResponseDto(projectEntity);
     }
 }

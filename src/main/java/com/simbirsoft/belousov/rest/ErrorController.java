@@ -1,7 +1,7 @@
 package com.simbirsoft.belousov.rest;
 
+import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusException;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,6 +20,15 @@ public class ErrorController {
     @ExceptionHandler(NoSuchException.class)
     public ResponseEntity handleIOException(NoSuchException e) {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity handleIOException(IllegalArgumentException e) {
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IncorrectlyEnteredStatusException.class)
+    public ResponseEntity handleIOException(IncorrectlyEnteredStatusException e) {
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }

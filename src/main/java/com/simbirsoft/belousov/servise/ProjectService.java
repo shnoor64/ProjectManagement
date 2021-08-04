@@ -16,5 +16,7 @@ public interface ProjectService {
     ProjectResponseDto updateProject(ProjectRequestDto projectRequestDto, int id);
 
     void deleteProject(int id);
+
+    ProjectResponseDto updateStatusProject(int projectId, String statusProject);
 }
 
