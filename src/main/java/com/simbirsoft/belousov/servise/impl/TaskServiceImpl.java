@@ -13,6 +13,7 @@ import com.simbirsoft.belousov.repository.TaskRepository;
 import com.simbirsoft.belousov.repository.UserRepository;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
+import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusException;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.TaskService;
 import org.springframework.stereotype.Service;
@@ -109,9 +110,8 @@ public class TaskServiceImpl implements TaskService {
             case IN_PROGRESS:
                 if (taskEntity.getProjectId().getStatusProject().equals(StatusProject.IN_PROGRESS)) {
                     taskEntity.setStartTimeTask(LocalDateTime.now());
-                    //taskEntity.setEndTimeTask(getPlannedEndTimeTask(taskEntity.getStartTimeTask(), taskEntity.getTimeToComplete()));
                 } else {
-                    //вывалить исключение : Невозможно поменять статус, проект не стартовал.
+                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус задачи, проект не стартовал.");
                 }
                 break;
             case DONE:
@@ -119,11 +119,9 @@ public class TaskServiceImpl implements TaskService {
                     taskEntity.setStatusTask(StatusTask.DONE);
                     taskEntity.setEndTimeTask(LocalDateTime.now());
                 } else {
-                    //вывалить исключение : Невозможно поменять статус, задача не была на исполнении.
+                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус задачи, задача не была на исполнении.");
                 }
                 break;
-            default:
-
         }
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);

@@ -55,6 +55,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto addProject(ProjectRequestDto projectRequestDto) {
         ProjectEntity projectEntity = projectMapper.projectRequestDtoToEntity(projectRequestDto);
+        projectEntity.setStatusProject(StatusProject.BACKLOG);
         projectRepository.save(projectEntity);
         return projectMapper.projectEntityToResponseDto(projectEntity);
     }
@@ -81,7 +82,7 @@ public class ProjectServiceImpl implements ProjectService {
             if (taskRepository.countAllNotDoneTasksByProject(projectId) == 0) {
                 projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
             } else {
-                throw new IncorrectlyEnteredStatusException("Не все задачи завершены");
+                throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
             }
         } else {
             projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
