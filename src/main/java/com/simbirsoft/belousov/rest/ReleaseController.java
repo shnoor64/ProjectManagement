@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Tag(name = "Управление релизами")
 @RequestMapping("/api/management/releases")
 @RestController
 public class ReleaseController {
     private final ReleaseService releaseService;
+    private static final Logger LOG = Logger.getLogger(ReleaseController.class.getName());
 
     public ReleaseController(ReleaseService releaseService) {
         this.releaseService = releaseService;
@@ -27,22 +30,23 @@ public class ReleaseController {
     public ResponseEntity<List<ReleaseResponseDto>> getReleases() {
 
         List<ReleaseResponseDto> results = releaseService.getAllReleases();
+        LOG.log(Level.INFO, "Вызван метод: getReleases");
         return ResponseEntity.ok().body(results);
-
     }
 
     @Operation(summary = "Получить релиз")
     @GetMapping(value = "/{id}")
     public ResponseEntity<ReleaseResponseDto> getRelease(@PathVariable int id) {
         ReleaseResponseDto result = releaseService.getReleaseById(id);
+        LOG.log(Level.INFO, "Вызван метод: getRelease");
         return ResponseEntity.ok().body(result);
-
     }
 
     @Operation(summary = "Добавить релиз")
     @PostMapping
     public ResponseEntity<ReleaseResponseDto> createRelease(@RequestBody ReleaseRequestDto requestDto) {
         ReleaseResponseDto result = releaseService.addRelease(requestDto);
+        LOG.log(Level.INFO, "Вызван метод: createRelease");
         return ResponseEntity.ok().body(result);
     }
 
@@ -51,13 +55,15 @@ public class ReleaseController {
     public ResponseEntity<ReleaseResponseDto> partialUpdateRelease(@PathVariable int id,
                                                                    @RequestBody ReleaseRequestDto requestDto) throws IOException {
         ReleaseResponseDto result = releaseService.updateRelease(requestDto, id);
+        LOG.log(Level.INFO, "Вызван метод: partialUpdateRelease");
         throw new IOException();
     }
 
     @Operation(summary = "Удалить релиз")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity partialUpdateRelease(@PathVariable int id) {
+    public ResponseEntity partialDeleteRelease(@PathVariable int id) {
         releaseService.deleteRelease(id);
+        LOG.log(Level.INFO, "Вызван метод: partialDeleteRelease");
         return ResponseEntity.ok().build();
     }
 

@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Tag(name = "Управление задачами")
 @RequestMapping("/api/management/tasks")
@@ -19,6 +21,7 @@ import java.util.List;
 public class TaskBoardController {
 
     private final TaskService taskService;
+    private static final Logger LOG = Logger.getLogger(TaskBoardController.class.getName());
 
     public TaskBoardController(TaskService taskService) {
         this.taskService = taskService;
@@ -28,6 +31,7 @@ public class TaskBoardController {
     @GetMapping
     public ResponseEntity<List<TaskResponseDto>> getTasks() {
         List<TaskResponseDto> results = taskService.getAllTasks();
+        LOG.log(Level.INFO, "Вызван метод: getTasks");
         return ResponseEntity.ok().body(results);
     }
 
@@ -35,6 +39,7 @@ public class TaskBoardController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<TaskResponseDto> getTask(@PathVariable int id) {
         TaskResponseDto result = taskService.getTaskById(id);
+        LOG.log(Level.INFO, "Вызван метод: getTask");
         return ResponseEntity.ok().body(result);
     }
 
@@ -42,6 +47,7 @@ public class TaskBoardController {
     @PostMapping
     public ResponseEntity<TaskResponseDto> createTask(@RequestBody TaskRequestDto requestDto) {
         TaskResponseDto result = taskService.addTask(requestDto);
+        LOG.log(Level.INFO, "Вызван метод: createTask");
         return ResponseEntity.ok().body(result);
     }
 
@@ -50,13 +56,15 @@ public class TaskBoardController {
     public ResponseEntity<TaskResponseDto> partialUpdateTask(@PathVariable int id,
                                                              @RequestBody TaskRequestDto requestDto) throws IOException {
         taskService.updateTask(requestDto, id);
+        LOG.log(Level.INFO, "Вызван метод: partialUpdateTask");
         throw new IOException();
     }
 
     @Operation(summary = "Удалить задачу")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity partialUpdateTask(@PathVariable int id) {
+    public ResponseEntity partialDeleteTask(@PathVariable int id) {
         taskService.deleteTask(id);
+        LOG.log(Level.INFO, "Вызван метод: partialDeleteTask");
         return ResponseEntity.ok().build();
     }
 
@@ -65,6 +73,7 @@ public class TaskBoardController {
     public ResponseEntity<TaskResponseDto> updatePerformerTaskById(@PathVariable int id,
                                                                    @RequestBody int performerId) throws IOException {
         taskService.updatePerformerTask(id, performerId);
+        LOG.log(Level.INFO, "Вызван метод: updatePerformerTaskById");
         throw new IOException();
     }
 
@@ -73,6 +82,7 @@ public class TaskBoardController {
     public ResponseEntity<TaskResponseDto> updateStatusTaskById(@PathVariable int id,
                                                                 @RequestBody String statusTask) throws IOException {
         taskService.updateStatusTask(id, statusTask);
+        LOG.log(Level.INFO, "Вызван метод: updateStatusTaskById");
         throw new IOException();
     }
 
@@ -81,6 +91,7 @@ public class TaskBoardController {
     public ResponseEntity<TaskResponseDto> updateReleaseTaskById(@PathVariable int id,
                                                                  @RequestBody int releaseId) throws IOException {
         taskService.updateReleaseTask(id, releaseId);
+        LOG.log(Level.INFO, "Вызван метод: updateReleaseTaskById");
         throw new IOException();
     }
 
@@ -89,6 +100,7 @@ public class TaskBoardController {
     public ResponseEntity<TaskResponseDto> updateTimeToCompleteTaskById(@PathVariable int id,
                                                                         @RequestBody Period timeToComplete) throws IOException {
         taskService.updateTimeToCompleteTask(id, timeToComplete);
+        LOG.log(Level.INFO, "Вызван метод: updateTimeToCompleteTaskById");
         throw new IOException();
     }
 
@@ -97,6 +109,7 @@ public class TaskBoardController {
     public ResponseEntity<TaskResponseDto> updateStartTimeTaskById(@PathVariable int id,
                                                                    @RequestBody LocalDateTime startTimeTask) throws IOException {
         taskService.updateStartTimeTask(id, startTimeTask);
+        LOG.log(Level.INFO, "Вызван метод: updateStartTimeTaskById");
         throw new IOException();
     }
 
@@ -104,6 +117,7 @@ public class TaskBoardController {
     @GetMapping(value = "/{releaseId}")
     public ResponseEntity<Integer> showNumberOutstandingTaskByReleaseId(@PathVariable int releaseId) {
         int result = taskService.showNumberOutstandingTask(releaseId);
+        LOG.log(Level.INFO, "Вызван метод: showNumberOutstandingTaskByReleaseId");
         return ResponseEntity.ok().body(result);
     }
 
@@ -111,6 +125,7 @@ public class TaskBoardController {
     @GetMapping(value = "/{releaseId}")
     public ResponseEntity<List<TaskResponseDto>> showAllOutstandingTasksByReleaseId(@PathVariable int releaseId) {
         List<TaskResponseDto> results = taskService.showAllOutstandingTasks(releaseId);
+        LOG.log(Level.INFO, "Вызван метод: showAllOutstandingTasksByReleaseId");
         return ResponseEntity.ok().body(results);
     }
 }
