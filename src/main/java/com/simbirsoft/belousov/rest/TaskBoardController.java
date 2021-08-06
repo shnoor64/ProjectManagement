@@ -51,14 +51,14 @@ public class TaskBoardController {
         return ResponseEntity.ok().body(result);
     }
 
-//    @Operation(summary = "Обновить задачу")
-//    @PutMapping(value = "/{id}")
-//    public ResponseEntity<TaskResponseDto> partialUpdateTask(@PathVariable int id,
-//                                                             @RequestBody TaskRequestDto requestDto) throws IOException {
-//        taskService.updateTask(requestDto, id);
-//        LOG.log(Level.INFO, "Вызван метод: partialUpdateTask");
-//        throw new IOException();
-//    }
+    @Operation(summary = "Обновить задачу")
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<TaskResponseDto> partialUpdateTask(@PathVariable int id,
+                                                             @RequestBody TaskRequestDto requestDto) throws IOException {
+        taskService.updateTask(requestDto, id);
+        LOG.log(Level.INFO, "Вызван метод: partialUpdateTask");
+        throw new IOException();
+    }
 
     @Operation(summary = "Удалить задачу")
     @DeleteMapping(value = "/{id}")
