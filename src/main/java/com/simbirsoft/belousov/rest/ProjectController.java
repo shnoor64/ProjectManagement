@@ -69,9 +69,9 @@ public class ProjectController {
     }
 
     @Operation(summary = "Обновить статус проекта")
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}/{status}")
     public ResponseEntity<ProjectResponseDto> updateStatusProjectById(@PathVariable int id,
-                                                                      @RequestBody String status) throws IOException {
+                                                                      @PathVariable String status) throws IOException {
         ProjectResponseDto result = projectService.updateStatusProject(id, status);
         LOG.log(Level.INFO, "Вызван метод: updateStatusProjectById");
         throw new IOException();
