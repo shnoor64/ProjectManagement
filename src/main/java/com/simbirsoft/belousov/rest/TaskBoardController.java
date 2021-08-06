@@ -69,45 +69,45 @@ public class TaskBoardController {
     }
 
     @Operation(summary = "Обновить исполнителя задачи")
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}/user/{performerId}")
     public ResponseEntity<TaskResponseDto> updatePerformerTaskById(@PathVariable int id,
-                                                                   @RequestBody int performerId) throws IOException {
+                                                                   @PathVariable int performerId) throws IOException {
         taskService.updatePerformerTask(id, performerId);
         LOG.log(Level.INFO, "Вызван метод: updatePerformerTaskById");
         throw new IOException();
     }
 
     @Operation(summary = "Обновить статус задачи")
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}/{statusTask}")
     public ResponseEntity<TaskResponseDto> updateStatusTaskById(@PathVariable int id,
-                                                                @RequestBody String statusTask) throws IOException {
+                                                                @PathVariable String statusTask) throws IOException {
         taskService.updateStatusTask(id, statusTask);
         LOG.log(Level.INFO, "Вызван метод: updateStatusTaskById");
         throw new IOException();
     }
 
     @Operation(summary = "Обновить релиз задачи")
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}/release/{releaseId}")
     public ResponseEntity<TaskResponseDto> updateReleaseTaskById(@PathVariable int id,
-                                                                 @RequestBody int releaseId) throws IOException {
+                                                                 @PathVariable int releaseId) throws IOException {
         taskService.updateReleaseTask(id, releaseId);
         LOG.log(Level.INFO, "Вызван метод: updateReleaseTaskById");
         throw new IOException();
     }
 
     @Operation(summary = "Обновить время для завершения задачи")
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}/{timeToComplete}")
     public ResponseEntity<TaskResponseDto> updateTimeToCompleteTaskById(@PathVariable int id,
-                                                                        @RequestBody Period timeToComplete) throws IOException {
+                                                                        @PathVariable Period timeToComplete) throws IOException {
         taskService.updateTimeToCompleteTask(id, timeToComplete);
         LOG.log(Level.INFO, "Вызван метод: updateTimeToCompleteTaskById");
         throw new IOException();
     }
 
     @Operation(summary = "Обновить время старта задачи")
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}/{startTimeTask}")
     public ResponseEntity<TaskResponseDto> updateStartTimeTaskById(@PathVariable int id,
-                                                                   @RequestBody LocalDateTime startTimeTask) throws IOException {
+                                                                   @PathVariable LocalDateTime startTimeTask) throws IOException {
         taskService.updateStartTimeTask(id, startTimeTask);
         LOG.log(Level.INFO, "Вызван метод: updateStartTimeTaskById");
         throw new IOException();
@@ -122,7 +122,7 @@ public class TaskBoardController {
     }
 
     @Operation(summary = "Получить список задач, не завершившихся в заданный релиз")
-    @GetMapping(value = "/{releaseId}")
+    @GetMapping(value = "/release/{releaseId}")
     public ResponseEntity<List<TaskResponseDto>> showAllOutstandingTasksByReleaseId(@PathVariable int releaseId) {
         List<TaskResponseDto> results = taskService.showAllOutstandingTasks(releaseId);
         LOG.log(Level.INFO, "Вызван метод: showAllOutstandingTasksByReleaseId");
