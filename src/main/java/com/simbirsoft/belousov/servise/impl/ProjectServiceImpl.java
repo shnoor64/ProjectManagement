@@ -87,6 +87,8 @@ public class ProjectServiceImpl implements ProjectService {
         } else {
             projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
         }
+        projectRepository.save(projectEntity);
         return projectMapper.projectEntityToResponseDto(projectEntity);
+
     }
 }

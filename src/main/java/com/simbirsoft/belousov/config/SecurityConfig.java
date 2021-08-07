@@ -2,6 +2,7 @@ package com.simbirsoft.belousov.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,7 +17,17 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/")
+                .permitAll()
+                .antMatchers(HttpMethod.GET, "/api/**").hasAnyRole("admin", "user")
+                .antMatchers(HttpMethod.POST, "/api/**").hasAnyRole("admin")
+                .antMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("admin")
+                .anyRequest().authenticated().and().httpBasic();
+
+
     }
 
     @Bean
@@ -26,12 +37,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 User.builder()
                         .username("admin")
                         .password(passwordEncoder().encode("admin"))
-                        .roles("ADMIN")
-                        .build()) {
-        };
+                        .roles("admin")
+                        .build(),
+                User.builder()
+                        .username("user")
+                        .password(passwordEncoder().encode("user"))
+                        .roles("user")
+                        .build())
+                ;
     }
+
     @Bean
-    protected PasswordEncoder passwordEncoder(){
+    protected PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
 }
