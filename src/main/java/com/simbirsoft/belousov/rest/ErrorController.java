@@ -13,22 +13,22 @@ import java.io.IOException;
 public class ErrorController {
 
     @ExceptionHandler(IOException.class)
-    public ResponseEntity handleIOException(IOException e) {
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> handleIOException(IOException e) {
+        return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NoSuchException.class)
-    public ResponseEntity handleIOException(NoSuchException e) {
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> handleIOException(NoSuchException e) {
+        return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity handleIOException(IllegalArgumentException e) {
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> handleIOException(IllegalArgumentException e) {
+        return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(IncorrectlyEnteredStatusException.class)
-    public ResponseEntity handleIOException(IncorrectlyEnteredStatusException e) {
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> handleIOException(IncorrectlyEnteredStatusException e) {
+        return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
