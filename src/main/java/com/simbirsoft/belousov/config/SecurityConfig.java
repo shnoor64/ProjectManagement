@@ -1,5 +1,6 @@
 package com.simbirsoft.belousov.config;
 
+import com.simbirsoft.belousov.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,6 +16,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private  final UserRepository userRepository;
+
+    public SecurityConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -39,6 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .password(passwordEncoder().encode("admin"))
                         .roles("admin")
                         .build(),
+                User.builder()
+                        .username("user")
+                        .password(passwordEncoder().encode("user"))
+                        .roles("user")
+                        .build())
+                ;
+
                 User.builder()
                         .username("user")
                         .password(passwordEncoder().encode("user"))
