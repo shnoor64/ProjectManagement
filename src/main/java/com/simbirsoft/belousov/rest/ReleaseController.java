@@ -7,6 +7,7 @@ import com.simbirsoft.belousov.servise.ReleaseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class ReleaseController {
 
     @Operation(summary = "Получить список редизов")
     @GetMapping
+    @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity<List<ReleaseResponseDto>> getReleases() {
 
         List<ReleaseResponseDto> results = releaseService.getAllReleases();
@@ -36,6 +38,7 @@ public class ReleaseController {
 
     @Operation(summary = "Получить релиз")
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity<ReleaseResponseDto> getRelease(@PathVariable int id) {
         ReleaseResponseDto result = releaseService.getReleaseById(id);
         LOG.log(Level.INFO, "Вызван метод: getRelease");
@@ -44,6 +47,7 @@ public class ReleaseController {
 
     @Operation(summary = "Добавить релиз")
     @PostMapping
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<ReleaseResponseDto> createRelease(@RequestBody ReleaseRequestDto requestDto) {
         ReleaseResponseDto result = releaseService.addRelease(requestDto);
         LOG.log(Level.INFO, "Вызван метод: createRelease");
@@ -52,6 +56,7 @@ public class ReleaseController {
 
     @Operation(summary = "Обновить релиз")
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<ReleaseResponseDto> partialUpdateRelease(@PathVariable int id,
                                                                    @RequestBody ReleaseRequestDto requestDto) throws IOException {
         ReleaseResponseDto result = releaseService.updateRelease(requestDto, id);
@@ -61,6 +66,7 @@ public class ReleaseController {
 
     @Operation(summary = "Удалить релиз")
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity partialDeleteRelease(@PathVariable int id) {
         releaseService.deleteRelease(id);
         LOG.log(Level.INFO, "Вызван метод: partialDeleteRelease");

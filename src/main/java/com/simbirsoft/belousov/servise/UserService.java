@@ -1,6 +1,5 @@
 package com.simbirsoft.belousov.servise;
 
-import com.simbirsoft.belousov.entity.UserEntity;
 import com.simbirsoft.belousov.rest.dto.UserRequestDto;
 import com.simbirsoft.belousov.rest.dto.UserResponseDto;
 
@@ -17,5 +16,4 @@ public interface UserService {
 
     void deleteUser(int id);
 
-    UserEntity getUserByName(String name);
 }

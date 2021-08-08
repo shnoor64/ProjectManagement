@@ -67,8 +67,5 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(userEntity);
     }
 
-    @Override
-    public UserEntity getUserByName(String name) {
-        return userRepository.findByUserName(name);
-    }
+
 }
