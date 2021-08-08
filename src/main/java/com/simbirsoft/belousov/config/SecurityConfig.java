@@ -8,15 +8,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private  final UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public SecurityConfig(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -40,18 +44,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     protected UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(
-                User.builder()
-                        .username("admin")
-                        .password(passwordEncoder().encode("admin"))
-                        .roles("admin")
-                        .build(),
-                User.builder()
-                        .username("user")
-                        .password(passwordEncoder().encode("user"))
-                        .roles("user")
+
+        Set<UserDetails> users= userRepository.findAll()
+                .stream()
+                .map(userEntity -> User.builder()
+                        .username(userEntity.getName())
+                        .password(passwordEncoder().encode(userEntity.getPassword()))
+                        .roles(userEntity.getRole().getName())
                         .build())
-                ;
+                .collect(Collectors.toSet());
+
+        return new InMemoryUserDetailsManager(users);
+
+//        return new InMemoryUserDetailsManager(
+//                User.builder()
+//                        .username("admin")
+//                        .password(passwordEncoder().encode("admin"))
+//                        .roles("admin")
+//                        .build(),
+//                User.builder()
+//                        .username("user")
+//                        .password(passwordEncoder().encode("user"))
+//                        .roles("user")
+//                        .build())
+//                ;
     }
 
     @Bean

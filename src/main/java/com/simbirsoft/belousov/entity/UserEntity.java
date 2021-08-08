@@ -34,6 +34,14 @@ public class UserEntity {
     private List<TaskEntity> tasks_performer;
 
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public UserEntity(int userId, String name, String surname, RoleEntity role, List<TaskEntity> tasks_author, List<TaskEntity> tasks_performer) {
         this.userId = userId;
         this.name = name;

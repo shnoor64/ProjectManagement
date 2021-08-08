@@ -66,4 +66,9 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
         userRepository.delete(userEntity);
     }
+
+    @Override
+    public UserEntity getUserByName(String name) {
+        return userRepository.findByUserName(name);
+    }
 }
