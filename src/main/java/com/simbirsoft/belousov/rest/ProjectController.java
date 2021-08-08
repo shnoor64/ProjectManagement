@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,10 +53,10 @@ public class ProjectController {
     @Operation(summary = "Обновить проект")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProjectResponseDto> partialUpdateProject(@PathVariable int id,
-                                                                   @RequestBody ProjectRequestDto requestDto) throws IOException {
+                                                                   @RequestBody ProjectRequestDto requestDto){
         ProjectResponseDto result = projectService.updateProject(requestDto, id);
         LOG.log(Level.INFO, "Вызван метод: partialUpdateProject");
-        throw new IOException();
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Удалить проект")
@@ -71,10 +70,10 @@ public class ProjectController {
     @Operation(summary = "Обновить статус проекта")
     @PutMapping(value = "/{id}/{status}")
     public ResponseEntity<ProjectResponseDto> updateStatusProjectById(@PathVariable int id,
-                                                                      @PathVariable String status) throws IOException {
+                                                                      @PathVariable String status) {
         ProjectResponseDto result = projectService.updateStatusProject(id, status);
         LOG.log(Level.INFO, "Вызван метод: updateStatusProjectById");
-        throw new IOException();
+        return ResponseEntity.ok().body(result);
     }
 
 }
