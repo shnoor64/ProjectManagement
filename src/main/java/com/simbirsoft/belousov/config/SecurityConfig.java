@@ -3,7 +3,6 @@ package com.simbirsoft.belousov.config;
 import com.simbirsoft.belousov.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -33,10 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/**").hasAnyRole("admin")
-                .antMatchers(HttpMethod.POST, "/api/**").hasAnyRole("admin")
-                .antMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("admin")
-                .antMatchers(HttpMethod.PUT, "/api/**").hasAnyRole("admin")
+//                .antMatchers(HttpMethod.GET, "/api/**").hasAnyRole("admin")
+//                .antMatchers(HttpMethod.POST, "/api/**").hasAnyRole("admin")
+//                .antMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("admin")
+//                .antMatchers(HttpMethod.PUT, "/api/**").hasAnyRole("admin")
                 .anyRequest().authenticated().and().httpBasic();
 
 
