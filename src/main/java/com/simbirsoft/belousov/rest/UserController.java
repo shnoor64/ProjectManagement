@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,10 +52,10 @@ public class UserController {
     @Operation(summary = "Обновить пользователя")
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserResponseDto> partialUpdateUser(@PathVariable int id,
-                                                             @RequestBody UserRequestDto requestDto) throws IOException {
+                                                             @RequestBody UserRequestDto requestDto) {
         UserResponseDto result = userService.updateUser(requestDto, id);
         LOG.log(Level.INFO, "Вызван метод: partialUpdateUser");
-        throw new IOException();
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Удалить пользователя")

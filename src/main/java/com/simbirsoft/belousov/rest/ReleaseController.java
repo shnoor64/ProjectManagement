@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,10 +57,10 @@ public class ReleaseController {
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<ReleaseResponseDto> partialUpdateRelease(@PathVariable int id,
-                                                                   @RequestBody ReleaseRequestDto requestDto) throws IOException {
+                                                                   @RequestBody ReleaseRequestDto requestDto) {
         ReleaseResponseDto result = releaseService.updateRelease(requestDto, id);
         LOG.log(Level.INFO, "Вызван метод: partialUpdateRelease");
-        throw new IOException();
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Удалить релиз")

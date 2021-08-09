@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,10 +50,10 @@ public class RoleController {
     @Operation(summary = "Обновить роль")
     @PutMapping(value = "/{id}")
     public ResponseEntity<RoleResponseDto> partialUpdateRole(@PathVariable int id,
-                                                             @RequestBody RoleRequestDto requestDto) throws IOException {
+                                                             @RequestBody RoleRequestDto requestDto) {
         RoleResponseDto result = roleService.updateRole(requestDto, id);
         LOG.log(Level.INFO, "Вызван метод: partialUpdateRole");
-        throw new IOException();
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Удалить роль")
