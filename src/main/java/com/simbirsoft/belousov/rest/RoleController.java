@@ -6,6 +6,7 @@ import com.simbirsoft.belousov.servise.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class RoleController {
 
     @Operation(summary = "Получить список ролей")
     @GetMapping
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<List<RoleResponseDto>> getRoles() {
         List<RoleResponseDto> results = roleService.getAllRoles();
         LOG.log(Level.INFO, "Вызван метод: getRoles");
@@ -33,6 +35,7 @@ public class RoleController {
 
     @Operation(summary = "Получить роль")
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<RoleResponseDto> getRole(@PathVariable int id) {
         RoleResponseDto result = roleService.getRoleById(id);
         LOG.log(Level.INFO, "Вызван метод: getRole");
@@ -41,6 +44,7 @@ public class RoleController {
 
     @Operation(summary = "Добавить роль")
     @PostMapping
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<RoleResponseDto> createRole(@RequestBody RoleRequestDto requestDto) {
         RoleResponseDto result = roleService.addRole(requestDto);
         LOG.log(Level.INFO, "Вызван метод: createRole");
@@ -49,6 +53,7 @@ public class RoleController {
 
     @Operation(summary = "Обновить роль")
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<RoleResponseDto> partialUpdateRole(@PathVariable int id,
                                                              @RequestBody RoleRequestDto requestDto) {
         RoleResponseDto result = roleService.updateRole(requestDto, id);
@@ -58,6 +63,7 @@ public class RoleController {
 
     @Operation(summary = "Удалить роль")
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity partialDeleteRole(@PathVariable int id) {
         roleService.deleteRole(id);
         LOG.log(Level.INFO, "Вызван метод: partialDeleteRole");
