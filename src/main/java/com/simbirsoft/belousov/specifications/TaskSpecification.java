@@ -3,10 +3,7 @@ package com.simbirsoft.belousov.specifications;
 import com.simbirsoft.belousov.entity.TaskEntity;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 public class TaskSpecification {
     public static Specification<TaskEntity> GetByName(String name) {
@@ -20,33 +17,37 @@ public class TaskSpecification {
         };
     }
 
-    public static Specification<TaskEntity> GetByRelease(int release) {
+    public static Specification<TaskEntity> GetByRelease(int releaseVersion) {
         return new Specification<TaskEntity>() {
             @Override
             public Predicate toPredicate(Root<TaskEntity> root,
                                          CriteriaQuery<?> criteriaQuery,
                                          CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.like(root.get("release_id"), "%" + release + "%");
+//                Join join = root.join("projectId");
+                Join join = root.join("releaseId", JoinType.RIGHT);
+                return criteriaBuilder.equal(join.get("version"), releaseVersion );
             }
         };
     }
-    public static Specification<TaskEntity> GetByAuthor(String author) {
+    public static Specification<TaskEntity> GetByAuthor(String authorName) {
         return new Specification<TaskEntity>() {
             @Override
             public Predicate toPredicate(Root<TaskEntity> root,
                                          CriteriaQuery<?> criteriaQuery,
                                          CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.like(root.get("author_id"), "%" + author + "%");
+                Join join = root.join("authorId");
+                return criteriaBuilder.equal(join.get("name"), authorName );
             }
         };
     }
-    public static Specification<TaskEntity> GetByPerformer(String performer) {
+    public static Specification<TaskEntity> GetByPerformer(String performerName) {
         return new Specification<TaskEntity>() {
             @Override
             public Predicate toPredicate(Root<TaskEntity> root,
                                          CriteriaQuery<?> criteriaQuery,
                                          CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.like(root.get("performer_id"), "%" + performer + "%");
+                Join join = root.join("performerId");
+                return criteriaBuilder.equal(join.get("name"), performerName );
             }
         };
     }

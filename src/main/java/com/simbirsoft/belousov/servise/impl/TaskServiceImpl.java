@@ -175,15 +175,25 @@ public class TaskServiceImpl implements TaskService {
     /**
      * написать, что делает метод
      *
-     * @param taskName
+     * @param
      * @return
      */
+//    @Override
+//    public List<TaskResponseDto> getAllTaskSort(String taskName, int release, String author, String performer) {
+//        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskName)
+//                .and(TaskSpecification.GetByRelease(release))
+//                .and(TaskSpecification.GetByAuthor(author))
+//                .and(TaskSpecification.GetByPerformer(performer)));
+//        return taskEntityList
+//                .stream()
+//                .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
+//                .collect(Collectors.toList());
+//    }
     @Override
-    public List<TaskResponseDto> getAllTaskSort(String taskName, int release, String author, String performer) {
-        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskName)
-                .and(TaskSpecification.GetByRelease(release))
-                .and(TaskSpecification.GetByAuthor(author))
-                .and(TaskSpecification.GetByPerformer(performer)));
+//    public List<TaskResponseDto> getAllTaskSort(String taskName, int release, String author, String performer) {
+    public List<TaskResponseDto> getAllTaskSort(int release) {
+//        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByRelease(release));
+        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByRelease(release));
         return taskEntityList
                 .stream()
                 .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))

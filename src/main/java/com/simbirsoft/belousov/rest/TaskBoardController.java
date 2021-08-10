@@ -105,7 +105,7 @@ public class TaskBoardController {
     }
 
     @Operation(summary = "Обновить время для завершения задачи")
-    @PutMapping(value = "/{id}/{timeToComplete}")
+    @PutMapping(value = "/{id}/time/{timeToComplete}")
     @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity<TaskResponseDto> updateTimeToCompleteTaskById(@PathVariable int id,
                                                                         @PathVariable Period timeToComplete) throws IOException {
@@ -115,7 +115,7 @@ public class TaskBoardController {
     }
 
     @Operation(summary = "Обновить время старта задачи")
-    @PutMapping(value = "/{id}/{startTimeTask}")
+    @PutMapping(value = "{id}/start//{startTimeTask}")
     @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity<TaskResponseDto> updateStartTimeTaskById(@PathVariable int id,
                                                                    @PathVariable LocalDateTime startTimeTask) throws IOException {
@@ -125,7 +125,7 @@ public class TaskBoardController {
     }
 
     @Operation(summary = "Показать количество задач, не завершившихся в заданный релиз")
-    @GetMapping(value = "/{releaseId}")
+    @GetMapping(value = "/release/quantity/{releaseId}")
     @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity<Integer> showNumberOutstandingTaskByReleaseId(@PathVariable int releaseId) {
         int result = taskService.showNumberOutstandingTask(releaseId);
@@ -144,9 +144,9 @@ public class TaskBoardController {
     @Operation(summary = "Получить отсортированный список задач")
     @GetMapping(value = "/filter")
     @PreAuthorize("hasAnyRole('admin','user')")
-//    public ResponseEntity<List<TaskResponseDto>> showTaskSort(@PathVariable String taskName) {
     public ResponseEntity<List<TaskResponseDto>> showTaskSort(@RequestBody String taskName, int taskRelease, String taskAuthor,String taskPerformer) {
-        List<TaskResponseDto> results = taskService.getAllTaskSort(taskName, taskRelease, taskAuthor, taskPerformer );
+//        List<TaskResponseDto> results = taskService.getAllTaskSort(taskName, taskRelease, taskAuthor, taskPerformer );
+        List<TaskResponseDto> results = taskService.getAllTaskSort(taskRelease);
         LOG.log(Level.INFO, "Вызван метод: showTaskByName");
         return ResponseEntity.ok().body(results);
     }
