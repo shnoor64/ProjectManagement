@@ -79,14 +79,11 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));
         if (statusProject.equals(StatusProject.CLOSED)) {
-            if (taskRepository.countAllNotDoneTasksByProject(projectId) == 0) {
-                projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
-            } else {
+            if (taskRepository.countAllNotDoneTasksByProject(projectId) != 0) {
                 throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
             }
-        } else {
-            projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
         }
+        projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
         projectRepository.save(projectEntity);
         return projectMapper.projectEntityToResponseDto(projectEntity);
 

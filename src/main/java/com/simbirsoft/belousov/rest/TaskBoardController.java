@@ -141,4 +141,12 @@ public class TaskBoardController {
         LOG.log(Level.INFO, "Вызван метод: showAllOutstandingTasksByReleaseId");
         return ResponseEntity.ok().body(results);
     }
+    @Operation(summary = "Получить список задач по имени")
+    @GetMapping(value = "/filter/{searchName}")
+    @PreAuthorize("hasAnyRole('admin','user')")
+    public ResponseEntity<List<TaskResponseDto>> showTaskByName(@PathVariable String searchName) {
+        List<TaskResponseDto> results = taskService.getAllTaskByName(searchName);
+        LOG.log(Level.INFO, "Вызван метод: showTaskByName");
+        return ResponseEntity.ok().body(results);
+    }
 }

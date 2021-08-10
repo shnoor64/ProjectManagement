@@ -16,6 +16,7 @@ import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusException;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.TaskService;
+import com.simbirsoft.belousov.specifications.TaskSpecification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -171,6 +172,21 @@ public class TaskServiceImpl implements TaskService {
         return startTimeTask.plus(timeToComplete);
     }
 
+    /**
+     *
+     * написать, что делает метод
+     * @param taskName
+     * @return List<TaskResponseDto>
+     *
+     */
+    @Override
+    public List<TaskResponseDto> getAllTaskByName(String taskName) {
+        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskName).);
+        return taskEntityList
+                .stream()
+                .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
+                .collect(Collectors.toList());
+    }
 
 
 }
