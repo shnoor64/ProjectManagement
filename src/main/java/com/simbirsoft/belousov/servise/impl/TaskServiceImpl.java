@@ -173,15 +173,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     /**
-     *
      * написать, что делает метод
+     *
      * @param taskName
      * @return
-     *
      */
     @Override
-    public List<TaskResponseDto> getAllTaskSort(String taskName) {
-        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskName));
+    public List<TaskResponseDto> getAllTaskSort(String taskName, int release, String author, String performer) {
+        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskName)
+                .and(TaskSpecification.GetByRelease(release))
+                .and(TaskSpecification.GetByAuthor(author))
+                .and(TaskSpecification.GetByPerformer(performer)));
         return taskEntityList
                 .stream()
                 .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))

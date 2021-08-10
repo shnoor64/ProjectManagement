@@ -142,10 +142,11 @@ public class TaskBoardController {
         return ResponseEntity.ok().body(results);
     }
     @Operation(summary = "Получить отсортированный список задач")
-    @GetMapping(value = "/filter/{searchName}")
+    @GetMapping(value = "/filter")
     @PreAuthorize("hasAnyRole('admin','user')")
-    public ResponseEntity<List<TaskResponseDto>> showTaskSort(@PathVariable String searchName) {
-        List<TaskResponseDto> results = taskService.getAllTaskSort(searchName);
+//    public ResponseEntity<List<TaskResponseDto>> showTaskSort(@PathVariable String taskName) {
+    public ResponseEntity<List<TaskResponseDto>> showTaskSort(@RequestBody String taskName, int taskRelease, String taskAuthor,String taskPerformer) {
+        List<TaskResponseDto> results = taskService.getAllTaskSort(taskName, taskRelease, taskAuthor, taskPerformer );
         LOG.log(Level.INFO, "Вызван метод: showTaskByName");
         return ResponseEntity.ok().body(results);
     }
