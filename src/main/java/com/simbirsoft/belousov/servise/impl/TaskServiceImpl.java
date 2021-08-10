@@ -176,12 +176,12 @@ public class TaskServiceImpl implements TaskService {
      *
      * написать, что делает метод
      * @param taskName
-     * @return List<TaskResponseDto>
+     * @return
      *
      */
     @Override
     public List<TaskResponseDto> getAllTaskByName(String taskName) {
-        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskName).);
+        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskName));
         return taskEntityList
                 .stream()
                 .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
