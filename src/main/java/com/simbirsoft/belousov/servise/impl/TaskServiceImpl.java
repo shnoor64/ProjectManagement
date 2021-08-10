@@ -180,7 +180,7 @@ public class TaskServiceImpl implements TaskService {
      *
      */
     @Override
-    public List<TaskResponseDto> getAllTaskByName(String taskName) {
+    public List<TaskResponseDto> getAllTaskSort(String taskName) {
         List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskName));
         return taskEntityList
                 .stream()

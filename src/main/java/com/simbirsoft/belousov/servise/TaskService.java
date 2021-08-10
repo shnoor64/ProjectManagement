@@ -36,5 +36,5 @@ public interface TaskService {
 
     LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete);
 
-    List <TaskResponseDto> getAllTaskByName (String taskName);
+    List <TaskResponseDto> getAllTaskSort (String taskName);
 }
