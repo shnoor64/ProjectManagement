@@ -1,5 +1,6 @@
 package com.simbirsoft.belousov.rest;
 
+import com.simbirsoft.belousov.rest.dto.TaskFilterRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import com.simbirsoft.belousov.servise.TaskService;
@@ -59,8 +60,8 @@ public class TaskBoardController {
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity<TaskResponseDto> partialUpdateTask(@PathVariable int id,
-                                                             @RequestBody TaskRequestDto requestDto){
-        TaskResponseDto result=taskService.updateTask(requestDto, id);
+                                                             @RequestBody TaskRequestDto requestDto) {
+        TaskResponseDto result = taskService.updateTask(requestDto, id);
         LOG.log(Level.INFO, "Вызван метод: partialUpdateTask");
         return ResponseEntity.ok().body(result);
     }
@@ -141,13 +142,13 @@ public class TaskBoardController {
         LOG.log(Level.INFO, "Вызван метод: showAllOutstandingTasksByReleaseId");
         return ResponseEntity.ok().body(results);
     }
+    
     @Operation(summary = "Получить отсортированный список задач")
-    @GetMapping(value = "/filter")
+    @PutMapping(value = "/filter")
     @PreAuthorize("hasAnyRole('admin','user')")
-    public ResponseEntity<List<TaskResponseDto>> showTaskSort(@RequestBody String taskName, int taskRelease, String taskAuthor,String taskPerformer) {
-//        List<TaskResponseDto> results = taskService.getAllTaskSort(taskName, taskRelease, taskAuthor, taskPerformer );
-        List<TaskResponseDto> results = taskService.getAllTaskSort(taskRelease);
-        LOG.log(Level.INFO, "Вызван метод: showTaskByName");
+    public ResponseEntity<List<TaskResponseDto>> showTaskSort(@RequestBody TaskFilterRequestDto taskFilterRequestDto) {
+        List<TaskResponseDto> results = taskService.getAllTaskSort(taskFilterRequestDto);
+        LOG.log(Level.INFO, "Вызван метод: getAllTaskSort");
         return ResponseEntity.ok().body(results);
     }
 }

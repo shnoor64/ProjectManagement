@@ -11,6 +11,7 @@ import com.simbirsoft.belousov.mappers.UserMapperImpl;
 import com.simbirsoft.belousov.repository.ReleaseRepository;
 import com.simbirsoft.belousov.repository.TaskRepository;
 import com.simbirsoft.belousov.repository.UserRepository;
+import com.simbirsoft.belousov.rest.dto.TaskFilterRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusException;
@@ -191,9 +192,9 @@ public class TaskServiceImpl implements TaskService {
 //    }
     @Override
 //    public List<TaskResponseDto> getAllTaskSort(String taskName, int release, String author, String performer) {
-    public List<TaskResponseDto> getAllTaskSort(int release) {
+    public List<TaskResponseDto> getAllTaskSort(TaskFilterRequestDto taskFilterRequestDto) {
 //        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByRelease(release));
-        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByRelease(release));
+        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByRelease(taskFilterRequestDto));
         return taskEntityList
                 .stream()
                 .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))

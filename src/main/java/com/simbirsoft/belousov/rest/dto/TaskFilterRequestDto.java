@@ -10,19 +10,32 @@ public class TaskFilterRequestDto {
     private String name;
 
     @Schema(description = "Проект")
-    private int projectId;
+    private String project;
 
     @Schema(description = "Статус задачи")
     private StatusTask statusTask;
 
     @Schema(description = "Автор задачи")
-    private int authorId;
+    private String author;
 
     @Schema(description = "Исполнитель задачи")
-    private int performerId;
+    private String performer;
 
     @Schema(description = "Релиз")
-    private int releaseId;
+    private int release;
+
+    public TaskFilterRequestDto(String name) {
+        this.name = name;
+    }
+
+    public TaskFilterRequestDto(String name, String project, StatusTask statusTask, String author, String performer, int release) {
+        this.name = name;
+        this.project = project;
+        this.statusTask = statusTask;
+        this.author = author;
+        this.performer = performer;
+        this.release = release;
+    }
 
     public String getName() {
         return name;
@@ -32,12 +45,12 @@ public class TaskFilterRequestDto {
         this.name = name;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public String getProject() {
+        return project;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setProject(String project) {
+        this.project = project;
     }
 
     public StatusTask getStatusTask() {
@@ -48,36 +61,27 @@ public class TaskFilterRequestDto {
         this.statusTask = statusTask;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public int getPerformerId() {
-        return performerId;
+    public String getPerformer() {
+        return performer;
     }
 
-    public void setPerformerId(int performerId) {
-        this.performerId = performerId;
+    public void setPerformer(String performer) {
+        this.performer = performer;
     }
 
-    public int getReleaseId() {
-        return releaseId;
+    public int getRelease() {
+        return release;
     }
 
-    public TaskFilterRequestDto(String name, int projectId, StatusTask statusTask, int authorId, int performerId, int releaseId) {
-        this.name = name;
-        this.projectId = projectId;
-        this.statusTask = statusTask;
-        this.authorId = authorId;
-        this.performerId = performerId;
-        this.releaseId = releaseId;
-    }
-
-    public void setReleaseId(int releaseId) {
-        this.releaseId = releaseId;
+    public void setRelease(int release) {
+        this.release = release;
     }
 }

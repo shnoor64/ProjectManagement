@@ -1,5 +1,6 @@
 package com.simbirsoft.belousov.servise;
 
+import com.simbirsoft.belousov.rest.dto.TaskFilterRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 
@@ -37,5 +38,5 @@ public interface TaskService {
     LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete);
 
 //    List <TaskResponseDto> getAllTaskSort (String taskName, int release, String author, String performer);
-List <TaskResponseDto> getAllTaskSort (int release);
+List <TaskResponseDto> getAllTaskSort (TaskFilterRequestDto taskFilterRequestDto);
 }
