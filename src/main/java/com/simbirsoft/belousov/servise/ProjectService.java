@@ -17,7 +17,7 @@ public interface ProjectService {
     /**
      * Метод позволяет получить проект по id
      *
-     * @param id - запрос с параметрами фильтра
+     * @param id - id проекта
      * @return ProjectResponseDto - искомый проект
      */
     ProjectResponseDto getProjectById(int id);

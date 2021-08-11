@@ -22,7 +22,7 @@ public interface TaskService {
     /**
      * Метод позволяет получить задачу по id
      *
-     * @param taskId - запрос с параметрами фильтра
+     * @param taskId - id задачи
      * @return TaskResponseDto - искомая задача
      */
     TaskResponseDto getTaskById(int taskId);
