@@ -18,17 +18,17 @@ public class ErrorController {
     }
 
     @ExceptionHandler(NoSuchException.class)
-    public ResponseEntity<String> handleIOException(NoSuchException e) {
+    public ResponseEntity<String> handleNoSuchException(NoSuchException e) {
         return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIOException(IllegalArgumentException e) {
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
         return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(IncorrectlyEnteredStatusException.class)
-    public ResponseEntity<String> handleIOException(IncorrectlyEnteredStatusException e) {
+    public ResponseEntity<String> handleIncorrectlyEnteredStatusException(IncorrectlyEnteredStatusException e) {
         return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
