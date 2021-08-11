@@ -190,14 +190,4 @@ public class TaskServiceImpl implements TaskService {
                 .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
                 .collect(Collectors.toList());
     }
-//    @Override
-//    public List<TaskResponseDto> getAllTaskSort(TaskFilterRequestDto taskFilterRequestDto) {
-//        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByRelease(taskFilterRequestDto));
-//        return taskEntityList
-//                .stream()
-//                .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
-//                .collect(Collectors.toList());
-//    }
-
-
 }
