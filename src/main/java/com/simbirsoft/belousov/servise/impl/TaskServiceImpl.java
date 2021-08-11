@@ -8,6 +8,7 @@ import com.simbirsoft.belousov.enums.StatusTask;
 import com.simbirsoft.belousov.mappers.ReleaseMapperImpl;
 import com.simbirsoft.belousov.mappers.TaskMapperImpl;
 import com.simbirsoft.belousov.mappers.UserMapperImpl;
+import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.repository.ReleaseRepository;
 import com.simbirsoft.belousov.repository.TaskRepository;
 import com.simbirsoft.belousov.repository.UserRepository;
@@ -18,9 +19,16 @@ import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusExc
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.TaskService;
 import com.simbirsoft.belousov.specifications.TaskSpecification;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
@@ -35,9 +43,10 @@ public class TaskServiceImpl implements TaskService {
     private final UserMapperImpl userMapper;
     private final ReleaseRepository releaseRepository;
     private final ReleaseMapperImpl releaseMapper;
+    private final ProjectRepository projectRepository;
 
 
-    public TaskServiceImpl(TaskRepository taskRepository, TaskMapperImpl taskMapper, UserRepository userRepository, UserMapperImpl userMapper, ReleaseRepository releaseRepository, ReleaseMapperImpl releaseMapper) {
+    public TaskServiceImpl(TaskRepository taskRepository, TaskMapperImpl taskMapper, UserRepository userRepository, UserMapperImpl userMapper, ReleaseRepository releaseRepository, ReleaseMapperImpl releaseMapper, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
         this.userRepository = userRepository;
@@ -45,10 +54,12 @@ public class TaskServiceImpl implements TaskService {
 
         this.releaseRepository = releaseRepository;
         this.releaseMapper = releaseMapper;
+        this.projectRepository = projectRepository;
     }
 
     /**
      * Метод позволяет получить все задачи
+     *
      * @return List<TaskResponseDto> - лист задач
      */
     @Transactional
@@ -65,6 +76,7 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет получить задачу по id
+     *
      * @param id - запрос с параметрами фильтра
      * @return TaskResponseDto - искомая задача
      */
@@ -77,6 +89,7 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет добавить задачу
+     *
      * @param taskRequestDto - добавляемая задача,
      * @return TaskResponseDto -добавленная задача
      */
@@ -91,8 +104,9 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет обновить задачу
+     *
      * @param taskRequestDto - обновленная задача,
-     *        id- id задачи
+     *                       id- id задачи
      * @return TaskResponseDto -обновленная задача
      */
     @Transactional
@@ -105,7 +119,8 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет удалить задачу
-     * @param  id- id задачи
+     *
+     * @param id- id задачи
      */
     @Transactional
     @Override
@@ -116,8 +131,9 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет обновить исполнителя задачи
+     *
      * @param performerId - исполнитель задачи,
-     *        taskId- id задачи
+     *                    taskId- id задачи
      * @return TaskResponseDto -обновленная задача
      */
     @Override
@@ -131,8 +147,9 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет обновить статус задачи
+     *
      * @param statusTask - статус задачи,
-     *        taskId- id задачи
+     *                   taskId- id задачи
      * @return TaskResponseDto -обновленная задача
      */
     @Override
@@ -164,10 +181,12 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
+
     /**
      * Метод позволяет обновить релиз задачи
+     *
      * @param releaseId - релиз задачи,
-     *        taskId- id задачи
+     *                  taskId- id задачи
      * @return TaskResponseDto -обновленная задача
      */
     @Override
@@ -178,10 +197,12 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
+
     /**
      * Метод позволяет обновить время на исполнение задачи
+     *
      * @param timeToComplete - время на исполнение задачи,
-     *        taskId- id задачи
+     *                       taskId- id задачи
      * @return TaskResponseDto -обновленная задача
      */
     @Override
@@ -191,10 +212,12 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
+
     /**
      * Метод позволяет обновить время старта задачи
+     *
      * @param startTimeTask - начало задачи,
-     *        taskId- id задачи
+     *                      taskId- id задачи
      * @return TaskResponseDto -обновленная задача
      */
     @Override
@@ -207,6 +230,7 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет получить число задач, которые не выполненны в заданном релизе
+     *
      * @param releaseId - релиз задач,
      * @return int - число задач
      */
@@ -217,6 +241,7 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет получить лист задач, которые не выполненны в заданном релизе
+     *
      * @param releaseId - релиз задач,
      * @return List<TaskResponseDto> - лист задач
      */
@@ -231,8 +256,9 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет получить плановое вреемя завершения задачи
+     *
      * @param startTimeTask - начало задачи,
-     *        timeToComplete- время на исполение залдачи
+     *                      timeToComplete- время на исполение залдачи
      * @return LocalDateTime Дата и время окончания задачи
      */
     @Override
@@ -242,6 +268,7 @@ public class TaskServiceImpl implements TaskService {
 
     /**
      * Метод позволяет получить задачу по фильтру
+     *
      * @param taskFilterRequestDto - запрос с параметрами фильтра
      * @return List<TaskResponseDto> - личт задач
      */
@@ -251,6 +278,32 @@ public class TaskServiceImpl implements TaskService {
                 .and(TaskSpecification.GetByRelease(taskFilterRequestDto.getRelease()))
                 .and(TaskSpecification.GetByAuthor(taskFilterRequestDto.getAuthor()))
                 .and(TaskSpecification.GetByPerformer(taskFilterRequestDto.getPerformer())));
+        return taskEntityList
+                .stream()
+                .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskResponseDto> parsTaskFromCsv(MultipartFile file) throws IOException {
+        List<TaskEntity> taskEntityList= new ArrayList<>();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(bufferedReader);
+        for (CSVRecord record : records) {
+            TaskEntity taskEntity = new TaskEntity();
+            taskEntity.setTaskId(Integer.parseInt(record.get(0)));
+            taskEntity.setName(record.get(1));
+            taskEntity.setDescriptionTask(record.get(2));
+            taskEntity.setProjectId(projectRepository.findById(Integer.parseInt(record.get(3))).orElseThrow(() -> new NoSuchException("Проект не найден")));
+            taskEntity.setStatusTask(StatusTask.valueOf(record.get(4)));
+            taskEntity.setAuthorId(userRepository.findById(Integer.parseInt(record.get(5))).orElseThrow(() -> new NoSuchException("Пользователь не найден")));
+            taskEntity.setPerformerId(userRepository.findById(Integer.parseInt(record.get(6))).orElseThrow(() -> new NoSuchException("Пользователь не найден")));
+            taskEntity.setReleaseId(releaseRepository.findById(Integer.parseInt(record.get(7))).orElseThrow(() -> new NoSuchException("Релиз не найден")));
+            taskEntity.setTimeToComplete(Period.parse(record.get(8)));
+            taskEntity.setStartTimeTask(LocalDateTime.parse(record.get(9)));
+            taskEntity.setEndTimeTask(LocalDateTime.parse(record.get(10)));
+            taskEntityList.add(taskEntity);
+        }
         return taskEntityList
                 .stream()
                 .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))

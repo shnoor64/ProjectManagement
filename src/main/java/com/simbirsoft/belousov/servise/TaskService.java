@@ -3,7 +3,9 @@ package com.simbirsoft.belousov.servise;
 import com.simbirsoft.belousov.rest.dto.TaskFilterRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
@@ -38,4 +40,6 @@ public interface TaskService {
     LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete);
 
     List<TaskResponseDto> getAllTaskSort(TaskFilterRequestDto taskFilterRequestDto);
+
+    List<TaskResponseDto> parsTaskFromCsv (MultipartFile file) throws IOException;
 }

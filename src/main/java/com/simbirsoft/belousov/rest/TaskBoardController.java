@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -151,4 +152,14 @@ public class TaskBoardController {
         LOG.log(Level.INFO, "Вызван метод: getAllTaskSort");
         return ResponseEntity.ok().body(results);
     }
+
+    @Operation(summary = "Добавить задачу из csv файла")
+    @PostMapping(value = "/csv")
+    @PreAuthorize("hasAnyRole('admin','user')")
+    public ResponseEntity createTaskFromCsv(@RequestParam("file") MultipartFile file) throws IOException {
+        List<TaskResponseDto> result = taskService.parsTaskFromCsv(file);
+        LOG.log(Level.INFO, "Вызван метод: createTaskFromCsv");
+        return ResponseEntity.ok().body(result);
+    }
+
 }
