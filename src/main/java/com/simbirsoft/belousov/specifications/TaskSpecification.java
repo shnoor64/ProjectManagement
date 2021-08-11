@@ -6,6 +6,12 @@ import org.springframework.data.jpa.domain.Specification;
 import javax.persistence.criteria.*;
 
 public class TaskSpecification {
+
+    /**
+     * Метод позволяет получить спецификацию для поиска задачи по имени
+     * @param taskName - искомое имя
+     * @return Specification<TaskEntity> - спецификация для поиска задачи
+     */
     public static Specification<TaskEntity> GetByName(String taskName) {
         if (taskName ==null) {
             return  null;
@@ -20,6 +26,11 @@ public class TaskSpecification {
         };
     }
 
+    /**
+     * Метод позволяет получить спецификацию для поиска задачи по релизу
+     * @param taskRelease - искомый релиз
+     * @return Specification<TaskEntity> - спецификация для поиска задачи
+     */
     public static Specification<TaskEntity> GetByRelease(int taskRelease) {
         if (taskRelease ==0) {
             return  null;
@@ -35,6 +46,11 @@ public class TaskSpecification {
         };
     }
 
+    /**
+     * Метод позволяет получить спецификацию для поиска задачи по автору
+     * @param taskAuthor - искомый автор
+     * @return Specification<TaskEntity> - спецификация для поиска задачи
+     */
     public static Specification<TaskEntity> GetByAuthor(String taskAuthor) {
         if (taskAuthor ==null) {
             return  null;
@@ -50,6 +66,11 @@ public class TaskSpecification {
         };
     }
 
+    /**
+     * Метод позволяет получить спецификацию для поиска задачи по исполнителю
+     * @param taskPerformer - искомый исполнитель
+     * @return Specification<TaskEntity> - спецификация для поиска задачи
+     */
     public static Specification<TaskEntity> GetByPerformer(String taskPerformer) {
         if (taskPerformer ==null) {
             return  null;
