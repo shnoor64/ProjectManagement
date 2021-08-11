@@ -179,27 +179,25 @@ public class TaskServiceImpl implements TaskService {
      * @param
      * @return
      */
-//    @Override
-//    public List<TaskResponseDto> getAllTaskSort(String taskName, int release, String author, String performer) {
-//        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskName)
-//                .and(TaskSpecification.GetByRelease(release))
-//                .and(TaskSpecification.GetByAuthor(author))
-//                .and(TaskSpecification.GetByPerformer(performer)));
-//        return taskEntityList
-//                .stream()
-//                .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
-//                .collect(Collectors.toList());
-//    }
     @Override
-//    public List<TaskResponseDto> getAllTaskSort(String taskName, int release, String author, String performer) {
     public List<TaskResponseDto> getAllTaskSort(TaskFilterRequestDto taskFilterRequestDto) {
-//        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByRelease(release));
-        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByRelease(taskFilterRequestDto));
+        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskFilterRequestDto.getName())
+                .and(TaskSpecification.GetByRelease(taskFilterRequestDto.getRelease()))
+                .and(TaskSpecification.GetByAuthor(taskFilterRequestDto.getAuthor()))
+                .and(TaskSpecification.GetByPerformer(taskFilterRequestDto.getPerformer())));
         return taskEntityList
                 .stream()
                 .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
                 .collect(Collectors.toList());
     }
+//    @Override
+//    public List<TaskResponseDto> getAllTaskSort(TaskFilterRequestDto taskFilterRequestDto) {
+//        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByRelease(taskFilterRequestDto));
+//        return taskEntityList
+//                .stream()
+//                .map(taskEntity -> taskMapper.taskEntityToResponseDto(taskEntity))
+//                .collect(Collectors.toList());
+//    }
 
 
 }

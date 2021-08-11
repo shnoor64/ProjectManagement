@@ -142,7 +142,7 @@ public class TaskBoardController {
         LOG.log(Level.INFO, "Вызван метод: showAllOutstandingTasksByReleaseId");
         return ResponseEntity.ok().body(results);
     }
-    
+
     @Operation(summary = "Получить отсортированный список задач")
     @PutMapping(value = "/filter")
     @PreAuthorize("hasAnyRole('admin','user')")
