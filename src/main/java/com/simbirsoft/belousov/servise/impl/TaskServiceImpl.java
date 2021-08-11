@@ -57,11 +57,6 @@ public class TaskServiceImpl implements TaskService {
         this.projectRepository = projectRepository;
     }
 
-    /**
-     * Метод позволяет получить все задачи
-     *
-     * @return List<TaskResponseDto> - лист задач
-     */
     @Transactional
     @Override
     public List<TaskResponseDto> getAllTasks() {
@@ -74,12 +69,6 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
-    /**
-     * Метод позволяет получить задачу по id
-     *
-     * @param id - запрос с параметрами фильтра
-     * @return TaskResponseDto - искомая задача
-     */
     @Transactional
     @Override
     public TaskResponseDto getTaskById(int id) {
@@ -87,12 +76,6 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
-    /**
-     * Метод позволяет добавить задачу
-     *
-     * @param taskRequestDto - добавляемая задача,
-     * @return TaskResponseDto -добавленная задача
-     */
     @Transactional
     @Override
     public TaskResponseDto addTask(TaskRequestDto taskRequestDto) {
@@ -102,13 +85,6 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
-    /**
-     * Метод позволяет обновить задачу
-     *
-     * @param taskRequestDto - обновленная задача,
-     *                       id- id задачи
-     * @return TaskResponseDto -обновленная задача
-     */
     @Transactional
     @Override
     public TaskResponseDto updateTask(TaskRequestDto taskRequestDto, int id) {
@@ -117,11 +93,6 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
-    /**
-     * Метод позволяет удалить задачу
-     *
-     * @param id- id задачи
-     */
     @Transactional
     @Override
     public void deleteTask(int id) {
@@ -129,13 +100,6 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.delete(taskEntity);
     }
 
-    /**
-     * Метод позволяет обновить исполнителя задачи
-     *
-     * @param performerId - исполнитель задачи,
-     *                    taskId- id задачи
-     * @return TaskResponseDto -обновленная задача
-     */
     @Override
     public TaskResponseDto updatePerformerTask(int taskId, int performerId) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -145,13 +109,6 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
-    /**
-     * Метод позволяет обновить статус задачи
-     *
-     * @param statusTask - статус задачи,
-     *                   taskId- id задачи
-     * @return TaskResponseDto -обновленная задача
-     */
     @Override
     public TaskResponseDto updateStatusTask(int taskId, String statusTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -182,13 +139,6 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
-    /**
-     * Метод позволяет обновить релиз задачи
-     *
-     * @param releaseId - релиз задачи,
-     *                  taskId- id задачи
-     * @return TaskResponseDto -обновленная задача
-     */
     @Override
     public TaskResponseDto updateReleaseTask(int taskId, int releaseId) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -198,13 +148,6 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
-    /**
-     * Метод позволяет обновить время на исполнение задачи
-     *
-     * @param timeToComplete - время на исполнение задачи,
-     *                       taskId- id задачи
-     * @return TaskResponseDto -обновленная задача
-     */
     @Override
     public TaskResponseDto updateTimeToCompleteTask(int taskId, Period timeToComplete) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -213,13 +156,6 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
-    /**
-     * Метод позволяет обновить время старта задачи
-     *
-     * @param startTimeTask - начало задачи,
-     *                      taskId- id задачи
-     * @return TaskResponseDto -обновленная задача
-     */
     @Override
     public TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -228,23 +164,11 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
-    /**
-     * Метод позволяет получить число задач, которые не выполненны в заданном релизе
-     *
-     * @param releaseId - релиз задач,
-     * @return int - число задач
-     */
     @Override
     public int showNumberOutstandingTask(int releaseId) {
         return taskRepository.countAllOutstandingTasksByRelease(releaseId);
     }
 
-    /**
-     * Метод позволяет получить лист задач, которые не выполненны в заданном релизе
-     *
-     * @param releaseId - релиз задач,
-     * @return List<TaskResponseDto> - лист задач
-     */
     @Override
     public List<TaskResponseDto> showAllOutstandingTasks(int releaseId) {
         List<TaskEntity> taskEntityList = taskRepository.getAllOutstandingTasksByRelease(releaseId);
@@ -254,24 +178,11 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Метод позволяет получить плановое вреемя завершения задачи
-     *
-     * @param startTimeTask - начало задачи,
-     *                      timeToComplete- время на исполение залдачи
-     * @return LocalDateTime Дата и время окончания задачи
-     */
     @Override
     public LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete) {
         return startTimeTask.plus(timeToComplete);
     }
 
-    /**
-     * Метод позволяет получить задачу по фильтру
-     *
-     * @param taskFilterRequestDto - запрос с параметрами фильтра
-     * @return List<TaskResponseDto> - личт задач
-     */
     @Override
     public List<TaskResponseDto> getAllTaskSort(TaskFilterRequestDto taskFilterRequestDto) {
         List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskFilterRequestDto.getName())
