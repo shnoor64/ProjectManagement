@@ -5,21 +5,21 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "release")
+@Table(name = "releases")
 public class ReleaseEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int releaseId;
 
     @Column(name = "version")
     private int version;
 
-    @Column(name = "start_time_release")
+    @Column(name = "start_time_release", updatable = false)
     private LocalDateTime startTimeRelease;
 
-    @Column(name = "end_time_release")
+    @Column(name = "end_time_release", updatable = false)
     private LocalDateTime endTimeRelease;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "releaseId")

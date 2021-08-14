@@ -1,18 +1,12 @@
 package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.RoleEntity;
-import com.simbirsoft.belousov.entity.RoleEntity;
-import com.simbirsoft.belousov.mappers.RoleMapperImpl;
 import com.simbirsoft.belousov.mappers.RoleMapperImpl;
 import com.simbirsoft.belousov.repository.RoleRepository;
-import com.simbirsoft.belousov.repository.RoleRepository;
-import com.simbirsoft.belousov.repository.RoleRepository;
-import com.simbirsoft.belousov.rest.dto.*;
 import com.simbirsoft.belousov.rest.dto.RoleRequestDto;
 import com.simbirsoft.belousov.rest.dto.RoleResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,8 +55,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleResponseDto updateRole(RoleRequestDto roleRequestDto, int id) {
         RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoSuchException("Роль не найдена"));
-        roleEntity = roleMapper.roleRequestDtoToEntity(roleRequestDto);
-        roleRepository.save(roleEntity);
+        roleRepository.save(roleMapper.roleRequestDtoToEntity(roleRequestDto));
         return roleMapper.roleEntityToResponseDto(roleEntity);
     }
 

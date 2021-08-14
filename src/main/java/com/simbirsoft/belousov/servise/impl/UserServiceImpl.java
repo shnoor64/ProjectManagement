@@ -4,13 +4,10 @@ package com.simbirsoft.belousov.servise.impl;
 import com.simbirsoft.belousov.entity.UserEntity;
 import com.simbirsoft.belousov.mappers.UserMapperImpl;
 import com.simbirsoft.belousov.repository.UserRepository;
-
 import com.simbirsoft.belousov.rest.dto.UserRequestDto;
 import com.simbirsoft.belousov.rest.dto.UserResponseDto;
-
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import com.simbirsoft.belousov.servise.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,8 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto updateUser(UserRequestDto userRequestDto, int id) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
-        userEntity = userMapper.userRequestDtoToEntity(userRequestDto);
-        userRepository.save(userEntity);
+        userRepository.save(userMapper.userRequestDtoToEntity(userRequestDto));
         return userMapper.userEntityToResponseDto(userEntity);
     }
 
