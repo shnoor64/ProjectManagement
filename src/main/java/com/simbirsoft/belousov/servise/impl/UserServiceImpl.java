@@ -2,6 +2,7 @@ package com.simbirsoft.belousov.servise.impl;
 
 
 import com.simbirsoft.belousov.entity.UserEntity;
+import com.simbirsoft.belousov.mappers.UserMapper;
 import com.simbirsoft.belousov.mappers.UserMapperImpl;
 import com.simbirsoft.belousov.repository.UserRepository;
 import com.simbirsoft.belousov.rest.dto.UserRequestDto;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final UserMapperImpl userMapper;
+    private final UserMapper userMapper;
 
     public UserServiceImpl(UserRepository userRepository, UserMapperImpl userMapper) {
         this.userRepository = userRepository;
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto updateUser(UserRequestDto userRequestDto, int id) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
-        userRepository.save(userMapper.userRequestDtoToEntity(userRequestDto));
+        userEntity = userMapper.userRequestDtoToEntity(userRequestDto);
         return userMapper.userEntityToResponseDto(userEntity);
     }
 
@@ -66,4 +67,6 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
         userRepository.delete(userEntity);
     }
+
+
 }

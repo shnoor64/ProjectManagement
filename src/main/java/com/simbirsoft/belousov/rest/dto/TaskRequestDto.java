@@ -58,6 +58,9 @@ public class TaskRequestDto {
         this.endTimeTask = endTimeTask;
     }
 
+    public TaskRequestDto() {
+    }
+
     public int getTaskId() {
         return taskId;
     }

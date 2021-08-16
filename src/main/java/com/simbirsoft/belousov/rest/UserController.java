@@ -6,9 +6,9 @@ import com.simbirsoft.belousov.servise.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +26,7 @@ public class UserController {
 
     @Operation(summary = "Получить список пользователей")
     @GetMapping
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<List<UserResponseDto>> getUsers() {
         List<UserResponseDto> results = userService.getAllUsers();
         LOG.log(Level.INFO, "Вызван метод: getUsers");
@@ -35,6 +36,7 @@ public class UserController {
 
     @Operation(summary = "Получить пользователя")
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<UserResponseDto> getUser(@PathVariable int id) {
         UserResponseDto result = userService.getUserById(id);
         LOG.log(Level.INFO, "Вызван метод: getUser");
@@ -44,6 +46,7 @@ public class UserController {
 
     @Operation(summary = "Добавить пользователя")
     @PostMapping
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto requestDto) {
         UserResponseDto result = userService.addUser(requestDto);
         LOG.log(Level.INFO, "Вызван метод: createUser");
@@ -52,15 +55,17 @@ public class UserController {
 
     @Operation(summary = "Обновить пользователя")
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<UserResponseDto> partialUpdateUser(@PathVariable int id,
-                                                             @RequestBody UserRequestDto requestDto) throws IOException {
+                                                             @RequestBody UserRequestDto requestDto) {
         UserResponseDto result = userService.updateUser(requestDto, id);
         LOG.log(Level.INFO, "Вызван метод: partialUpdateUser");
-        throw new IOException();
+        return ResponseEntity.ok().body(result);
     }
 
     @Operation(summary = "Удалить пользователя")
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity partialDeleteUser(@PathVariable int id) {
         userService.deleteUser(id);
         LOG.log(Level.INFO, "Вызван метод: partialDeleteUser");
