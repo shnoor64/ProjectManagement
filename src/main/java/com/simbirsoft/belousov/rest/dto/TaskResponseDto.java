@@ -4,7 +4,6 @@ import com.simbirsoft.belousov.enums.StatusTask;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
-import java.time.Period;
 
 @Schema(description = "Задача")
 public class TaskResponseDto {
@@ -34,7 +33,7 @@ public class TaskResponseDto {
     private int releaseId;
 
     @Schema(description = "Время на исполнение задачи")
-    private Period timeToComplete;
+    private int timeToComplete;
 
     @Schema(description = "Время начала выполнения задачи")
     private LocalDateTime startTimeTask;
@@ -44,7 +43,7 @@ public class TaskResponseDto {
 
     public TaskResponseDto(int taskId, String name, String description, int projectId,
                            StatusTask statusTask, int authorId, int performerId, int releaseId,
-                           Period timeToComplete, LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
+                           int timeToComplete, LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
         this.descriptionTask = description;
@@ -126,11 +125,11 @@ public class TaskResponseDto {
         this.releaseId = releaseId;
     }
 
-    public Period getTimeToComplete() {
+    public int getTimeToComplete() {
         return timeToComplete;
     }
 
-    public void setTimeToComplete(Period timeToComplete) {
+    public void setTimeToComplete(int timeToComplete) {
         this.timeToComplete = timeToComplete;
     }
 

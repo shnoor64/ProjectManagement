@@ -4,7 +4,6 @@ import com.simbirsoft.belousov.enums.StatusTask;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.Period;
 
 @Entity
 @Table(name = "tasks")
@@ -42,7 +41,7 @@ public class TaskEntity {
     private ReleaseEntity releaseId;
 
     @Column(name = "time_to_complete")
-    private Period timeToComplete;
+    private int timeToComplete;
 
     @Column(name = "start_time_task", updatable = false)
     private LocalDateTime startTimeTask;
@@ -53,7 +52,7 @@ public class TaskEntity {
     public TaskEntity(int taskId, String name, String descriptionTask,
                       ProjectEntity projectId, StatusTask statusTask,
                       UserEntity authorId, UserEntity performerId,
-                      ReleaseEntity releaseId, Period timeToComplete,
+                      ReleaseEntity releaseId, int timeToComplete,
                       LocalDateTime startTimeTask, LocalDateTime endTimeTask) {
         this.taskId = taskId;
         this.name = name;
@@ -136,11 +135,11 @@ public class TaskEntity {
         this.releaseId = releaseId;
     }
 
-    public Period getTimeToComplete() {
+    public int getTimeToComplete() {
         return timeToComplete;
     }
 
-    public void setTimeToComplete(Period timeToComplete) {
+    public void setTimeToComplete(int timeToComplete) {
         this.timeToComplete = timeToComplete;
     }
 

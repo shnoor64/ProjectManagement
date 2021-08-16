@@ -85,7 +85,7 @@ public interface TaskService {
      * @param taskId- id задачи
      * @return TaskResponseDto -обновленная задача
      */
-    TaskResponseDto updateTimeToCompleteTask(int taskId, Period timeToComplete);
+    TaskResponseDto updateTimeToCompleteTask(int taskId, int timeToComplete);
 
     /**
      * Метод позволяет обновить время старта задачи
