@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.List;
 
 public interface TaskService {
@@ -121,7 +120,7 @@ public interface TaskService {
      * @param timeToComplete- время на исполение залдачи
      * @return LocalDateTime Дата и время окончания задачи
      */
-    LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete);
+    LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, int timeToComplete);
 
     /**
      * Метод позволяет получить задачу по фильтру
