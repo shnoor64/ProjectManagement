@@ -1,0 +1,30 @@
+databaseChangeLog:
+#  - changeSet:
+#     id: modifyDataType-table-tasks
+#     author: Oleg Belousov
+#     changes:
+#       - modifyDataType:
+#           catalogName: management_db
+#           columnName: time_to_complete
+#           newDataType: int
+#           schemaName: public
+#           tableName: tasks
+  - changeSet:
+      id: dropColumn-time_to_complete-in-table-tasks
+      author: Oleg Belousov
+      changes:
+        - dropColumn:
+            catalogName: management_db
+            columnName: time_to_complete
+            schemaName: public
+            tableName: tasks
+  - changeSet:
+      id: addColumn-time_to_complete-in-table-tasks
+      author: Oleg Belousov
+      changes:
+        - addColumn:
+            tableName: tasks
+            columns:
+              - column:
+                  name: time_to_complete
+                  type: int
