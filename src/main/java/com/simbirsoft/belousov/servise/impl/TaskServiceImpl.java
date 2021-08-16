@@ -76,7 +76,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto addTask(TaskRequestDto taskRequestDto) {
         TaskEntity taskEntity = taskMapper.taskRequestDtoToEntity(taskRequestDto);
         taskEntity.setStatusTask(StatusTask.BACKLOG);
-//        taskRepository.save(taskEntity);
+        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -96,6 +96,7 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.delete(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updatePerformerTask(int taskId, int performerId) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -105,6 +106,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updateStatusTask(int taskId, String statusTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -135,6 +137,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updateReleaseTask(int taskId, int releaseId) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -144,6 +147,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updateTimeToCompleteTask(int taskId, Period timeToComplete) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -152,6 +156,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -160,11 +165,13 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public int showNumberOutstandingTask(int releaseId) {
         return taskRepository.countAllOutstandingTasksByRelease(releaseId);
     }
 
+    @Transactional
     @Override
     public List<TaskResponseDto> showAllOutstandingTasks(int releaseId) {
         List<TaskEntity> taskEntityList = taskRepository.getAllOutstandingTasksByRelease(releaseId);
@@ -174,11 +181,13 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete) {
         return startTimeTask.plus(timeToComplete);
     }
 
+    @Transactional
     @Override
     public List<TaskResponseDto> getAllTaskSort(TaskFilterRequestDto taskFilterRequestDto) {
         List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.getByName(taskFilterRequestDto.getName())
@@ -191,6 +200,7 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public List<TaskResponseDto> parsTaskFromCsv(MultipartFile file) throws IOException {
         List<TaskEntity> taskEntityList = new ArrayList<>();

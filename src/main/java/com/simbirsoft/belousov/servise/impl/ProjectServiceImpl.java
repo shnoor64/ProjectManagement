@@ -56,7 +56,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto addProject(ProjectRequestDto projectRequestDto) {
         ProjectEntity projectEntity = projectMapper.projectRequestDtoToEntity(projectRequestDto);
         projectEntity.setStatusProject(StatusProject.BACKLOG);
-//        projectRepository.save(projectEntity);
+        projectRepository.save(projectEntity);
         return projectMapper.projectEntityToResponseDto(projectEntity);
     }
 
@@ -76,6 +76,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.delete(projectEntity);
     }
 
+    @Transactional
     @Override
     public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));

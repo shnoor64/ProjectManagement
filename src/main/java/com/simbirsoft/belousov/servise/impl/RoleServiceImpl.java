@@ -47,7 +47,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleResponseDto addRole(RoleRequestDto roleRequestDto) {
         RoleEntity roleEntity = roleMapper.roleRequestDtoToEntity(roleRequestDto);
-//        roleRepository.save(roleEntity);
+        roleRepository.save(roleEntity);
         return roleMapper.roleEntityToResponseDto(roleEntity);
     }
 
@@ -55,7 +55,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleResponseDto updateRole(RoleRequestDto roleRequestDto, int id) {
         RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoSuchException("Роль не найдена"));
-        roleEntity=roleMapper.roleRequestDtoToEntity(roleRequestDto);
+        roleEntity = roleMapper.roleRequestDtoToEntity(roleRequestDto);
 //        roleRepository.save(roleEntity);
         return roleMapper.roleEntityToResponseDto(roleEntity);
     }
