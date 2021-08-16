@@ -127,7 +127,7 @@ public class TaskServiceImpl implements TaskService {
                 }
                 break;
             case DONE:
-                if (taskEntity.getStatusTask().equals(StatusTask.IN_PROGRESS)) {
+                if (StatusTask.IN_PROGRESS.equals(taskEntity.getStatusTask())) {
                     taskEntity.setStatusTask(StatusTask.DONE);
                     taskEntity.setEndTimeTask(LocalDateTime.now());
                 } else {
