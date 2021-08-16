@@ -32,7 +32,7 @@ public class ProjectController {
     public ResponseEntity<List<ProjectResponseDto>> getProjects() {
 
         List<ProjectResponseDto> results = projectService.getAllProjects();
-        LOG.log(Level.INFO, "Вызван метод: getProjects");
+        LOG.log(Level.INFO, "Запрос: \"Получить список проектов\" /api/management/projects");
         return ResponseEntity.ok().body(results);
     }
 
@@ -41,7 +41,7 @@ public class ProjectController {
     @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity<ProjectResponseDto> getProject(@PathVariable int id) {
         ProjectResponseDto result = projectService.getProjectById(id);
-        LOG.log(Level.INFO, "Вызван метод: getProject");
+        LOG.log(Level.INFO, "Запрос: \"Получить проектв\" /api/management/projects/"+id);
         return ResponseEntity.ok().body(result);
     }
 
@@ -50,7 +50,7 @@ public class ProjectController {
     @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto requestDto) {
         ProjectResponseDto result = projectService.addProject(requestDto);
-        LOG.log(Level.INFO, "Вызван метод: createProject");
+        LOG.log(Level.INFO, "Запрос: \"Добавить проект\" /api/management/projects");
         return ResponseEntity.ok().body(result);
     }
 
@@ -60,7 +60,7 @@ public class ProjectController {
     public ResponseEntity<ProjectResponseDto> partialUpdateProject(@PathVariable int id,
                                                                    @RequestBody ProjectRequestDto requestDto){
         ProjectResponseDto result = projectService.updateProject(requestDto, id);
-        LOG.log(Level.INFO, "Вызван метод: partialUpdateProject");
+        LOG.log(Level.INFO, "Запрос: \"Обновить проект\" /api/management/projects/"+id);
         return ResponseEntity.ok().body(result);
     }
 
@@ -69,7 +69,7 @@ public class ProjectController {
     @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity partialDeleteProject(@PathVariable int id) {
         projectService.deleteProject(id);
-        LOG.log(Level.INFO, "Вызван метод: partialDeleteProject");
+        LOG.log(Level.INFO, "Запрос: \"Удалить проект\" /api/management/projects/"+id);
         return ResponseEntity.ok().build();
     }
 
@@ -79,7 +79,7 @@ public class ProjectController {
     public ResponseEntity<ProjectResponseDto> updateStatusProjectById(@PathVariable int id,
                                                                       @PathVariable String status) {
         ProjectResponseDto result = projectService.updateStatusProject(id, status);
-        LOG.log(Level.INFO, "Вызван метод: updateStatusProjectById");
+        LOG.log(Level.INFO, "Запрос: \"Обновить статус проекта\" /api/management/projects/"+id+"/"+status);
         return ResponseEntity.ok().body(result);
     }
 

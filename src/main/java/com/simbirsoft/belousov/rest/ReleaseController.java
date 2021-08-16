@@ -31,7 +31,7 @@ public class ReleaseController {
     public ResponseEntity<List<ReleaseResponseDto>> getReleases() {
 
         List<ReleaseResponseDto> results = releaseService.getAllReleases();
-        LOG.log(Level.INFO, "Вызван метод: getReleases");
+        LOG.log(Level.INFO, "Запрос: \"Получить список редизов\" /api/management/releases/");
         return ResponseEntity.ok().body(results);
     }
 
@@ -40,7 +40,7 @@ public class ReleaseController {
     @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity<ReleaseResponseDto> getRelease(@PathVariable int id) {
         ReleaseResponseDto result = releaseService.getReleaseById(id);
-        LOG.log(Level.INFO, "Вызван метод: getRelease");
+        LOG.log(Level.INFO, "Запрос: \"Получить релиз\" /api/management/releases/"+id);
         return ResponseEntity.ok().body(result);
     }
 
@@ -49,7 +49,7 @@ public class ReleaseController {
     @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<ReleaseResponseDto> createRelease(@RequestBody ReleaseRequestDto requestDto) {
         ReleaseResponseDto result = releaseService.addRelease(requestDto);
-        LOG.log(Level.INFO, "Вызван метод: createRelease");
+        LOG.log(Level.INFO, "Запрос: \"Добавить релиз\" /api/management/releases/");
         return ResponseEntity.ok().body(result);
     }
 
@@ -59,7 +59,7 @@ public class ReleaseController {
     public ResponseEntity<ReleaseResponseDto> partialUpdateRelease(@PathVariable int id,
                                                                    @RequestBody ReleaseRequestDto requestDto) {
         ReleaseResponseDto result = releaseService.updateRelease(requestDto, id);
-        LOG.log(Level.INFO, "Вызван метод: partialUpdateRelease");
+        LOG.log(Level.INFO, "Запрос: \"Обновить релиз\" /api/management/releases/"+id);
         return ResponseEntity.ok().body(result);
     }
 
@@ -68,7 +68,7 @@ public class ReleaseController {
     @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity partialDeleteRelease(@PathVariable int id) {
         releaseService.deleteRelease(id);
-        LOG.log(Level.INFO, "Вызван метод: partialDeleteRelease");
+        LOG.log(Level.INFO, "Запрос: \"Удалить релиз\" /api/management/releases/"+id);
         return ResponseEntity.ok().build();
     }
 

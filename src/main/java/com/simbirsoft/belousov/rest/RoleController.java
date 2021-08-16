@@ -29,7 +29,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<List<RoleResponseDto>> getRoles() {
         List<RoleResponseDto> results = roleService.getAllRoles();
-        LOG.log(Level.INFO, "Вызван метод: getRoles");
+        LOG.log(Level.INFO, "Запрос: \"Получить список ролей\" /api/management/roles/");
         return ResponseEntity.ok().body(results);
     }
 
@@ -38,7 +38,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<RoleResponseDto> getRole(@PathVariable int id) {
         RoleResponseDto result = roleService.getRoleById(id);
-        LOG.log(Level.INFO, "Вызван метод: getRole");
+        LOG.log(Level.INFO, "Запрос: \"Получить роль\" /api/management/roles/"+id);
         return ResponseEntity.ok().body(result);
     }
 
@@ -47,7 +47,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity<RoleResponseDto> createRole(@RequestBody RoleRequestDto requestDto) {
         RoleResponseDto result = roleService.addRole(requestDto);
-        LOG.log(Level.INFO, "Вызван метод: createRole");
+        LOG.log(Level.INFO, "Запрос: \"Добавить роль\" /api/management/roles/");
         return ResponseEntity.ok().body(result);
     }
 
@@ -57,7 +57,7 @@ public class RoleController {
     public ResponseEntity<RoleResponseDto> partialUpdateRole(@PathVariable int id,
                                                              @RequestBody RoleRequestDto requestDto) {
         RoleResponseDto result = roleService.updateRole(requestDto, id);
-        LOG.log(Level.INFO, "Вызван метод: partialUpdateRole");
+        LOG.log(Level.INFO, "Запрос: \"Обновить роль\" /api/management/roles/"+id);
         return ResponseEntity.ok().body(result);
     }
 
@@ -66,7 +66,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('admin')")
     public ResponseEntity partialDeleteRole(@PathVariable int id) {
         roleService.deleteRole(id);
-        LOG.log(Level.INFO, "Вызван метод: partialDeleteRole");
+        LOG.log(Level.INFO, "Запрос: \"Удалить роль\" /api/management/roles/"+id);
         return ResponseEntity.ok().build();
     }
 
