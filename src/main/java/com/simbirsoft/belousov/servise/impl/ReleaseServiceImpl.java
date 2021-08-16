@@ -1,7 +1,7 @@
 package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.ReleaseEntity;
-import com.simbirsoft.belousov.mappers.ReleaseMapperImpl;
+import com.simbirsoft.belousov.mappers.ReleaseMapper;
 import com.simbirsoft.belousov.repository.ReleaseRepository;
 import com.simbirsoft.belousov.rest.dto.ReleaseRequestDto;
 import com.simbirsoft.belousov.rest.dto.ReleaseResponseDto;
@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 @Service
 public class ReleaseServiceImpl implements ReleaseService {
     private final ReleaseRepository releaseRepository;
-    private final ReleaseMapperImpl releaseMapper;
+    private final ReleaseMapper releaseMapper;
 
-    public ReleaseServiceImpl(ReleaseRepository releaseRepository, ReleaseMapperImpl releaseMapper) {
+    public ReleaseServiceImpl(ReleaseRepository releaseRepository, ReleaseMapper releaseMapper) {
         this.releaseRepository = releaseRepository;
         this.releaseMapper = releaseMapper;
     }

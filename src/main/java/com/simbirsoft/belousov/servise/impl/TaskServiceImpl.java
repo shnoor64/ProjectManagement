@@ -5,9 +5,7 @@ import com.simbirsoft.belousov.entity.TaskEntity;
 import com.simbirsoft.belousov.entity.UserEntity;
 import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.enums.StatusTask;
-import com.simbirsoft.belousov.mappers.ReleaseMapperImpl;
-import com.simbirsoft.belousov.mappers.TaskMapperImpl;
-import com.simbirsoft.belousov.mappers.UserMapperImpl;
+import com.simbirsoft.belousov.mappers.*;
 import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.repository.ReleaseRepository;
 import com.simbirsoft.belousov.repository.TaskRepository;
@@ -38,24 +36,21 @@ import java.util.stream.Collectors;
 @Service
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
-    private final TaskMapperImpl taskMapper;
+    private final TaskMapper taskMapper;
     private final UserRepository userRepository;
-    private final UserMapperImpl userMapper;
+
     private final ReleaseRepository releaseRepository;
-    private final ReleaseMapperImpl releaseMapper;
+
     private final ProjectRepository projectRepository;
 
-
-    public TaskServiceImpl(TaskRepository taskRepository, TaskMapperImpl taskMapper, UserRepository userRepository, UserMapperImpl userMapper, ReleaseRepository releaseRepository, ReleaseMapperImpl releaseMapper, ProjectRepository projectRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper, UserRepository userRepository, ReleaseRepository releaseRepository, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
-
         this.releaseRepository = releaseRepository;
-        this.releaseMapper = releaseMapper;
         this.projectRepository = projectRepository;
     }
+
 
     @Transactional
     @Override
@@ -197,7 +192,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskResponseDto> parsTaskFromCsv(MultipartFile file) throws IOException {
-        List<TaskEntity> taskEntityList= new ArrayList<>();
+        List<TaskEntity> taskEntityList = new ArrayList<>();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(bufferedReader);
         for (CSVRecord record : records) {

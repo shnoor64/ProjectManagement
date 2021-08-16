@@ -1,7 +1,7 @@
 package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.RoleEntity;
-import com.simbirsoft.belousov.mappers.RoleMapperImpl;
+import com.simbirsoft.belousov.mappers.RoleMapper;
 import com.simbirsoft.belousov.repository.RoleRepository;
 import com.simbirsoft.belousov.rest.dto.RoleRequestDto;
 import com.simbirsoft.belousov.rest.dto.RoleResponseDto;
@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 @Service
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
-    private final RoleMapperImpl roleMapper;
+    private final RoleMapper roleMapper;
 
-    public RoleServiceImpl(RoleRepository roleRepository, RoleMapperImpl roleMapper) {
+    public RoleServiceImpl(RoleRepository roleRepository, RoleMapper roleMapper) {
         this.roleRepository = roleRepository;
         this.roleMapper = roleMapper;
     }

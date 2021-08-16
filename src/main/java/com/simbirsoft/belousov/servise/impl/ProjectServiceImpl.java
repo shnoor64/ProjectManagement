@@ -2,7 +2,7 @@ package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.ProjectEntity;
 import com.simbirsoft.belousov.enums.StatusProject;
-import com.simbirsoft.belousov.mappers.ProjectMapperImpl;
+import com.simbirsoft.belousov.mappers.ProjectMapper;
 import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.repository.TaskRepository;
 import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
@@ -23,9 +23,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
-    private final ProjectMapperImpl projectMapper;
+    private final ProjectMapper projectMapper;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ProjectMapperImpl projectMapper) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ProjectMapper projectMapper) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
         this.projectMapper = projectMapper;
