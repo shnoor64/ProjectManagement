@@ -47,7 +47,7 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public ReleaseResponseDto addRelease(ReleaseRequestDto releaseRequestDto) {
         ReleaseEntity releaseEntity = releaseMapper.releaseRequestDtoToEntity(releaseRequestDto);
-        releaseRepository.save(releaseEntity);
+//        releaseRepository.save(releaseEntity);
         return releaseMapper.releaseEntityToResponseDto(releaseEntity);
     }
 
@@ -55,7 +55,8 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public ReleaseResponseDto updateRelease(ReleaseRequestDto releaseRequestDto, int id) {
         ReleaseEntity releaseEntity = releaseRepository.findById(id).orElseThrow(() -> new NoSuchException("Релиз не найден"));
-        releaseRepository.save(releaseMapper.releaseRequestDtoToEntity(releaseRequestDto));
+        releaseEntity =releaseMapper.releaseRequestDtoToEntity(releaseRequestDto);
+//        releaseRepository.save(releaseEntity);
         return releaseMapper.releaseEntityToResponseDto(releaseEntity);
     }
 

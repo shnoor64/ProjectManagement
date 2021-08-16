@@ -76,7 +76,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto addTask(TaskRequestDto taskRequestDto) {
         TaskEntity taskEntity = taskMapper.taskRequestDtoToEntity(taskRequestDto);
         taskEntity.setStatusTask(StatusTask.BACKLOG);
-        taskRepository.save(taskEntity);
+//        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -84,7 +84,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateTask(TaskRequestDto taskRequestDto, int id) {
         TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException("Задача не найдена"));
-        taskRepository.save(taskMapper.taskRequestDtoToEntity(taskRequestDto));
+        taskEntity = taskMapper.taskRequestDtoToEntity(taskRequestDto);
+//        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -100,7 +101,7 @@ public class TaskServiceImpl implements TaskService {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         UserEntity performerEntity = userRepository.findById(performerId).orElseThrow(() -> new NoSuchException("Пользователь не найден"));
         taskEntity.setPerformerId(performerEntity);
-        taskRepository.save(taskEntity);
+//        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -130,7 +131,7 @@ public class TaskServiceImpl implements TaskService {
                 }
                 break;
         }
-        taskRepository.save(taskEntity);
+//        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -139,7 +140,7 @@ public class TaskServiceImpl implements TaskService {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         ReleaseEntity releaseEntity = releaseRepository.findById(releaseId).orElseThrow(() -> new NoSuchException("Релиз не найден"));
         taskEntity.setReleaseId(releaseEntity);
-        taskRepository.save(taskEntity);
+//        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -147,7 +148,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto updateTimeToCompleteTask(int taskId, Period timeToComplete) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         taskEntity.setTimeToComplete(timeToComplete);
-        taskRepository.save(taskEntity);
+//        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -155,7 +156,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         taskEntity.setStartTimeTask(startTimeTask);
-        taskRepository.save(taskEntity);
+//        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
