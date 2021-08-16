@@ -56,7 +56,6 @@ public class ReleaseServiceImpl implements ReleaseService {
     public ReleaseResponseDto updateRelease(ReleaseRequestDto releaseRequestDto, int id) {
         ReleaseEntity releaseEntity = releaseRepository.findById(id).orElseThrow(() -> new NoSuchException("Релиз не найден"));
         releaseEntity = releaseMapper.releaseRequestDtoToEntity(releaseRequestDto);
-//        releaseRepository.save(releaseEntity);
         return releaseMapper.releaseEntityToResponseDto(releaseEntity);
     }
 

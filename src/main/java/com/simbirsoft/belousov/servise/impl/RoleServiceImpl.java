@@ -56,7 +56,6 @@ public class RoleServiceImpl implements RoleService {
     public RoleResponseDto updateRole(RoleRequestDto roleRequestDto, int id) {
         RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoSuchException("Роль не найдена"));
         roleEntity = roleMapper.roleRequestDtoToEntity(roleRequestDto);
-//        roleRepository.save(roleEntity);
         return roleMapper.roleEntityToResponseDto(roleEntity);
     }
 

@@ -65,7 +65,6 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto updateProject(ProjectRequestDto projectRequestDto, int id) {
         ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
         projectEntity = projectMapper.projectRequestDtoToEntity(projectRequestDto);
-//        projectRepository.save(projectEntity);
         return projectMapper.projectEntityToResponseDto(projectEntity);
     }
 
@@ -86,7 +85,6 @@ public class ProjectServiceImpl implements ProjectService {
             }
         }
         projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
-//        projectRepository.save(projectEntity);
         return projectMapper.projectEntityToResponseDto(projectEntity);
 
     }

@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto updateUser(UserRequestDto userRequestDto, int id) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
         userEntity = userMapper.userRequestDtoToEntity(userRequestDto);
-//        userRepository.save(userEntity);
         return userMapper.userEntityToResponseDto(userEntity);
     }
 
