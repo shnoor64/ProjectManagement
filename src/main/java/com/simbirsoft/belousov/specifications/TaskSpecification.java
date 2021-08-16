@@ -9,12 +9,13 @@ public class TaskSpecification {
 
     /**
      * Метод позволяет получить спецификацию для поиска задачи по имени
+     *
      * @param taskName - искомое имя
      * @return Specification<TaskEntity> - спецификация для поиска задачи
      */
-    public static Specification<TaskEntity> GetByName(String taskName) {
-        if (taskName ==null) {
-            return  null;
+    public static Specification<TaskEntity> getByName(String taskName) {
+        if (taskName == null) {
+            return null;
         }
         return new Specification<TaskEntity>() {
             @Override
@@ -28,12 +29,13 @@ public class TaskSpecification {
 
     /**
      * Метод позволяет получить спецификацию для поиска задачи по релизу
+     *
      * @param taskRelease - искомый релиз
      * @return Specification<TaskEntity> - спецификация для поиска задачи
      */
     public static Specification<TaskEntity> GetByRelease(int taskRelease) {
-        if (taskRelease ==0) {
-            return  null;
+        if (taskRelease == 0) {
+            return null;
         }
         return new Specification<TaskEntity>() {
             @Override
@@ -48,12 +50,13 @@ public class TaskSpecification {
 
     /**
      * Метод позволяет получить спецификацию для поиска задачи по автору
+     *
      * @param taskAuthor - искомый автор
      * @return Specification<TaskEntity> - спецификация для поиска задачи
      */
     public static Specification<TaskEntity> GetByAuthor(String taskAuthor) {
-        if (taskAuthor ==null) {
-            return  null;
+        if (taskAuthor == null) {
+            return null;
         }
         return new Specification<TaskEntity>() {
             @Override
@@ -68,12 +71,13 @@ public class TaskSpecification {
 
     /**
      * Метод позволяет получить спецификацию для поиска задачи по исполнителю
+     *
      * @param taskPerformer - искомый исполнитель
      * @return Specification<TaskEntity> - спецификация для поиска задачи
      */
     public static Specification<TaskEntity> GetByPerformer(String taskPerformer) {
-        if (taskPerformer ==null) {
-            return  null;
+        if (taskPerformer == null) {
+            return null;
         }
         return new Specification<TaskEntity>() {
             @Override

@@ -5,9 +5,7 @@ import com.simbirsoft.belousov.entity.TaskEntity;
 import com.simbirsoft.belousov.entity.UserEntity;
 import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.enums.StatusTask;
-import com.simbirsoft.belousov.mappers.ReleaseMapperImpl;
-import com.simbirsoft.belousov.mappers.TaskMapperImpl;
-import com.simbirsoft.belousov.mappers.UserMapperImpl;
+import com.simbirsoft.belousov.mappers.*;
 import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.repository.ReleaseRepository;
 import com.simbirsoft.belousov.repository.TaskRepository;
@@ -38,24 +36,21 @@ import java.util.stream.Collectors;
 @Service
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
-    private final TaskMapperImpl taskMapper;
+    private final TaskMapper taskMapper;
     private final UserRepository userRepository;
-    private final UserMapperImpl userMapper;
+
     private final ReleaseRepository releaseRepository;
-    private final ReleaseMapperImpl releaseMapper;
+
     private final ProjectRepository projectRepository;
 
-
-    public TaskServiceImpl(TaskRepository taskRepository, TaskMapperImpl taskMapper, UserRepository userRepository, UserMapperImpl userMapper, ReleaseRepository releaseRepository, ReleaseMapperImpl releaseMapper, ProjectRepository projectRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper, UserRepository userRepository, ReleaseRepository releaseRepository, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
-
         this.releaseRepository = releaseRepository;
-        this.releaseMapper = releaseMapper;
         this.projectRepository = projectRepository;
     }
+
 
     @Transactional
     @Override
@@ -89,7 +84,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateTask(TaskRequestDto taskRequestDto, int id) {
         TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException("Задача не найдена"));
-        taskRepository.save(taskMapper.taskRequestDtoToEntity(taskRequestDto));
+        taskEntity = taskMapper.taskRequestDtoToEntity(taskRequestDto);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -100,15 +95,16 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.delete(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updatePerformerTask(int taskId, int performerId) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         UserEntity performerEntity = userRepository.findById(performerId).orElseThrow(() -> new NoSuchException("Пользователь не найден"));
         taskEntity.setPerformerId(performerEntity);
-        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updateStatusTask(int taskId, String statusTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
@@ -127,7 +123,7 @@ public class TaskServiceImpl implements TaskService {
                 }
                 break;
             case DONE:
-                if (taskEntity.getStatusTask().equals(StatusTask.IN_PROGRESS)) {
+                if (StatusTask.IN_PROGRESS.equals(taskEntity.getStatusTask())) {
                     taskEntity.setStatusTask(StatusTask.DONE);
                     taskEntity.setEndTimeTask(LocalDateTime.now());
                 } else {
@@ -135,40 +131,41 @@ public class TaskServiceImpl implements TaskService {
                 }
                 break;
         }
-        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updateReleaseTask(int taskId, int releaseId) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         ReleaseEntity releaseEntity = releaseRepository.findById(releaseId).orElseThrow(() -> new NoSuchException("Релиз не найден"));
         taskEntity.setReleaseId(releaseEntity);
-        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updateTimeToCompleteTask(int taskId, Period timeToComplete) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         taskEntity.setTimeToComplete(timeToComplete);
-        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         taskEntity.setStartTimeTask(startTimeTask);
-        taskRepository.save(taskEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
+    @Transactional
     @Override
     public int showNumberOutstandingTask(int releaseId) {
         return taskRepository.countAllOutstandingTasksByRelease(releaseId);
     }
 
+    @Transactional
     @Override
     public List<TaskResponseDto> showAllOutstandingTasks(int releaseId) {
         List<TaskEntity> taskEntityList = taskRepository.getAllOutstandingTasksByRelease(releaseId);
@@ -178,14 +175,16 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete) {
         return startTimeTask.plus(timeToComplete);
     }
 
+    @Transactional
     @Override
     public List<TaskResponseDto> getAllTaskSort(TaskFilterRequestDto taskFilterRequestDto) {
-        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskFilterRequestDto.getName())
+        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.getByName(taskFilterRequestDto.getName())
                 .and(TaskSpecification.GetByRelease(taskFilterRequestDto.getRelease()))
                 .and(TaskSpecification.GetByAuthor(taskFilterRequestDto.getAuthor()))
                 .and(TaskSpecification.GetByPerformer(taskFilterRequestDto.getPerformer())));
@@ -195,9 +194,10 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public List<TaskResponseDto> parsTaskFromCsv(MultipartFile file) throws IOException {
-        List<TaskEntity> taskEntityList= new ArrayList<>();
+        List<TaskEntity> taskEntityList = new ArrayList<>();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(bufferedReader);
         for (CSVRecord record : records) {
