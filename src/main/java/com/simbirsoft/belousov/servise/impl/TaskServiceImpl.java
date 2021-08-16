@@ -185,7 +185,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskResponseDto> getAllTaskSort(TaskFilterRequestDto taskFilterRequestDto) {
-        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.GetByName(taskFilterRequestDto.getName())
+        List<TaskEntity> taskEntityList = taskRepository.findAll(TaskSpecification.getByName(taskFilterRequestDto.getName())
                 .and(TaskSpecification.GetByRelease(taskFilterRequestDto.getRelease()))
                 .and(TaskSpecification.GetByAuthor(taskFilterRequestDto.getAuthor()))
                 .and(TaskSpecification.GetByPerformer(taskFilterRequestDto.getPerformer())));
