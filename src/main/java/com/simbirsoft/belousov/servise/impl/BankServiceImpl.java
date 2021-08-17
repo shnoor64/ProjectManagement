@@ -32,7 +32,7 @@ public class BankServiceImpl implements BankService {
             throw new NoSuchException("Не найден проект, который хотите оплатить");
         }
         ResponseEntity<AccountDetailsResponseDto> result = bankClient.paymentProject(description);
-        projectEntity.setDescriptionProject(String.valueOf(StatusPay.PAID));
+        projectEntity.setDescriptionProject(StatusPay.PAID);
         return result.getBody();
     }
 

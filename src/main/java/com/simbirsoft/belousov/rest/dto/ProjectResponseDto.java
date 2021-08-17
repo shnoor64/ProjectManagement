@@ -1,5 +1,6 @@
 package com.simbirsoft.belousov.rest.dto;
 
+import com.simbirsoft.belousov.enums.StatusPay;
 import com.simbirsoft.belousov.enums.StatusProject;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -13,7 +14,7 @@ public class ProjectResponseDto {
     private String name;
 
     @Schema(description = "Описание проекта")
-    private String descriptionProject;
+    private StatusPay descriptionProject;
 
     @Schema(description = "Заказчик")
     private String customer;
@@ -21,7 +22,7 @@ public class ProjectResponseDto {
     @Schema(description = "Статус проекта")
     private StatusProject statusProject;
 
-    public ProjectResponseDto(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject) {
+    public ProjectResponseDto(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject) {
         this.projectId=projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
@@ -49,11 +50,11 @@ public class ProjectResponseDto {
         this.name = name;
     }
 
-    public String getDescriptionProject() {
+    public StatusPay getDescriptionProject() {
         return descriptionProject;
     }
 
-    public void setDescriptionProject(String descriptionProject) {
+    public void setDescriptionProject(StatusPay descriptionProject) {
         this.descriptionProject = descriptionProject;
     }
 

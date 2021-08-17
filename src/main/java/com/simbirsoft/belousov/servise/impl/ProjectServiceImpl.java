@@ -82,8 +82,8 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));
         switch (StatusProject.valueOf(statusProject)) {
-            case BACKLOG:
-                if (StatusPay.PAID.equals(projectEntity.getDescriptionProject())) {
+            case IN_PROGRESS:
+                if (StatusPay.NOT_PAID.equals(projectEntity.getDescriptionProject())) {
                     throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта, сначала заплатите");
                 }
                 break;

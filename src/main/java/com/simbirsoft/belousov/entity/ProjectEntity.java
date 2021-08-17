@@ -1,5 +1,6 @@
 package com.simbirsoft.belousov.entity;
 
+import com.simbirsoft.belousov.enums.StatusPay;
 import com.simbirsoft.belousov.enums.StatusProject;
 
 import javax.persistence.*;
@@ -16,8 +17,9 @@ public class ProjectEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description_project")
-    private String descriptionProject;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "description_project") //теперь эта колонка хранит статус оплаты проекта
+    private StatusPay descriptionProject;
 
     @Column(name = "customer")
     private String customer;
@@ -29,7 +31,7 @@ public class ProjectEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
     private List <TaskEntity> tasks;
 
-    public ProjectEntity(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject) {
+    public ProjectEntity(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject) {
         this.projectId = projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
@@ -57,11 +59,11 @@ public class ProjectEntity {
         this.name = name;
     }
 
-    public String getDescriptionProject() {
+    public StatusPay getDescriptionProject() {
         return descriptionProject;
     }
 
-    public void setDescriptionProject(String descriptionProject) {
+    public void setDescriptionProject(StatusPay descriptionProject) {
         this.descriptionProject = descriptionProject;
     }
 
