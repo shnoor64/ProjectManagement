@@ -95,6 +95,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public void makePayment(String description) {
-        bankService.payProject();
+        bankService.payProject(description);
     }
 }

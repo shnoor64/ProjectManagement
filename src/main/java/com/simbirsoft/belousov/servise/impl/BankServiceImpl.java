@@ -18,8 +18,8 @@ public class BankServiceImpl implements BankService {
     }
     @Transactional
     @Override
-    public AccountDetailsResponseDto payProject() {
-        return bankClient.paymentProject("денежка на корм").getBody();
+    public AccountDetailsResponseDto payProject(String description) {
+        return bankClient.paymentProject(description).getBody();
     }
     @Transactional
     @Override
