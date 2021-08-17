@@ -1,6 +1,5 @@
 package com.simbirsoft.belousov.config;
 
-import feign.RequestInterceptor;
 import feign.auth.BasicAuthRequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,7 +18,7 @@ public class FeignConfig {
 
     @Bean
     @ConditionalOnProperty(value = "application.security.enabled", havingValue = "true")
-    public RequestInterceptor basicAuthRequestInterceptor() {
+    public BasicAuthRequestInterceptor  basicAuthRequestInterceptor() {
         return new BasicAuthRequestInterceptor(loggin, password);
     }
 
