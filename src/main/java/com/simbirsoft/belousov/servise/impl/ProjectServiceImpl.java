@@ -9,6 +9,7 @@ import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusException;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
+import com.simbirsoft.belousov.servise.BankService;
 import com.simbirsoft.belousov.servise.ProjectService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +25,13 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
     private final ProjectMapper projectMapper;
+    private final BankService bankService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ProjectMapper projectMapper) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ProjectMapper projectMapper, BankService bankService) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
         this.projectMapper = projectMapper;
+        this.bankService = bankService;
     }
 
     @Transactional
@@ -87,5 +90,11 @@ public class ProjectServiceImpl implements ProjectService {
         projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
         return projectMapper.projectEntityToResponseDto(projectEntity);
 
+    }
+
+    @Transactional
+    @Override
+    public void makePayment(String description) {
+        bankService.payProject();
     }
 }

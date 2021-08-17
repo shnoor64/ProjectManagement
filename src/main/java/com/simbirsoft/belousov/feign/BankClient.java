@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-@FeignClient(name = "MicroBank", url = "${wiki.api-base-url}")
+@FeignClient(name = "MicroBank", url = "ivan:ivan@"+"${micro-bank.url}")
 public interface BankClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "/{description}")

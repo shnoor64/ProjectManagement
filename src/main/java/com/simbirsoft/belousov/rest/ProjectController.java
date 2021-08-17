@@ -82,6 +82,13 @@ public class ProjectController {
         LOG.log(Level.INFO, "Запрос: \"Обновить статус проекта\" /api/management/projects/"+id+"/"+status);
         return ResponseEntity.ok().body(result);
     }
+    @Operation(summary = "Заплатить за проект")
+    @PostMapping(value = "/{description}")
+    @PreAuthorize("hasAnyRole('admin','user')")
+    public  void payment ( @PathVariable String description){
+        projectService.makePayment(description);
+        LOG.log(Level.INFO, "Запрос: \"Заплатить за проект\" /api/management/projects/"+description);
 
+    }
 }
 

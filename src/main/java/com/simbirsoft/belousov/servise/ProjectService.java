@@ -54,5 +54,12 @@ public interface ProjectService {
      * @return ProjectResponseDto -обновленный проект
      */
     ProjectResponseDto updateStatusProject(int projectId, String statusProject);
+
+    /**
+     * Метод производит оплату
+     *
+     * @param description - описание платежа,
+     */
+    void makePayment (String description);
 }
 
