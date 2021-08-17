@@ -1,9 +1,11 @@
 package com.simbirsoft.belousov.config;
 
 import feign.auth.BasicAuthRequestInterceptor;
+import feign.codec.ErrorDecoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 //@EnableFeignClients(basePackages = "com.simbirsoft.belousov.feign")
@@ -15,9 +17,13 @@ public class FeignConfig {
     private String password;
 
     @Bean
-//    @ConditionalOnProperty(value = "application.security.enabled", havingValue = "true")
     public BasicAuthRequestInterceptor  basicAuthRequestInterceptor() {
         return new BasicAuthRequestInterceptor(loggin, password);
+    }
+    @Primary
+    @Bean
+    public ErrorDecoder errorDecoder() {
+        return new CustomErrorDecoder();
     }
 
     ;

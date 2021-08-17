@@ -1,6 +1,7 @@
 package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.ProjectEntity;
+import com.simbirsoft.belousov.enums.StatusPay;
 import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.mappers.ProjectMapper;
 import com.simbirsoft.belousov.repository.ProjectRepository;
@@ -80,11 +81,24 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));
-        if (StatusProject.CLOSED.equals(statusProject)) {
-            if (taskRepository.countAllNotDoneTasksByProject(projectId) != 0) {
-                throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
-            }
+        switch (StatusProject.valueOf(statusProject)) {
+            case BACKLOG:
+                if (StatusPay.PAID.equals(projectEntity.getDescriptionProject())) {
+                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта, сначала заплатите");
+                }
+                break;
+            case CLOSED:
+                if (taskRepository.countAllNotDoneTasksByProject(projectId) != 0) {
+                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
+                }
+                break;
         }
+
+//        if (StatusProject.CLOSED.equals(statusProject)) {
+//            if (taskRepository.countAllNotDoneTasksByProject(projectId) != 0) {
+//                throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
+//            }
+//        }
         projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
         return projectMapper.projectEntityToResponseDto(projectEntity);
 
