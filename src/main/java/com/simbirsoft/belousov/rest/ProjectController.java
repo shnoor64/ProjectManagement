@@ -99,9 +99,8 @@ public class ProjectController {
     @Operation(summary = "Получить всю историю операций по логину")
     @GetMapping(value = "/information")
     @PreAuthorize("hasAnyRole('admin','user')")
-    public ResponseEntity<List<AccountHistoryResponseDto>> getCustomerOperationHistory(@PathVariable String description) {
-        projectService.makePayment(description);
-        LOG.log(Level.INFO, "Запрос: \"Заплатить за проект\" /api/management/projects/" + description);
+    public ResponseEntity<List<AccountHistoryResponseDto>> getCustomerOperationHistory() {
+        LOG.log(Level.INFO, "Запрос: \"Получить всю историю операций по логину\" /api/management/projects/");
         List<AccountHistoryResponseDto> results = bankService.getAllHistoryAccount();
         return ResponseEntity.ok().body(results);
     }

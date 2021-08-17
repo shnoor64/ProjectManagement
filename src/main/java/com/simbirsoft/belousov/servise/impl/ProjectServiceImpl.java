@@ -25,13 +25,11 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
     private final ProjectMapper projectMapper;
-    private final BankService bankService;
 
     public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ProjectMapper projectMapper, BankService bankService) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
         this.projectMapper = projectMapper;
-        this.bankService = bankService;
     }
 
     @Transactional
@@ -92,9 +90,5 @@ public class ProjectServiceImpl implements ProjectService {
 
     }
 
-    @Transactional
-    @Override
-    public void makePayment(String description) {
-        bankService.payProject(description);
-    }
+
 }
