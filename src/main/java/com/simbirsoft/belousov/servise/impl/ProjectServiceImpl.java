@@ -83,7 +83,7 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));
         switch (StatusProject.valueOf(statusProject)) {
             case IN_PROGRESS:
-                if (StatusPay.NOT_PAID.equals(projectEntity.getDescriptionProject())) {
+                if (StatusPay.NOT_PAID.equals(projectEntity.getPaymentStatus())) {
                     throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта, сначала заплатите");
                 }
                 break;

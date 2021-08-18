@@ -4,6 +4,8 @@ import com.simbirsoft.belousov.enums.StatusPay;
 import com.simbirsoft.belousov.enums.StatusProject;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import javax.persistence.Column;
+
 @Schema(description = "Проект")
 public class ProjectResponseDto {
 
@@ -22,12 +24,16 @@ public class ProjectResponseDto {
     @Schema(description = "Статус проекта")
     private StatusProject statusProject;
 
-    public ProjectResponseDto(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject) {
-        this.projectId=projectId;
+    @Column(name = "payment_status")
+    private StatusPay paymentStatus;
+
+    public ProjectResponseDto(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject, StatusPay paymentStatus) {
+        this.projectId = projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
         this.customer = customer;
         this.statusProject = statusProject;
+        this.paymentStatus = paymentStatus;
     }
 
     public ProjectResponseDto() {
@@ -74,4 +80,11 @@ public class ProjectResponseDto {
         this.statusProject = statusProject;
     }
 
+    public StatusPay getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(StatusPay paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 }

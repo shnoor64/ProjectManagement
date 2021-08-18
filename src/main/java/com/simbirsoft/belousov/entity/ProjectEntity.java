@@ -17,8 +17,7 @@ public class ProjectEntity {
     @Column(name = "name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "description_project") //теперь эта колонка хранит статус оплаты проекта
+    @Column(name = "description_project")
     private StatusPay descriptionProject;
 
     @Column(name = "customer")
@@ -28,19 +27,25 @@ public class ProjectEntity {
     @Column(name = "status_project")
     private StatusProject statusProject;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
+    private StatusPay paymentStatus;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
     private List <TaskEntity> tasks;
 
-    public ProjectEntity(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject) {
+    public ProjectEntity() {
+
+    }
+
+    public ProjectEntity(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject, StatusPay paymentStatus, List<TaskEntity> tasks) {
         this.projectId = projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
         this.customer = customer;
         this.statusProject = statusProject;
-    }
-
-    public ProjectEntity() {
-
+        this.paymentStatus = paymentStatus;
+        this.tasks = tasks;
     }
 
     public int getProjectId() {
@@ -89,5 +94,13 @@ public class ProjectEntity {
 
     public void setTasks(List<TaskEntity> tasks) {
         this.tasks = tasks;
+    }
+
+    public StatusPay getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(StatusPay paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

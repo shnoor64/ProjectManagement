@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: addColumn-table-projects
+      author: Oleg Belousov
+      changes:
+        - addColumn:
+            tableName: projects
+            columns:
+              - column:
+                  name: payment_status
+                  type: VARCHAR(32)
