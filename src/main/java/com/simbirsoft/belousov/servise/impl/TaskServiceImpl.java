@@ -174,7 +174,6 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     @Override
     public LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, int timeToComplete) {
         return startTimeTask.plusHours(timeToComplete);

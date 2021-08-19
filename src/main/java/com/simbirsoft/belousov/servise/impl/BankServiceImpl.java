@@ -26,12 +26,12 @@ public class BankServiceImpl implements BankService {
 
     @Transactional
     @Override
-    public AccountDetailsResponseDto payProject(String description) {//description-будет название проекта
-        ProjectEntity projectEntity = projectRepository.findByName(description);
+    public AccountDetailsResponseDto payProject(String paymentStatus) {
+        ProjectEntity projectEntity = projectRepository.findByName(paymentStatus);
         if (projectEntity == null) {
             throw new NoSuchException("Не найден проект, который хотите оплатить");
         }
-        ResponseEntity<AccountDetailsResponseDto> result = bankClient.paymentProject(description);
+        ResponseEntity<AccountDetailsResponseDto> result = bankClient.paymentProject(paymentStatus);
         projectEntity.setPaymentStatus(StatusPay.PAID);
         return result.getBody();
     }

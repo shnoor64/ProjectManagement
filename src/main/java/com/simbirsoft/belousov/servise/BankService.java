@@ -14,7 +14,7 @@ public interface BankService {
     AccountDetailsResponseDto payProject(String description);
 
     /**
-     * Метод позволяет полкчить историю аккаунта
+     * Метод позволяет получить историю аккаунта
      *
      * @return List<AccountHistoryResponseDto> - лист истории
      */
