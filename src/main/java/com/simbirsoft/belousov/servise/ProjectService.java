@@ -54,5 +54,6 @@ public interface ProjectService {
      * @return ProjectResponseDto -обновленный проект
      */
     ProjectResponseDto updateStatusProject(int projectId, String statusProject);
+
 }
 

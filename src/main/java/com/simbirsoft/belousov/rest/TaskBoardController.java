@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -110,7 +109,7 @@ public class TaskBoardController {
     @PutMapping(value = "/{id}/time/{timeToComplete}")
     @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity<TaskResponseDto> updateTimeToCompleteTaskById(@PathVariable int id,
-                                                                        @PathVariable Period timeToComplete) throws IOException {
+                                                                        @PathVariable int timeToComplete) throws IOException {
         taskService.updateTimeToCompleteTask(id, timeToComplete);
         LOG.log(Level.INFO, "Запрос: \"Обновить время для завершения задачи\" /api/management/tasks/"+id+"/time/"+timeToComplete);
         throw new IOException();
@@ -158,7 +157,7 @@ public class TaskBoardController {
     @PreAuthorize("hasAnyRole('admin','user')")
     public ResponseEntity createTaskFromCsv(@RequestParam("file") MultipartFile file) throws IOException {
         List<TaskResponseDto> result = taskService.parsTaskFromCsv(file);
-        LOG.log(Level.INFO, "Запрос: \"Добавить задачу из csv файла\" /api/management/tasks/");
+        LOG.log(Level.INFO, "Запрос: \"Добавить задачу из csv файла\" /api/management/tasks/csv");
         return ResponseEntity.ok().body(result);
     }
 

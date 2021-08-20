@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+     id: modifyDataType-table-users
+     author: Oleg Belousov
+     changes:
+       - modifyDataType:
+           catalogName: management_db
+           columnName: password
+           newDataType: VARCHAR(255)
+           schemaName: public
+           tableName: users

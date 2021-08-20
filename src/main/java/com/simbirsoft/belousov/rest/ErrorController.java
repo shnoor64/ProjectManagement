@@ -1,6 +1,7 @@
 package com.simbirsoft.belousov.rest;
 
 import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusException;
+import com.simbirsoft.belousov.rest.exeption_handing.LowBalanceException;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,11 @@ public class ErrorController {
 
     @ExceptionHandler(IncorrectlyEnteredStatusException.class)
     public ResponseEntity<String> handleIncorrectlyEnteredStatusException(IncorrectlyEnteredStatusException e) {
+        return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(LowBalanceException.class)
+    public ResponseEntity<String> handleLowBalanceException(LowBalanceException e) {
         return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

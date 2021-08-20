@@ -1,7 +1,10 @@
 package com.simbirsoft.belousov.rest.dto;
 
+import com.simbirsoft.belousov.enums.StatusPay;
 import com.simbirsoft.belousov.enums.StatusProject;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import javax.persistence.Column;
 
 @Schema(description = "Проект")
 public class ProjectRequestDto {
@@ -13,7 +16,7 @@ public class ProjectRequestDto {
     private String name;
 
     @Schema(description = "Описание проекта")
-    private String descriptionProject;
+    private StatusPay descriptionProject;
 
     @Schema(description = "Заказчик")
     private String customer;
@@ -21,12 +24,16 @@ public class ProjectRequestDto {
     @Schema(description = "Статус проекта")
     private StatusProject statusProject;
 
-    public ProjectRequestDto(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject) {
+    @Column(name = "payment_status")
+    private StatusPay paymentStatus;
+
+    public ProjectRequestDto(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject, StatusPay paymentStatus) {
         this.projectId = projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
         this.customer = customer;
         this.statusProject = statusProject;
+        this.paymentStatus = paymentStatus;
     }
 
     public ProjectRequestDto() {
@@ -49,11 +56,11 @@ public class ProjectRequestDto {
         this.name = name;
     }
 
-    public String getDescriptionProject() {
+    public StatusPay getDescriptionProject() {
         return descriptionProject;
     }
 
-    public void setDescriptionProject(String descriptionProject) {
+    public void setDescriptionProject(StatusPay descriptionProject) {
         this.descriptionProject = descriptionProject;
     }
 
@@ -71,5 +78,13 @@ public class ProjectRequestDto {
 
     public void setStatusProject(StatusProject statusProject) {
         this.statusProject = statusProject;
+    }
+
+    public StatusPay getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(StatusPay paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

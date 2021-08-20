@@ -1,6 +1,7 @@
 package com.simbirsoft.belousov.servise.impl;
 
 import com.simbirsoft.belousov.entity.ProjectEntity;
+import com.simbirsoft.belousov.enums.StatusPay;
 import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.mappers.ProjectMapper;
 import com.simbirsoft.belousov.repository.ProjectRepository;
@@ -9,6 +10,7 @@ import com.simbirsoft.belousov.rest.dto.ProjectRequestDto;
 import com.simbirsoft.belousov.rest.dto.ProjectResponseDto;
 import com.simbirsoft.belousov.rest.exeption_handing.IncorrectlyEnteredStatusException;
 import com.simbirsoft.belousov.rest.exeption_handing.NoSuchException;
+import com.simbirsoft.belousov.servise.BankService;
 import com.simbirsoft.belousov.servise.ProjectService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +27,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final TaskRepository taskRepository;
     private final ProjectMapper projectMapper;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ProjectMapper projectMapper) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, TaskRepository taskRepository, ProjectMapper projectMapper, BankService bankService) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
         this.projectMapper = projectMapper;
@@ -79,13 +81,28 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
         ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));
-        if (StatusProject.CLOSED.equals(statusProject)) {
-            if (taskRepository.countAllNotDoneTasksByProject(projectId) != 0) {
-                throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
-            }
+        switch (StatusProject.valueOf(statusProject)) {
+            case IN_PROGRESS:
+                if (StatusPay.NOT_PAID.equals(projectEntity.getPaymentStatus())) {
+                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта, сначала заплатите");
+                }
+                break;
+            case CLOSED:
+                if (taskRepository.countAllNotDoneTasksByProject(projectId) != 0) {
+                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
+                }
+                break;
         }
+
+//        if (StatusProject.CLOSED.equals(statusProject)) {
+//            if (taskRepository.countAllNotDoneTasksByProject(projectId) != 0) {
+//                throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
+//            }
+//        }
         projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
         return projectMapper.projectEntityToResponseDto(projectEntity);
 
     }
+
+
 }

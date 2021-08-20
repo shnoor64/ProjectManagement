@@ -1,5 +1,6 @@
 package com.simbirsoft.belousov.entity;
 
+import com.simbirsoft.belousov.enums.StatusPay;
 import com.simbirsoft.belousov.enums.StatusProject;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class ProjectEntity {
     private String name;
 
     @Column(name = "description_project")
-    private String descriptionProject;
+    private StatusPay descriptionProject;
 
     @Column(name = "customer")
     private String customer;
@@ -26,19 +27,25 @@ public class ProjectEntity {
     @Column(name = "status_project")
     private StatusProject statusProject;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
+    private StatusPay paymentStatus;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
     private List <TaskEntity> tasks;
 
-    public ProjectEntity(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject) {
+    public ProjectEntity() {
+
+    }
+
+    public ProjectEntity(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject, StatusPay paymentStatus, List<TaskEntity> tasks) {
         this.projectId = projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
         this.customer = customer;
         this.statusProject = statusProject;
-    }
-
-    public ProjectEntity() {
-
+        this.paymentStatus = paymentStatus;
+        this.tasks = tasks;
     }
 
     public int getProjectId() {
@@ -57,11 +64,11 @@ public class ProjectEntity {
         this.name = name;
     }
 
-    public String getDescriptionProject() {
+    public StatusPay getDescriptionProject() {
         return descriptionProject;
     }
 
-    public void setDescriptionProject(String descriptionProject) {
+    public void setDescriptionProject(StatusPay descriptionProject) {
         this.descriptionProject = descriptionProject;
     }
 
@@ -87,5 +94,13 @@ public class ProjectEntity {
 
     public void setTasks(List<TaskEntity> tasks) {
         this.tasks = tasks;
+    }
+
+    public StatusPay getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(StatusPay paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

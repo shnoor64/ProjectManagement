@@ -5,7 +5,7 @@ import com.simbirsoft.belousov.entity.TaskEntity;
 import com.simbirsoft.belousov.entity.UserEntity;
 import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.enums.StatusTask;
-import com.simbirsoft.belousov.mappers.*;
+import com.simbirsoft.belousov.mappers.TaskMapper;
 import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.repository.ReleaseRepository;
 import com.simbirsoft.belousov.repository.TaskRepository;
@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -145,7 +144,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public TaskResponseDto updateTimeToCompleteTask(int taskId, Period timeToComplete) {
+    public TaskResponseDto updateTimeToCompleteTask(int taskId, int timeToComplete) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
         taskEntity.setTimeToComplete(timeToComplete);
         return taskMapper.taskEntityToResponseDto(taskEntity);
@@ -175,10 +174,9 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     @Override
-    public LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, Period timeToComplete) {
-        return startTimeTask.plus(timeToComplete);
+    public LocalDateTime getPlannedEndTimeTask(LocalDateTime startTimeTask, int timeToComplete) {
+        return startTimeTask.plusHours(timeToComplete);
     }
 
     @Transactional
@@ -210,7 +208,7 @@ public class TaskServiceImpl implements TaskService {
             taskEntity.setAuthorId(userRepository.findById(Integer.parseInt(record.get(5))).orElseThrow(() -> new NoSuchException("Пользователь не найден")));
             taskEntity.setPerformerId(userRepository.findById(Integer.parseInt(record.get(6))).orElseThrow(() -> new NoSuchException("Пользователь не найден")));
             taskEntity.setReleaseId(releaseRepository.findById(Integer.parseInt(record.get(7))).orElseThrow(() -> new NoSuchException("Релиз не найден")));
-            taskEntity.setTimeToComplete(Period.parse(record.get(8)));
+            taskEntity.setTimeToComplete(Integer.parseInt(record.get(8)));
             taskEntity.setStartTimeTask(LocalDateTime.parse(record.get(9)));
             taskEntity.setEndTimeTask(LocalDateTime.parse(record.get(10)));
             taskEntityList.add(taskEntity);
