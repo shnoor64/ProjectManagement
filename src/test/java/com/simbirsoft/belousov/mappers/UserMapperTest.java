@@ -20,6 +20,7 @@ import java.util.Optional;
 class UserMapperTest {
     private UserMapper userMapper;
     private RoleEntity roleEntity;
+
     @BeforeEach
     void prepare() {
         userMapper = new UserMapperImpl();
