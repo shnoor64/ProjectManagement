@@ -24,7 +24,7 @@ class UserMapperTest {
     void UserRequestDtoMappingEntity() {
         UserMapper userMapper = new UserMapperImpl();
         RoleEntity roleEntity = new RoleEntity(1, "admin");
-        UserRequestDto userRequestDto = new UserRequestDto(1, "Oleg", "Olegov", "password",1);
+        UserRequestDto userRequestDto = new UserRequestDto(1, "Oleg", "Olegov", "password", 1);
         Mockito.when(roleRepository.findById(1)).thenReturn(Optional.of(roleEntity));
         ReflectionTestUtils.setField(userMapper, "roleRepository", roleRepository);
 
@@ -35,7 +35,6 @@ class UserMapperTest {
         Assertions.assertEquals(userRequestDto.getName(), userEntity.getName());
         Assertions.assertEquals(userRequestDto.getSurname(), userEntity.getSurname());
         Assertions.assertEquals(userRequestDto.getPassword(), userEntity.getPassword());
-
 
     }
 }
