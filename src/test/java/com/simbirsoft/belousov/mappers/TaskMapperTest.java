@@ -34,8 +34,7 @@ class TaskMapperTest {
         taskMapper = new TaskMapperImpl();
         releaseEntity = new ReleaseEntity(1, 1, LocalDateTime.of(2021, 8, 8, 12, 0),
                 LocalDateTime.of(2022, 8, 8, 14, 0));
-        roleEntity = new RoleEntity(1, "admin");
-        userEntity = new UserEntity(1, "Oleg", "Olegov", "password", roleEntity);
+        userEntity = new UserEntity(1, "Oleg", "Olegov", "password", new RoleEntity(1, "admin"));
         projectEntity = new ProjectEntity(1, "Velodrom", "For velodrom", "OOO Velodrom", StatusProject.BACKLOG, StatusPay.PAID);
     }
 
