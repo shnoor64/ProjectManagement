@@ -1,15 +1,13 @@
 package com.simbirsoft.belousov.mappers;
 
-import com.simbirsoft.belousov.entity.ProjectEntity;
-import com.simbirsoft.belousov.entity.RoleEntity;
-import com.simbirsoft.belousov.entity.UserEntity;
+import com.simbirsoft.belousov.entity.*;
 import com.simbirsoft.belousov.enums.StatusPay;
 import com.simbirsoft.belousov.enums.StatusProject;
+import com.simbirsoft.belousov.enums.StatusTask;
 import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.repository.ReleaseRepository;
-import com.simbirsoft.belousov.repository.RoleRepository;
 import com.simbirsoft.belousov.repository.UserRepository;
-import com.simbirsoft.belousov.rest.dto.UserRequestDto;
+import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,21 +31,42 @@ class TaskMapperTest {
 
     @Test
     void TaskRequestDtoMappingEntity() {
-        TaskMapper taskMapper= new TaskMapperImpl();
+        TaskMapper taskMapper = new TaskMapperImpl();
         RoleEntity roleEntity = new RoleEntity(1, "admin");
-        UserEntity userEntity = new UserEntity(1, "Oleg", "Olegov", "password",roleEntity);
+        UserEntity userEntity = new UserEntity(1, "Oleg", "Olegov", "password", roleEntity);
         ProjectEntity projectEntity = new ProjectEntity(1, "Velodrom", "For velodrom", "OOO Velodrom", StatusProject.BACKLOG, StatusPay.PAID);
-        UserRequestDto userRequestDto = new UserRequestDto(1, "Oleg", "Olegov", "password",1);
-        Mockito.when(roleRepository.findById(1)).thenReturn(Optional.of(roleEntity));
-        ReflectionTestUtils.setField(userMapper, "roleRepository", roleRepository);
+        ReleaseEntity releaseEntity = new ReleaseEntity(1, 1, LocalDateTime.of(2021, 8, 8, 12, 0),
+                LocalDateTime.of(2022, 8, 8, 14, 0));
+        TaskRequestDto taskRequestDto = new TaskRequestDto(1,"velo","add velo", 1, StatusTask.DONE,1,1,1,2,
+                LocalDateTime.of(2021, 8, 8, 12, 0),
+                LocalDateTime.of(2021, 8, 8, 14, 0));
+        Mockito.when(projectRepository.findById(1)).thenReturn(Optional.of(projectEntity));
+        Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(userEntity));
+        Mockito.when(releaseRepository.findById(1)).thenReturn(Optional.of(releaseEntity));
+        ReflectionTestUtils.setField(taskMapper, "projectRepository", projectRepository);
+        ReflectionTestUtils.setField(taskMapper, "userRepository", userRepository);
+        ReflectionTestUtils.setField(taskMapper, "releaseRepository", releaseRepository);
 
-        UserEntity userEntity = userMapper.userRequestDtoToEntity(userRequestDto);
+        TaskEntity taskEntity = taskMapper.taskRequestDtoToEntity(taskRequestDto);
 
-        Mockito.verify(roleRepository, Mockito.times(1)).findById(1);//тут я проверил вызывался ли 1 раз метод findById, который стучится в репо roleRepository
-        Assertions.assertEquals(userRequestDto.getUserId(), userEntity.getUserId());
-        Assertions.assertEquals(userRequestDto.getName(), userEntity.getName());
-        Assertions.assertEquals(userRequestDto.getSurname(), userEntity.getSurname());
-        Assertions.assertEquals(userRequestDto.getPassword(), userEntity.getPassword());
+        Mockito.verify(projectRepository, Mockito.times(1)).findById(1);
+        Mockito.verify(userRepository, Mockito.times(2)).findById(1);
+        Mockito.verify(releaseRepository, Mockito.times(1)).findById(1);
+        Assertions.assertEquals(taskRequestDto.getTaskId(), taskEntity.getTaskId());
+        Assertions.assertEquals(taskRequestDto.getName(), taskEntity.getName());
+        Assertions.assertEquals(taskRequestDto.getDescriptionTask(), taskEntity.getDescriptionTask());
+        Assertions.assertEquals(taskRequestDto.getPerformerId(), taskEntity.getProjectId().getProjectId());
+        Assertions.assertEquals(taskRequestDto.getStatusTask(), taskEntity.getStatusTask());
+        Assertions.assertEquals(taskRequestDto.getAuthorId(), taskEntity.getAuthorId().getUserId());
+        Assertions.assertEquals(taskRequestDto.getPerformerId(), taskEntity.getPerformerId().getUserId());
+        Assertions.assertEquals(taskRequestDto.getReleaseId(), taskEntity.getReleaseId().getReleaseId());
+        Assertions.assertEquals(taskRequestDto.getTimeToComplete(), taskEntity.getTimeToComplete());
+        Assertions.assertEquals(taskRequestDto.getStartTimeTask(), taskEntity.getStartTimeTask());
+        Assertions.assertEquals(taskRequestDto.getEndTimeTask(), taskEntity.getEndTimeTask());
+
+
+
+
 
 
     }
