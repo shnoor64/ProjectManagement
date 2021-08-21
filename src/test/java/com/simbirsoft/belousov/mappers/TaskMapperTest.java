@@ -27,7 +27,6 @@ class TaskMapperTest {
     private ReleaseEntity releaseEntity;
     private UserEntity userEntity;
     private ProjectEntity projectEntity;
-    private RoleEntity roleEntity;
 
     @BeforeEach
     void prepare() {
