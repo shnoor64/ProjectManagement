@@ -88,11 +88,21 @@ class ProjectServiceTest {
 
     @Test
     void InProgressStatusOfThePaidProject() {
-
         Mockito.when(projectRepository.findById(1)).thenReturn(Optional.of(projectEntity));
 
-        ProjectResponseDto projectResponseDto = projectService.updateStatusProject(1, "IN_PROGRESS");
+        ProjectResponseDto projectResponseDto = projectService.updateStatusProject(projectEntity.getProjectId(), "IN_PROGRESS");
 
-        Assertions.assertEquals(projectEntity.getPaymentStatus(), projectResponseDto.getPaymentStatus());
+        Assertions.assertEquals(projectEntity.getStatusProject(), projectResponseDto.getStatusProject());
+    }
+
+    @Test
+    void ClosedStatusOfTheAllTaskCompleted(){
+        Mockito.when(projectRepository.findById(1)).thenReturn(Optional.of(projectEntity));
+        Mockito.when(taskRepository.countAllNotDoneTasksByProject(projectEntity.getProjectId())).thenReturn(0);
+
+        ProjectResponseDto projectResponseDto = projectService.updateStatusProject(projectEntity.getProjectId(), "CLOSED");
+
+        Assertions.assertEquals(projectEntity.getStatusProject(), projectResponseDto.getStatusProject());
+
     }
 }
