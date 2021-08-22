@@ -170,7 +170,7 @@ databaseChangeLog:
                     - nullable: false
               - column:
                   name: time_to_complete
-                  type: interval
+                  type: int
               - column:
                   name: start_time_task
                   type: timestamp
