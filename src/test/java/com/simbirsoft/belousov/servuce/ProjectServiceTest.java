@@ -87,7 +87,7 @@ class ProjectServiceTest {
     }
 
     @Test
-    void ProjectNotPaid() {
+    void InProgressStatusOfThePaidProject() {
 
         Mockito.when(projectRepository.findById(1)).thenReturn(Optional.of(projectEntity));
 
