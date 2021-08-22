@@ -72,7 +72,6 @@ import java.util.Optional;
 class ProjectServiceTest {
     private ProjectEntity projectEntity;
     private ProjectService projectService;
-    private ProjectMapper projectMapper;
 
     @Mock
     ProjectRepository projectRepository;
@@ -82,7 +81,7 @@ class ProjectServiceTest {
     @BeforeEach
     void prepare() {
         projectEntity = new ProjectEntity(1, "Velodrom", "For velodrom", "OOO Velodrom", StatusProject.BACKLOG, StatusPay.PAID);
-        projectMapper = new ProjectMapperImpl();
+        ProjectMapper projectMapper = new ProjectMapperImpl();
         projectService = new ProjectServiceImpl(projectRepository, taskRepository, projectMapper);
     }
 
@@ -96,7 +95,7 @@ class ProjectServiceTest {
     }
 
     @Test
-    void ClosedStatusOfTheAllTaskCompleted(){
+    void ClosedStatusOfTheAllTaskCompleted() {
         Mockito.when(projectRepository.findById(1)).thenReturn(Optional.of(projectEntity));
         Mockito.when(taskRepository.countAllNotDoneTasksByProject(projectEntity.getProjectId())).thenReturn(0);
 
