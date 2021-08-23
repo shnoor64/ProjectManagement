@@ -9,6 +9,7 @@ import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.repository.ReleaseRepository;
 import com.simbirsoft.belousov.repository.TaskRepository;
 import com.simbirsoft.belousov.repository.UserRepository;
+import com.simbirsoft.belousov.rest.dto.TaskFilterRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import com.simbirsoft.belousov.servise.TaskService;
 import org.junit.jupiter.api.Assertions;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest(
         classes = ProjectManagerApplication.class)
@@ -46,9 +48,8 @@ public class TaskServiceTest {
 
 
     @BeforeAll
-
     void prepare() {
-        roleEntity = new RoleEntity(1,"oleg");
+        roleEntity = new RoleEntity(1, "oleg");
         releaseEntity = new ReleaseEntity(1, 1, LocalDateTime.of(2021, 8, 8, 12, 0),
                 LocalDateTime.of(2022, 8, 8, 14, 0));
         projectEntity = new ProjectEntity(1, "Velodrom", "For velodrom", "OOO Velodrom", StatusProject.IN_PROGRESS, StatusPay.PAID);
@@ -83,11 +84,15 @@ public class TaskServiceTest {
 
         Assertions.assertTrue(numberTask == 1);
     }
+
     @Test
     void SortTaskByPerformerAndRelease() {
+        TaskFilterRequestDto taskFilterRequestDto = new TaskFilterRequestDto("velo", "Velodrom", StatusTask.BACKLOG, "Oleg", "Oleg", 1);
 
-        int numberOutstandingTask = taskService.showNumberOutstandingTask(releaseEntity.getReleaseId());
+        List<TaskResponseDto> responseDtoList = taskService.getAllTaskSort(taskFilterRequestDto);
 
-        Assertions.assertTrue(numberOutstandingTask == 1);
+        Assertions.assertEquals(responseDtoList.size(), 1);
+        Assertions.assertTrue(responseDtoList.get(0).getTaskId() == 1);
+
     }
 }
