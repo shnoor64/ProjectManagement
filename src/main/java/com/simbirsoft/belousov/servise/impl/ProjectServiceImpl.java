@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 
@@ -47,7 +48,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public ProjectResponseDto getProjectById(int id) {
-        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
+        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.project")));
         return projectMapper.projectEntityToResponseDto(projectEntity);
 
     }
@@ -64,7 +65,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public ProjectResponseDto updateProject(ProjectRequestDto projectRequestDto, int id) {
-        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
+        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.project")));
         projectEntity = projectMapper.projectRequestDtoToEntity(projectRequestDto);
         return projectMapper.projectEntityToResponseDto(projectEntity);
     }
@@ -72,32 +73,26 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public void deleteProject(int id) {
-        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
+        ProjectEntity projectEntity = projectRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.project")));
         projectRepository.delete(projectEntity);
     }
 
     @Transactional
     @Override
     public ProjectResponseDto updateStatusProject(int projectId, String statusProject) {
-        ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException("Проект не найден"));
+        ProjectEntity projectEntity = projectRepository.findById(projectId).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.project")));
         switch (StatusProject.valueOf(statusProject)) {
             case IN_PROGRESS:
                 if (StatusPay.NOT_PAID.equals(projectEntity.getPaymentStatus())) {
-                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта, сначала заплатите");
+                    throw new IncorrectlyEnteredStatusException(ResourceBundle.getBundle("messages").getString("incorrectly.entered.status.project.in.progress"));
                 }
                 break;
             case CLOSED:
                 if (taskRepository.countAllNotDoneTasksByProject(projectId) != 0) {
-                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
+                    throw new IncorrectlyEnteredStatusException(ResourceBundle.getBundle("messages").getString("incorrectly.entered.status.project.done"));
                 }
                 break;
         }
-
-//        if (StatusProject.CLOSED.equals(statusProject)) {
-//            if (taskRepository.countAllNotDoneTasksByProject(projectId) != 0) {
-//                throw new IncorrectlyEnteredStatusException("Невозможно поменять статус проекта,не все задачи завершены");
-//            }
-//        }
         projectEntity.setStatusProject(StatusProject.valueOf(statusProject));
         return projectMapper.projectEntityToResponseDto(projectEntity);
 

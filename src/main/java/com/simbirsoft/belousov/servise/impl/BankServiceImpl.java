@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Service
 public class BankServiceImpl implements BankService {
@@ -29,7 +30,7 @@ public class BankServiceImpl implements BankService {
     public AccountDetailsResponseDto payProject(String paymentStatus) {
         ProjectEntity projectEntity = projectRepository.findByName(paymentStatus);
         if (projectEntity == null) {
-            throw new NoSuchException("Не найден проект, который хотите оплатить");
+            throw new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.project"));
         }
         ResponseEntity<AccountDetailsResponseDto> result = bankClient.paymentProject(paymentStatus);
         projectEntity.setPaymentStatus(StatusPay.PAID);

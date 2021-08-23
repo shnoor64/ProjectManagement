@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +40,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public RoleResponseDto getRoleById(int id) {
-        RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoSuchException("Роль не найдена"));
+        RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.role")));
         return roleMapper.roleEntityToResponseDto(roleEntity);
     }
 
@@ -54,7 +55,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public RoleResponseDto updateRole(RoleRequestDto roleRequestDto, int id) {
-        RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoSuchException("Роль не найдена"));
+        RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.role")));
         roleEntity = roleMapper.roleRequestDtoToEntity(roleRequestDto);
         return roleMapper.roleEntityToResponseDto(roleEntity);
     }
@@ -62,7 +63,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public void deleteRole(int id) {
-        RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoSuchException("Роль не найдена"));
+        RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.role")));
         roleRepository.delete(roleEntity);
     }
 }
