@@ -1,4 +1,4 @@
-package com.simbirsoft.belousov.servuce;
+package com.simbirsoft.belousov.service;
 
 import com.simbirsoft.belousov.entity.ProjectEntity;
 import com.simbirsoft.belousov.enums.StatusPay;
