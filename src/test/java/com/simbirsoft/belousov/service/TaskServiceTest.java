@@ -81,7 +81,7 @@ public class TaskServiceTest {
 
         int numberTask = taskService.showNumberOutstandingTask(releaseEntity.getReleaseId());
 
-        Assertions.assertTrue(numberTask == 1);
+        Assertions.assertEquals(numberTask, 1);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class TaskServiceTest {
         List<TaskResponseDto> responseDtoList = taskService.getAllTaskSort(taskFilterRequestDto);
 
         Assertions.assertEquals(responseDtoList.size(), 1);
-        Assertions.assertTrue(responseDtoList.get(0).getTaskId() == 1);
+        Assertions.assertEquals(responseDtoList.get(0).getTaskId(), 1);
 
     }
 }
