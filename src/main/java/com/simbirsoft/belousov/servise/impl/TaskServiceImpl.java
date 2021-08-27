@@ -109,7 +109,6 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto updateStatusTask(int taskId, String statusTask) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.task")));
         StatusTask oldStatusTask = taskEntity.getStatusTask();
-        taskEntity.setStatusTask(StatusTask.valueOf(statusTask));
         switch (StatusTask.valueOf(statusTask)) {
             case BACKLOG:
 //                taskEntity.setStartTimeTask(null);
@@ -131,6 +130,7 @@ public class TaskServiceImpl implements TaskService {
                 }
                 break;
         }
+        taskEntity.setStatusTask(StatusTask.valueOf(statusTask));
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 

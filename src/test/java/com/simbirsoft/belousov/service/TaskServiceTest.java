@@ -63,7 +63,6 @@ public class TaskServiceTest {
     @Test
     void InProgressStatusOfTheStartProject() {
 
-
         TaskResponseDto taskResponseDto = taskService.updateStatusTask(1, "IN_PROGRESS");
 
         Assertions.assertEquals(StatusTask.IN_PROGRESS, taskResponseDto.getStatusTask());
