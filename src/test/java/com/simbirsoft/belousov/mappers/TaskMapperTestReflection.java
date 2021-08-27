@@ -1,80 +1,72 @@
 package com.simbirsoft.belousov.mappers;
 
-import com.simbirsoft.belousov.ProjectManagerApplication;
 import com.simbirsoft.belousov.entity.*;
 import com.simbirsoft.belousov.enums.StatusPay;
 import com.simbirsoft.belousov.enums.StatusProject;
 import com.simbirsoft.belousov.enums.StatusTask;
 import com.simbirsoft.belousov.repository.ProjectRepository;
 import com.simbirsoft.belousov.repository.ReleaseRepository;
-import com.simbirsoft.belousov.repository.TaskRepository;
 import com.simbirsoft.belousov.repository.UserRepository;
 import com.simbirsoft.belousov.rest.dto.TaskRequestDto;
 import com.simbirsoft.belousov.rest.dto.TaskResponseDto;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
-@SpringBootTest(
-        classes = ProjectManagerApplication.class)
-@TestPropertySource(
-        locations = "classpath:application-integrationtest.properties")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TaskMapperTest {
-    @Autowired
+@ExtendWith(MockitoExtension.class)
+class TaskMapperTestReflection {
     private TaskMapper taskMapper;
     private ReleaseEntity releaseEntity;
     private UserEntity userEntity;
     private ProjectEntity projectEntity;
-    private RoleEntity roleEntity;
-    private TaskEntity taskEntity;
 
-    @Autowired
-    private TaskRepository taskRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ReleaseRepository releaseRepository;
-
-
-    @BeforeAll
+    @BeforeEach
     void prepare() {
-        roleEntity = new RoleEntity(1, "oleg");
+        taskMapper = new TaskMapperImpl();
         releaseEntity = new ReleaseEntity(1, 1, LocalDateTime.of(2021, 8, 8, 12, 0),
                 LocalDateTime.of(2022, 8, 8, 14, 0));
-        projectEntity = new ProjectEntity(1, "Velodrom", "For velodrom", "OOO Velodrom", StatusProject.IN_PROGRESS, StatusPay.PAID);
-        userEntity = new UserEntity(1, "Oleg", "Olegov", "password", roleEntity);
-        taskEntity = new TaskEntity(1, "velo", "add velo", projectEntity, StatusTask.IN_PROGRESS, userEntity, userEntity, releaseEntity, 2,
-                LocalDateTime.of(2021, 8, 8, 12, 0),
-                LocalDateTime.of(2021, 8, 8, 14, 0));
-        taskRepository.save(taskEntity);
+        userEntity = new UserEntity(1, "Oleg", "Olegov", "password", new RoleEntity(1, "admin"));
+        projectEntity = new ProjectEntity(1, "Velodrom", "For velodrom", "OOO Velodrom", StatusProject.BACKLOG, StatusPay.PAID);
     }
+
+    @Mock
+    ProjectRepository projectRepository;
+    @Mock
+    UserRepository userRepository;
+    @Mock
+    ReleaseRepository releaseRepository;
 
     @Test
     void TaskRequestDtoMappingEntity() {
-        TaskRequestDto taskRequestDto = new TaskRequestDto(1, "velo", "add velo", 1, StatusTask.IN_PROGRESS, 1, 1, 1, 2,
+//        TaskMapper taskMapper = new TaskMapperImpl();
+//        RoleEntity roleEntity = new RoleEntity(1, "admin");
+//        UserEntity userEntity = new UserEntity(1, "Oleg", "Olegov", "password", roleEntity);
+//        ProjectEntity projectEntity = new ProjectEntity(1, "Velodrom", "For velodrom", "OOO Velodrom", StatusProject.BACKLOG, StatusPay.PAID);
+//        ReleaseEntity releaseEntity = new ReleaseEntity(1, 1, LocalDateTime.of(2021, 8, 8, 12, 0),
+//                LocalDateTime.of(2022, 8, 8, 14, 0));
+        TaskRequestDto taskRequestDto = new TaskRequestDto(1, "velo", "add velo", 1, StatusTask.DONE, 1, 1, 1, 2,
                 LocalDateTime.of(2021, 8, 8, 12, 0),
                 LocalDateTime.of(2021, 8, 8, 14, 0));
-//        Mockito.when(projectRepository.findById(1)).thenReturn(Optional.of(projectEntity));
-//        Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(userEntity));
-//        Mockito.when(releaseRepository.findById(1)).thenReturn(Optional.of(releaseEntity));
-//        ReflectionTestUtils.setField(taskMapper, "projectRepository", projectRepository);
-//        ReflectionTestUtils.setField(taskMapper, "userRepository", userRepository);
-//        ReflectionTestUtils.setField(taskMapper, "releaseRepository", releaseRepository);
+        Mockito.when(projectRepository.findById(1)).thenReturn(Optional.of(projectEntity));
+        Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(userEntity));
+        Mockito.when(releaseRepository.findById(1)).thenReturn(Optional.of(releaseEntity));
+        ReflectionTestUtils.setField(taskMapper, "projectRepository", projectRepository);
+        ReflectionTestUtils.setField(taskMapper, "userRepository", userRepository);
+        ReflectionTestUtils.setField(taskMapper, "releaseRepository", releaseRepository);
 
         TaskEntity taskEntity = taskMapper.taskRequestDtoToEntity(taskRequestDto);
 
-//        Mockito.verify(projectRepository, Mockito.times(1)).findById(1);
-//        Mockito.verify(userRepository, Mockito.times(2)).findById(1);
-//        Mockito.verify(releaseRepository, Mockito.times(1)).findById(1);
+        Mockito.verify(projectRepository, Mockito.times(1)).findById(1);
+        Mockito.verify(userRepository, Mockito.times(2)).findById(1);
+        Mockito.verify(releaseRepository, Mockito.times(1)).findById(1);
         Assertions.assertEquals(taskRequestDto.getTaskId(), taskEntity.getTaskId());
         Assertions.assertEquals(taskRequestDto.getName(), taskEntity.getName());
         Assertions.assertEquals(taskRequestDto.getDescriptionTask(), taskEntity.getDescriptionTask());
@@ -90,9 +82,9 @@ class TaskMapperTest {
 
     @Test
     void TaskEntityMappingResponseDto() {
-//        TaskEntity taskEntity = new TaskEntity(1, "velo", "add velo", projectEntity, StatusTask.DONE, userEntity, userEntity, releaseEntity, 2,
-//                LocalDateTime.of(2021, 8, 8, 12, 0),
-//                LocalDateTime.of(2021, 8, 8, 14, 0));
+        TaskEntity taskEntity = new TaskEntity(1, "velo", "add velo", projectEntity, StatusTask.DONE, userEntity, userEntity, releaseEntity, 2,
+                LocalDateTime.of(2021, 8, 8, 12, 0),
+                LocalDateTime.of(2021, 8, 8, 14, 0));
 
         TaskResponseDto taskResponseDto = taskMapper.taskEntityToResponseDto(taskEntity);
 
