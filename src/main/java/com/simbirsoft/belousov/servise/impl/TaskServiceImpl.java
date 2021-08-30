@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,7 +67,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public TaskResponseDto getTaskById(int id) {
-        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.task")));
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
@@ -82,7 +83,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public TaskResponseDto updateTask(TaskRequestDto taskRequestDto, int id) {
-        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.task")));
         taskEntity = taskMapper.taskRequestDtoToEntity(taskRequestDto);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
@@ -90,14 +91,14 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public void deleteTask(int id) {
-        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.task")));
         taskRepository.delete(taskEntity);
     }
 
     @Transactional
     @Override
     public TaskResponseDto updatePerformerTask(int taskId, int performerId) {
-        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.task")));
         UserEntity performerEntity = userRepository.findById(performerId).orElseThrow(() -> new NoSuchException("Пользователь не найден"));
         taskEntity.setPerformerId(performerEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
@@ -106,9 +107,8 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public TaskResponseDto updateStatusTask(int taskId, String statusTask) {
-        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.task")));
         StatusTask oldStatusTask = taskEntity.getStatusTask();
-        taskEntity.setStatusTask(StatusTask.valueOf(statusTask));
         switch (StatusTask.valueOf(statusTask)) {
             case BACKLOG:
 //                taskEntity.setStartTimeTask(null);
@@ -118,7 +118,7 @@ public class TaskServiceImpl implements TaskService {
                 if (taskEntity.getProjectId().getStatusProject().equals(StatusProject.IN_PROGRESS)) {
                     taskEntity.setStartTimeTask(LocalDateTime.now());
                 } else {
-                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус задачи, проект не стартовал.");
+                    throw new IncorrectlyEnteredStatusException(ResourceBundle.getBundle("messages").getString("incorrectly.entered.status.task.in.progress"));
                 }
                 break;
             case DONE:
@@ -126,18 +126,19 @@ public class TaskServiceImpl implements TaskService {
                     taskEntity.setStatusTask(StatusTask.DONE);
                     taskEntity.setEndTimeTask(LocalDateTime.now());
                 } else {
-                    throw new IncorrectlyEnteredStatusException("Невозможно поменять статус задачи, задача не была на исполнении.");
+                    throw new IncorrectlyEnteredStatusException(ResourceBundle.getBundle("messages").getString("incorrectly.entered.status.task.done"));
                 }
                 break;
         }
+        taskEntity.setStatusTask(StatusTask.valueOf(statusTask));
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
 
     @Transactional
     @Override
     public TaskResponseDto updateReleaseTask(int taskId, int releaseId) {
-        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
-        ReleaseEntity releaseEntity = releaseRepository.findById(releaseId).orElseThrow(() -> new NoSuchException("Релиз не найден"));
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.task")));
+        ReleaseEntity releaseEntity = releaseRepository.findById(releaseId).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.release")));
         taskEntity.setReleaseId(releaseEntity);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
@@ -145,7 +146,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public TaskResponseDto updateTimeToCompleteTask(int taskId, int timeToComplete) {
-        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.task")));
         taskEntity.setTimeToComplete(timeToComplete);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
@@ -153,7 +154,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public TaskResponseDto updateStartTimeTask(int taskId, LocalDateTime startTimeTask) {
-        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException("Задача не найдена"));
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.task")));
         taskEntity.setStartTimeTask(startTimeTask);
         return taskMapper.taskEntityToResponseDto(taskEntity);
     }
@@ -203,11 +204,11 @@ public class TaskServiceImpl implements TaskService {
             taskEntity.setTaskId(Integer.parseInt(record.get(0)));
             taskEntity.setName(record.get(1));
             taskEntity.setDescriptionTask(record.get(2));
-            taskEntity.setProjectId(projectRepository.findById(Integer.parseInt(record.get(3))).orElseThrow(() -> new NoSuchException("Проект не найден")));
+            taskEntity.setProjectId(projectRepository.findById(Integer.parseInt(record.get(3))).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.project"))));
             taskEntity.setStatusTask(StatusTask.valueOf(record.get(4)));
-            taskEntity.setAuthorId(userRepository.findById(Integer.parseInt(record.get(5))).orElseThrow(() -> new NoSuchException("Пользователь не найден")));
-            taskEntity.setPerformerId(userRepository.findById(Integer.parseInt(record.get(6))).orElseThrow(() -> new NoSuchException("Пользователь не найден")));
-            taskEntity.setReleaseId(releaseRepository.findById(Integer.parseInt(record.get(7))).orElseThrow(() -> new NoSuchException("Релиз не найден")));
+            taskEntity.setAuthorId(userRepository.findById(Integer.parseInt(record.get(5))).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.user"))));
+            taskEntity.setPerformerId(userRepository.findById(Integer.parseInt(record.get(6))).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.user"))));
+            taskEntity.setReleaseId(releaseRepository.findById(Integer.parseInt(record.get(7))).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.release"))));
             taskEntity.setTimeToComplete(Integer.parseInt(record.get(8)));
             taskEntity.setStartTimeTask(LocalDateTime.parse(record.get(9)));
             taskEntity.setEndTimeTask(LocalDateTime.parse(record.get(10)));

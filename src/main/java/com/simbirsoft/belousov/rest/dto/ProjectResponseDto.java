@@ -16,7 +16,7 @@ public class ProjectResponseDto {
     private String name;
 
     @Schema(description = "Описание проекта")
-    private StatusPay descriptionProject;
+    private String descriptionProject;
 
     @Schema(description = "Заказчик")
     private String customer;
@@ -27,7 +27,7 @@ public class ProjectResponseDto {
     @Column(name = "payment_status")
     private StatusPay paymentStatus;
 
-    public ProjectResponseDto(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject, StatusPay paymentStatus) {
+    public ProjectResponseDto(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject, StatusPay paymentStatus) {
         this.projectId = projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
@@ -56,11 +56,11 @@ public class ProjectResponseDto {
         this.name = name;
     }
 
-    public StatusPay getDescriptionProject() {
+    public String getDescriptionProject() {
         return descriptionProject;
     }
 
-    public void setDescriptionProject(StatusPay descriptionProject) {
+    public void setDescriptionProject(String descriptionProject) {
         this.descriptionProject = descriptionProject;
     }
 

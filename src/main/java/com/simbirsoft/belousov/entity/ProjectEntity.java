@@ -18,7 +18,7 @@ public class ProjectEntity {
     private String name;
 
     @Column(name = "description_project")
-    private StatusPay descriptionProject;
+    private String descriptionProject;
 
     @Column(name = "customer")
     private String customer;
@@ -38,7 +38,16 @@ public class ProjectEntity {
 
     }
 
-    public ProjectEntity(int projectId, String name, StatusPay descriptionProject, String customer, StatusProject statusProject, StatusPay paymentStatus, List<TaskEntity> tasks) {
+    public ProjectEntity(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject, StatusPay paymentStatus) {
+        this.projectId = projectId;
+        this.name = name;
+        this.descriptionProject = descriptionProject;
+        this.customer = customer;
+        this.statusProject = statusProject;
+        this.paymentStatus = paymentStatus;
+    }
+
+    public ProjectEntity(int projectId, String name, String descriptionProject, String customer, StatusProject statusProject, StatusPay paymentStatus, List<TaskEntity> tasks) {
         this.projectId = projectId;
         this.name = name;
         this.descriptionProject = descriptionProject;
@@ -64,11 +73,11 @@ public class ProjectEntity {
         this.name = name;
     }
 
-    public StatusPay getDescriptionProject() {
+    public String getDescriptionProject() {
         return descriptionProject;
     }
 
-    public void setDescriptionProject(StatusPay descriptionProject) {
+    public void setDescriptionProject(String descriptionProject) {
         this.descriptionProject = descriptionProject;
     }
 

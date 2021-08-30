@@ -51,6 +51,14 @@ public class UserEntity {
         this.tasks_performer = tasks_performer;
     }
 
+    public UserEntity(int userId, String name, String surname, String password, RoleEntity role) {
+        this.userId = userId;
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.role = role;
+    }
+
     public UserEntity() {
 
     }

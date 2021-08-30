@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +40,7 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Transactional
     @Override
     public ReleaseResponseDto getReleaseById(int id) {
-        ReleaseEntity releaseEntity = releaseRepository.findById(id).orElseThrow(() -> new NoSuchException("Релиз не найден"));
+        ReleaseEntity releaseEntity = releaseRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.release")));
         return releaseMapper.releaseEntityToResponseDto(releaseEntity);
     }
 
@@ -62,7 +63,7 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Transactional
     @Override
     public void deleteRelease(int id) {
-        ReleaseEntity releaseEntity = releaseRepository.findById(id).orElseThrow(() -> new NoSuchException("Релиз не найден"));
+        ReleaseEntity releaseEntity = releaseRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.release")));
         releaseRepository.delete(releaseEntity);
     }
 }

@@ -34,6 +34,12 @@ public class ReleaseEntity {
         this.tasks = releases;
     }
 
+    public ReleaseEntity(int releaseId, int version, LocalDateTime startTimeRelease, LocalDateTime endTimeRelease) {
+        this.releaseId = releaseId;
+        this.version = version;
+        this.startTimeRelease = startTimeRelease;
+        this.endTimeRelease = endTimeRelease;
+    }
 
     public ReleaseEntity() {
 

@@ -2,7 +2,6 @@ package com.simbirsoft.belousov.entity;
 
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,6 +24,10 @@ public class RoleEntity {
         this.users = users;
     }
 
+    public RoleEntity(int roleId, String name) {
+        this.roleId = roleId;
+        this.name = name;
+    }
 
     public RoleEntity() {
 

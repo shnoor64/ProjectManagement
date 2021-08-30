@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserResponseDto getUserById(int id) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.user")));
         return userMapper.userEntityToResponseDto(userEntity);
     }
 
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserResponseDto updateUser(UserRequestDto userRequestDto, int id) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.user")));
         userEntity = userMapper.userRequestDtoToEntity(userRequestDto);
         return userMapper.userEntityToResponseDto(userEntity);
     }
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUser(int id) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException("Проект не найден"));
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NoSuchException(ResourceBundle.getBundle("messages").getString("no.such.user")));
         userRepository.delete(userEntity);
     }
 
